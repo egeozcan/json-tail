@@ -1,0 +1,63 @@
+.jsonTable {
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #a7a7a7;
+    border-collapse: collapse;
+    border-left-width: 0;
+}
+
+.jsonTable .jsonTable {
+    border-bottom-width: 0;
+}
+
+.jsonTable tr {
+    border-left: 2px solid #a7a7a7;
+}
+
+.jsonTable tr:hover {
+    border-left-color: #615f5f;
+}
+
+.jsonTable, .jsonTable tbody, .jsonTable tr, .jsonTable th, .jsonTable td {
+    margin: 0;
+    padding: 0;
+    vertical-align: text-top;
+}
+
+.jsonTable th, .jsonTable td {
+    border-bottom: 1px solid #a7a7a7;
+    text-align: left;
+    padding: 3px;
+}
+
+.jsonTable tr.hasSubTable > th, .jsonTable tr tr.hasSubTable td {
+    padding: 3px 3px 0 3px;
+}
+
+.jsonTable th {
+    background: #ececec;
+}
+
+.jsonTable td {
+    background: #fff;
+}
+
+.jsonTable td.odd {
+    background: #fbfde5;
+}
+
+.jsonTable tr:last-child > th, .jsonTable tr:last-child > td {
+    border-bottom: none;
+}
+
+.jsonTable .jsonTable > tbody > tr > th:first-child, .jsonTable .jsonTable > tbody > tr > td:first-child {
+    padding-left: 9px;
+}
+
+.jsonTable td.subTableCell {
+    padding: 0 !important;
+}
+
+body > div {
+    margin-bottom: 20px;
+}
