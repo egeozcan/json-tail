@@ -1,0 +1,34 @@
+{
+  "name": "json-tail",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "start-storybook"
+  },
+  "keywords": [],
+  "author": "",
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@storybook/preset-typescript": "^1.1.0",
+    "@storybook/react": "^5.2.6",
+    "@types/node": "^12.12.8",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.4",
+    "@types/styled-components": "^4.4.0",
+    "babel-loader": "^8.0.6",
+    "prettier": "^1.19.1",
+    "react-docgen-typescript-loader": "^3.5.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "immer": "^5.0.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "styled-components": "^4.4.1",
+    "use-immer": "^0.3.5"
+  }
+}
