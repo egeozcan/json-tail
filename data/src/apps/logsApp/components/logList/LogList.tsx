@@ -1,6 +1,5 @@
 import { ILog } from "../log/ILog";
 import * as React from "react";
-import { renderX } from "../table";
 import { useLogsAppStateContext } from "../../useContext";
 import { FunctionComponent } from "react";
 import { Log } from "../log/Log";

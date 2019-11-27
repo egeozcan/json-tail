@@ -1,5 +1,5 @@
 import { render } from "./createTable";
-import { escapeHTML } from "../src/apps/logsApp/components/table/helpers/escapeHtml";
+import { escapeHTML } from "./escapeHtml";
 
 export function generateTableFromObject(
   obj,

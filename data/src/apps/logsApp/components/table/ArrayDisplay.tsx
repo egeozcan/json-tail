@@ -1,5 +1,5 @@
 import { isObjectWithGivenKeys } from "./helpers/isObjectWithGivenKeys";
-import { LogDisplay } from "./LogTable";
+import { LogDisplay } from "./LogDisplay";
 import * as React from "react";
 import { BaseTable } from "./baseComponents/BaseTable";
 import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
@@ -63,6 +63,7 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
                 logMessage={createLog(el[title])}
                 level={level + 1}
                 path={path}
+                key={i}
               />
             ))}
           </BaseRow>

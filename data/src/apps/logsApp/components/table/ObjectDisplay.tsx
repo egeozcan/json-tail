@@ -1,24 +1,37 @@
-import { render } from "./LogTable";
-import { BaseTable, IBaseTableProps } from "./baseComponents/BaseTable";
+import { LogDisplay } from "./LogDisplay";
+import { BaseTable } from "./baseComponents/BaseTable";
 import * as React from "react";
 import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
-import { ContentDisplay } from "./ContentDisplay";
+import { createLog } from "../log/createLog";
+import { FunctionComponent } from "react";
 
-export function generateTableFromObject(
-  obj: object,
-  level: number,
-  path: string[]
-): React.ReactElement<IBaseTableProps> {
+export interface ITableDisplayProps {
+  obj: object;
+  level: number;
+  path: string[];
+}
+
+export const ObjectDisplay: FunctionComponent<ITableDisplayProps> = ({
+  obj,
+  level,
+  path
+}) => {
   return (
     <BaseTable baseTableCssClasses={"objectTable jsonTable"}>
       {Object.keys(obj || {}).map(key => {
-        const content = render(obj[key], level + 1);
+        const rowContent = (
+          <LogDisplay 
+            level={level + 1}
+            path={path}
+            logMessage={createLog(obj[key])}
+          />
+        );
 
-        if (typeof content === "string") {
+        if (rowContent.props.content) {
           return (
             <BaseRow key={key} headerType={HeaderType.Single}>
               {key}
-              <ContentDisplay content={content} />
+              {rowContent}
             </BaseRow>
           );
         } else {
@@ -31,7 +44,7 @@ export function generateTableFromObject(
             >
               <div className={"subTable"}>
                 {key}
-                {content}
+                {rowContent}
               </div>
             </BaseRow>
           );

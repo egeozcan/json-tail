@@ -1,5 +1,5 @@
 import { isObjectWithGivenKeys } from "../src/apps/logsApp/components/table/helpers/isObjectWithGivenKeys";
-import { escapeHTML } from "../src/apps/logsApp/components/table/helpers/escapeHtml";
+import { escapeHTML } from "./escapeHtml";
 import { render } from "./createTable";
 
 export function generateTableFromArray(arr: any[]): HTMLTableElement {
