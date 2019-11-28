@@ -1,17 +1,11 @@
 import { isObjectWithGivenKeys } from "./helpers/isObjectWithGivenKeys";
 import { LogDisplay } from "./LogDisplay";
 import * as React from "react";
+import { FunctionComponent } from "react";
 import { BaseTable } from "./baseComponents/BaseTable";
 import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
 import { ContentDisplay } from "./ContentDisplay";
-import { createLog } from "../log/createLog";
-import { FunctionComponent } from "react";
-
-export interface IArrayDisplayProps {
-  arr: any[];
-  level: number;
-  path: string[];
-}
+import { IArrayDisplayProps } from "./interfaces/IArrayDisplayProps";
 
 export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
   arr,
@@ -34,11 +28,7 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
       <BaseTable>
         {arr.map((el, idx) => (
           <BaseRow key={idx}>
-            <LogDisplay
-              logMessage={createLog(el)}
-              level={level + 1}
-              path={path}
-            />
+            <LogDisplay log={el} level={level + 1} path={path} />
           </BaseRow>
         ))}
       </BaseTable>
@@ -60,7 +50,7 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
           <BaseRow title={path.join(".")} key={idx} cellCssClass={cssClass}>
             {titles.map((title, i) => (
               <LogDisplay
-                logMessage={createLog(el[title])}
+                log={el[title]}
                 level={level + 1}
                 path={path}
                 key={i}

@@ -1,12 +1,11 @@
-import { ILog } from "../log/ILog";
 import * as React from "react";
-import { useLogsAppStateContext } from "../../useContext";
 import { FunctionComponent } from "react";
-import { Log } from "../log/Log";
-
-export interface ILogListProps {
-  logs: ILog[];
-}
+import {
+  useLogsAppDispatchContext,
+  useLogsAppStateContext
+} from "../../useContext";
+import { Log } from "./Log";
+import { ILogListProps } from "./interfaces/ILogListProps";
 
 export const LogList: FunctionComponent<ILogListProps> = ({ logs }) => (
   <div className={"LogsContainer"}>
@@ -18,6 +17,7 @@ export const LogList: FunctionComponent<ILogListProps> = ({ logs }) => (
 
 export const ConnectedLogList: FunctionComponent = () => {
   const appState = useLogsAppStateContext();
+  const dispatch = useLogsAppDispatchContext();
 
   return <LogList logs={appState.logs} />;
 };

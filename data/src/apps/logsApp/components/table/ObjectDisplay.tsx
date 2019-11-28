@@ -1,17 +1,13 @@
-import { LogDisplay } from "./LogDisplay";
 import { BaseTable } from "./baseComponents/BaseTable";
 import * as React from "react";
-import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
-import { createLog } from "../log/createLog";
 import { FunctionComponent } from "react";
+import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
+import { isRenderableAsString } from "./helpers/isRenderableAsString";
+import { ContentDisplay } from "./ContentDisplay";
+import { LogDisplay } from "./LogDisplay";
+import { IObjectDisplayProps } from "./interfaces/IObjectDisplayProps";
 
-export interface ITableDisplayProps {
-  obj: object;
-  level: number;
-  path: string[];
-}
-
-export const ObjectDisplay: FunctionComponent<ITableDisplayProps> = ({
+export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
   obj,
   level,
   path
@@ -19,19 +15,17 @@ export const ObjectDisplay: FunctionComponent<ITableDisplayProps> = ({
   return (
     <BaseTable baseTableCssClasses={"objectTable jsonTable"}>
       {Object.keys(obj || {}).map(key => {
-        const rowContent = (
-          <LogDisplay 
-            level={level + 1}
-            path={path}
-            logMessage={createLog(obj[key])}
-          />
-        );
+        const curElement = obj[key];
 
-        if (rowContent.props.content) {
+        if (isRenderableAsString(curElement)) {
           return (
-            <BaseRow key={key} headerType={HeaderType.Single}>
+            <BaseRow
+              key={key}
+              title={path.join(".")}
+              headerType={HeaderType.Single}
+            >
               {key}
-              {rowContent}
+              <ContentDisplay content={curElement} />
             </BaseRow>
           );
         } else {
@@ -44,7 +38,7 @@ export const ObjectDisplay: FunctionComponent<ITableDisplayProps> = ({
             >
               <div className={"subTable"}>
                 {key}
-                {rowContent}
+                <LogDisplay log={curElement} path={path.concat([key])} />
               </div>
             </BaseRow>
           );
@@ -52,4 +46,4 @@ export const ObjectDisplay: FunctionComponent<ITableDisplayProps> = ({
       })}
     </BaseTable>
   );
-}
+};

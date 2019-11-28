@@ -8,11 +8,11 @@ interface IContentDisplayProps {
 export const ContentDisplay: FunctionComponent<IContentDisplayProps> = ({
   content
 }) => {
-  if (content === " ") {
+  if (content === " " || !content) {
     return <>&nbsp;</>;
   }
 
-  if (content.indexOf("data:image") === 0) {
+  if (typeof content === "string" && content.indexOf("data:image") === 0) {
     return <img src={content} alt="dynamic image" />;
   }
 

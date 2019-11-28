@@ -2,8 +2,9 @@ import { AppAction, AppActionTypes } from "./AppAction";
 import * as React from "react";
 import { useImmerReducer } from "use-immer";
 import { logsAppReducer } from "./logsAppReducer";
-import { ILog } from "./components/log/ILog";
+import { ILog } from "./components/log/interfaces/ILog";
 import { FunctionComponent, useEffect } from "react";
+import { createLog } from "./actionGenerators/createLog";
 
 export interface IAppState {
   logs: ILog[];
@@ -40,21 +41,15 @@ export const LogsAppProvider: FunctionComponent<ILogsAppProviderProps> = ({
       const messages = evt.data.split("\n");
 
       for (let i = 0; i < messages.length; i++) {
-        const log = JSON.parse(messages[i]);
+        let log = messages[i];
 
         try {
-          log.data = JSON.parse(log.data);
+          log = JSON.parse(log);
         } catch (e) {
           //no-op
         }
 
-        dispatch({
-          type: AppActionTypes.Add,
-          data: {
-            logId: Date.now(),
-            log
-          }
-        });
+        dispatch(createLog(log));
       }
     };
 

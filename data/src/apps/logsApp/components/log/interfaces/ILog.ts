@@ -1,4 +1,4 @@
-import { LogStatus } from "./LogStatus";
+import { LogStatus } from "../LogStatus";
 
 export interface ILog {
   id: number;

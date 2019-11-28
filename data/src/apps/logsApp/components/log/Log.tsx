@@ -1,12 +1,11 @@
 import * as React from "react";
-import { LogDisplay } from "../table/LogDisplay";
-import { ILog } from "./ILog";
 import { FunctionComponent } from "react";
-
-export interface IMessageProps {
-  log: ILog;
-}
+import { LogStatus } from "./LogStatus";
+import { LogDisplay } from "../table/LogDisplay";
+import { IMessageProps } from "./interfaces/IMessageProps";
 
 export const Log: FunctionComponent<IMessageProps> = ({ log }) => (
-  <div key={log.id}><LogDisplay logMessage={log} /></div>
+  <div className={"logContainer"} key={log.id}>
+    {log.status === LogStatus.Shown ? <LogDisplay log={log.data} /> : ""}
+  </div>
 );

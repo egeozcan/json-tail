@@ -1,4 +1,4 @@
-import { ConnectedLogList } from "./components/logList/LogList";
+import { ConnectedLogList } from "./components/log/LogList";
 import { LogsAppProvider } from "./LogsAppProvider";
 import * as React from "react";
 import { FunctionComponent } from "react";
