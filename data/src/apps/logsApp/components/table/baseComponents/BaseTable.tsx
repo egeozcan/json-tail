@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
-import { StyledTable } from "./StyledTable";
+import { StyledTable } from "./styledComponents/StyledTable";
 
 export interface IBaseTableProps {
   baseTableCssClasses?: string;

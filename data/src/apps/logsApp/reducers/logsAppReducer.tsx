@@ -1,6 +1,7 @@
 import { Draft } from "immer";
-import { AppAction, AppActionTypes } from "./AppAction";
-import { IAppState, initialState } from "./LogsAppProvider";
+import { AppAction, AppActionTypes } from "../interfaces/AppAction";
+import { initialState } from "../LogsAppProvider";
+import { IAppState } from "../interfaces/IAppState";
 
 export function logsAppReducer(
   draft: Draft<IAppState>,
@@ -11,7 +12,11 @@ export function logsAppReducer(
       return initialState;
 
     case AppActionTypes.Add:
-      draft.logs.push(action.data.log);
+      draft.logs.push({
+        id: action.data.logId,
+        data: action.data.logData,
+        status: action.data.status
+      });
       return draft;
 
     case AppActionTypes.ChangeStatus:

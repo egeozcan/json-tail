@@ -1,4 +1,4 @@
-import { LogStatus } from "./components/log/LogStatus";
+import { LogStatus } from "../components/log/enums/LogStatus";
 
 export enum AppActionTypes {
   Reset,
@@ -16,7 +16,8 @@ export interface IAddAction {
   type: AppActionTypes.Add;
   data: {
     logId: number;
-    log: any;
+    logData: unknown;
+    status: LogStatus;
   };
 }
 

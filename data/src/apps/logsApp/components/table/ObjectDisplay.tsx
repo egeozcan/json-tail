@@ -15,7 +15,7 @@ export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
   return (
     <BaseTable baseTableCssClasses={"objectTable jsonTable"}>
       {Object.keys(obj || {}).map(key => {
-        const curElement = obj[key];
+        const curElement: any = (obj as any)[key];
 
         if (isRenderableAsString(curElement)) {
           return (

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
-import { LogStatus } from "./LogStatus";
+import { LogStatus } from "./enums/LogStatus";
 import { LogDisplay } from "../table/LogDisplay";
 import { IMessageProps } from "./interfaces/IMessageProps";
 

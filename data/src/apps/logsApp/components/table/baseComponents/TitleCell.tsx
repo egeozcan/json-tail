@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
 import { ICellProps } from "./interfaces/ICellProps";
-import { StyledTh } from "./StyledTh";
+import { StyledTh } from "./styledComponents/StyledTh";
 
 export const TitleCell: FunctionComponent<ICellProps> = props => (
   <StyledTh

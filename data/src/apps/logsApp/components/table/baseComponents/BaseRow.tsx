@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
-import { StyledTr } from "./StyledTr";
+import { StyledTr } from "./styledComponents/StyledTr";
 import { TitleCell } from "./TitleCell";
 import { Cell } from "./Cell";
 

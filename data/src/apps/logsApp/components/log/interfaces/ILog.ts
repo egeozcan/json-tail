@@ -1,7 +1,7 @@
-import { LogStatus } from "../LogStatus";
+import { LogStatus } from "../enums/LogStatus";
 
 export interface ILog {
   id: number;
-  data: any;
+  data: unknown;
   status: LogStatus;
 }

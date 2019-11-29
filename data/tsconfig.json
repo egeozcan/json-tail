@@ -5,9 +5,11 @@
     "sourceMap": true,
     "jsx": "react",
     "strictNullChecks": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "noImplicitAny": true
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "legacy"
   ]
 }
