@@ -18,5 +18,5 @@ export const ContentDisplay: FunctionComponent<IContentDisplayProps> = ({
     return <img src={content} alt="dynamic image" />;
   }
 
-  return <span title={title}>{content}</span>;
+  return <span title={title}>{String(content)}</span>;
 };

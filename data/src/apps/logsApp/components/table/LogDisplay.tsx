@@ -27,5 +27,6 @@ export const LogDisplay: FunctionComponent<ILogDisplayProps> = ({
     return <ObjectDisplay obj={log} level={level} path={path} />;
   }
 
+  //fingers crossed at this point
   return <ContentDisplay title={path.join(".")} content={String(log)} />;
 };
