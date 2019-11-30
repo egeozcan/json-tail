@@ -10,14 +10,8 @@ import { ILog } from "./components/log/interfaces/ILog";
 
 export const initialState: IAppState = {
   logs: [],
-  titleSelector: (log: ILog) => {
-    try {
-      return JSON.stringify(log.data).substr(0, 100) + "...";
-    } catch (e) {
-      console.log(e);
-      return "fail";
-    }
-  }
+  titleSelector: (log: ILog) => JSON.stringify(log.data),
+  filterPath: ""
 };
 
 export interface ILogsAppProviderProps {

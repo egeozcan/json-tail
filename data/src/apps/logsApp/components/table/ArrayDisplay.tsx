@@ -5,7 +5,12 @@ import { FunctionComponent } from "react";
 import { BaseTable } from "./baseComponents/BaseTable";
 import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
 import { ContentDisplay } from "./ContentDisplay";
-import { IArrayDisplayProps } from "./interfaces/IArrayDisplayProps";
+
+export interface IArrayDisplayProps {
+  arr: any[];
+  level: number;
+  path: string[];
+}
 
 export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
   arr,
@@ -27,7 +32,12 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
     return (
       <BaseTable>
         {arr.map((el, idx) => {
-          const currentPath = path.concat([`[${idx}]`]);
+          const currentPath = ([] as string[]).concat(path);
+          currentPath.splice(
+            path.length - 1,
+            1,
+            path[path.length - 1] + [`[${idx}]`]
+          );
           return (
             <BaseRow title={currentPath.join(".")} key={idx}>
               <LogDisplay log={el} level={level + 1} path={currentPath} />
@@ -51,14 +61,23 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
 
         return (
           <BaseRow title={path.join(".")} key={idx} cellCssClass={cssClass}>
-            {titles.map((title, i) => (
-              <LogDisplay
-                log={el[title]}
-                level={level + 1}
-                path={path.concat([`[${idx}]`, title])}
-                key={i}
-              />
-            ))}
+            {titles.map((title, i) => {
+              const currentPath = ([] as string[]).concat(path);
+              currentPath.splice(
+                path.length - 1,
+                1,
+                path[path.length - 1] + [`[${idx}]`],
+                title
+              );
+              return (
+                <LogDisplay
+                  log={el[title]}
+                  level={level + 1}
+                  path={currentPath}
+                  key={i}
+                />
+              );
+            })}
           </BaseRow>
         );
       })}

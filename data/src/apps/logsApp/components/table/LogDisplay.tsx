@@ -4,7 +4,12 @@ import * as React from "react";
 import { FunctionComponent } from "react";
 import { ContentDisplay } from "./ContentDisplay";
 import { isRenderableAsString } from "./helpers/isRenderableAsString";
-import { ILogDisplayProps } from "./interfaces/ILogDisplayProps";
+
+export interface ILogDisplayProps {
+  log: any;
+  level?: number;
+  path?: string[];
+}
 
 export const LogDisplay: FunctionComponent<ILogDisplayProps> = ({
   path = [],
@@ -17,10 +22,6 @@ export const LogDisplay: FunctionComponent<ILogDisplayProps> = ({
 
   if (Array.isArray(log)) {
     return <ArrayDisplay arr={log} level={level} path={path} />;
-  }
-
-  if (log instanceof Date) {
-    return <ContentDisplay content={log.toLocaleDateString()} />;
   }
 
   if (typeof log === "object" && log !== null) {

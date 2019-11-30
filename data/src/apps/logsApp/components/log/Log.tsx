@@ -5,6 +5,7 @@ import { LogDisplay } from "../table/LogDisplay";
 import { ILog } from "./interfaces/ILog";
 import { LogContainer } from "./styledComponents/LogContainer";
 import { LogToggleButton } from "./styledComponents/LogToggleButton";
+import { LogTitle } from "./styledComponents/LogTitle";
 
 export interface ILogProps {
   log: ILog;
@@ -29,7 +30,7 @@ export const Log: FunctionComponent<ILogProps> = ({
       {logIsShown ? (
         <LogDisplay log={log.data} />
       ) : titleSelector ? (
-        <span onClick={toggleState}>{titleSelector(log)}</span>
+        <LogTitle onClick={toggleState}>{titleSelector(log)}</LogTitle>
       ) : null}
     </LogContainer>
   );

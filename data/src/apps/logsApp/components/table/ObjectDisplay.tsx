@@ -5,7 +5,12 @@ import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
 import { isRenderableAsString } from "./helpers/isRenderableAsString";
 import { ContentDisplay } from "./ContentDisplay";
 import { LogDisplay } from "./LogDisplay";
-import { IObjectDisplayProps } from "./interfaces/IObjectDisplayProps";
+
+export interface IObjectDisplayProps {
+  obj: object;
+  level: number;
+  path: string[];
+}
 
 export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
   obj,

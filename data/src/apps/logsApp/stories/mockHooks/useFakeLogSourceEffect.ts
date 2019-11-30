@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createLog } from "../../actionCreators/createLog";
 import { AppAction } from "../../interfaces/IAppAction";
 
@@ -10,10 +10,14 @@ const fakeData = [
 
 export function useFakeLogSourceEffect(dispatch: React.Dispatch<AppAction>) {
   useEffect(() => {
+    let numLogs = 0;
     const faker = () => {
       const randWaitTime = 1000 + 2000 * Math.random();
       dispatch(createLog(fakeData[getRandomInt(0, fakeData.length)]));
-      timeout = setTimeout(faker, randWaitTime);
+      numLogs++;
+      if (numLogs < 10) {
+        timeout = setTimeout(faker, randWaitTime);
+      }
     };
     let timeout = setTimeout(faker, 100);
 
