@@ -1,7 +1,8 @@
 import { Draft } from "immer";
-import { AppAction, AppActionTypes } from "../interfaces/IAppAction";
+import { AppAction } from "../interfaces/IAppAction";
 import { initialState } from "../LogsAppProvider";
 import { IAppState } from "../interfaces/IAppState";
+import { AppActionTypes } from "../enums/AppActionTypes";
 
 export function logsAppReducer(
   draft: Draft<IAppState>,

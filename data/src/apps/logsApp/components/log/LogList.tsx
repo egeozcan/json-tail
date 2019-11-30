@@ -24,6 +24,7 @@ export const LogList: FunctionComponent<ILogListProps> = ({
         titleSelector={titleSelector}
         toggleState={() => toggleState(log.id, log.status)}
         log={log}
+        key={log.id}
       />
     ))}
   </div>

@@ -1,5 +1,6 @@
-import { AppActionTypes, IAddAction } from "../interfaces/IAppAction";
+import { IAddAction } from "../interfaces/IAppAction";
 import { LogStatus } from "../components/log/enums/LogStatus";
+import { AppActionTypes } from "../enums/AppActionTypes";
 
 export function createLog(
   data: unknown,
