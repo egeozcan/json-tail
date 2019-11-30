@@ -7,6 +7,7 @@ import { LogsAppDispatchContext } from "../../hooks/useLogsAppDispatchContext";
 import { LogsAppStateContext } from "../../hooks/useLogsAppStateContext";
 import { ILogsAppProviderProps, initialState } from "../../LogsAppProvider";
 import { useFakeLogSourceEffect } from "../mockHooks/useFakeLogSourceEffect";
+import { ILog } from "../../components/log/interfaces/ILog";
 
 export const LogsAppFakeProvider: FunctionComponent<ILogsAppProviderProps> = ({
   children

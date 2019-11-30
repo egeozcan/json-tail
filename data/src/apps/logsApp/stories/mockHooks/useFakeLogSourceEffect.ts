@@ -1,40 +1,18 @@
 import { useEffect } from "react";
 import { createLog } from "../../actionCreators/createLog";
-import { AppAction } from "../../interfaces/AppAction";
+import { AppAction } from "../../interfaces/IAppAction";
+
+const fakeData = [
+  require("../example-data/topping.json"),
+  require("../example-data/atlassian.json"),
+  require("../example-data/weird.json")
+];
 
 export function useFakeLogSourceEffect(dispatch: React.Dispatch<AppAction>) {
   useEffect(() => {
     const faker = () => {
       const randWaitTime = 1000 + 2000 * Math.random();
-      dispatch(
-        createLog({
-          potato: Math.random() * 1029358,
-          scotty: "doesn't know",
-          fiona: "says she's out shopping",
-          nested: {
-            stuff: {
-              should: {
-                not: {
-                  be: {
-                    a: {
-                      problem: [1, 2, 3]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          maLookAtMeImATable: [
-            { a: 1, b: 2, c: 3, d: 4 },
-            { a: 1, b: 2, c: 3, d: 5 },
-            { a: 1, b: 2, c: 3, d: 6 },
-            { a: 1, b: 2, c: 3, d: 7 },
-            { a: 1, b: 2, c: 3, d: 8 },
-            { a: 1, b: 2, c: 3, d: 9 },
-            { a: 1, b: 2, c: 3, d: 10 }
-          ]
-        })
-      );
+      dispatch(createLog(fakeData[getRandomInt(0, fakeData.length)]));
       timeout = setTimeout(faker, randWaitTime);
     };
     let timeout = setTimeout(faker, 100);
@@ -43,4 +21,10 @@ export function useFakeLogSourceEffect(dispatch: React.Dispatch<AppAction>) {
       clearTimeout(timeout);
     };
   }, [dispatch]);
+}
+
+function getRandomInt(min: number, max: number) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }

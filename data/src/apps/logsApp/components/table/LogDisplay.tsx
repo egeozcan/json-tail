@@ -12,7 +12,7 @@ export const LogDisplay: FunctionComponent<ILogDisplayProps> = ({
   log
 }) => {
   if (isRenderableAsString(log)) {
-    return <ContentDisplay content={log} />;
+    return <ContentDisplay title={path.join(".")} content={log} />;
   }
 
   if (Array.isArray(log)) {
@@ -27,5 +27,5 @@ export const LogDisplay: FunctionComponent<ILogDisplayProps> = ({
     return <ObjectDisplay obj={log} level={level} path={path} />;
   }
 
-  return <ContentDisplay content={String(log)} />;
+  return <ContentDisplay title={path.join(".")} content={String(log)} />;
 };

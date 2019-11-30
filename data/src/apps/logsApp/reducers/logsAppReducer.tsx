@@ -1,5 +1,5 @@
 import { Draft } from "immer";
-import { AppAction, AppActionTypes } from "../interfaces/AppAction";
+import { AppAction, AppActionTypes } from "../interfaces/IAppAction";
 import { initialState } from "../LogsAppProvider";
 import { IAppState } from "../interfaces/IAppState";
 

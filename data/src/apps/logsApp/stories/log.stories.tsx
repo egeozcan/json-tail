@@ -5,13 +5,13 @@ import { LogStatus } from "../components/log/enums/LogStatus";
 import { FakeLogsApp } from "./FakeLogsApp";
 
 const toppingsLog = {
-  data: require("../components/log/example-data/topping.json"),
+  data: require("./example-data/topping.json"),
   id: Math.random(),
   status: LogStatus.Shown
 };
 
 const atlassianLog = {
-  data: require("../components/log/example-data/atlassian.json"),
+  data: require("./example-data/atlassian.json"),
   id: Math.random(),
   status: LogStatus.Shown
 };

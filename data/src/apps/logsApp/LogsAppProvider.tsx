@@ -6,9 +6,18 @@ import { IAppState } from "./interfaces/IAppState";
 import useWebSocketLogSourceEffect from "./hooks/useWebSocketLogSourceEffect";
 import { LogsAppDispatchContext } from "./hooks/useLogsAppDispatchContext";
 import { LogsAppStateContext } from "./hooks/useLogsAppStateContext";
+import { ILog } from "./components/log/interfaces/ILog";
 
 export const initialState: IAppState = {
-  logs: []
+  logs: [],
+  titleSelector: (log: ILog) => {
+    try {
+      return JSON.stringify(log.data).substr(0, 100) + "...";
+    } catch (e) {
+      console.log(e);
+      return "fail";
+    }
+  }
 };
 
 export interface ILogsAppProviderProps {

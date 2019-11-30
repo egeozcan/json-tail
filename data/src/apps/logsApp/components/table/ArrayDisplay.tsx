@@ -26,20 +26,23 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
   if (notSuitableForTableView) {
     return (
       <BaseTable>
-        {arr.map((el, idx) => (
-          <BaseRow key={idx}>
-            <LogDisplay log={el} level={level + 1} path={path} />
-          </BaseRow>
-        ))}
+        {arr.map((el, idx) => {
+          const currentPath = path.concat([`[${idx}]`]);
+          return (
+            <BaseRow title={currentPath.join(".")} key={idx}>
+              <LogDisplay log={el} level={level + 1} path={currentPath} />
+            </BaseRow>
+          );
+        })}
       </BaseTable>
     );
   }
 
   return (
     <BaseTable>
-      <BaseRow key={"title"} headerType={HeaderType.All}>
+      <BaseRow title={path.join(".")} key={"title"} headerType={HeaderType.All}>
         {titles.map(title => (
-          <ContentDisplay content={title} />
+          <ContentDisplay key={title} content={title} />
         ))}
       </BaseRow>
 
@@ -52,7 +55,7 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
               <LogDisplay
                 log={el[title]}
                 level={level + 1}
-                path={path}
+                path={path.concat([`[${idx}]`, title])}
                 key={i}
               />
             ))}

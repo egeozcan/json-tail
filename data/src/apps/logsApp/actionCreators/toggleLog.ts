@@ -1,17 +1,19 @@
-import { AppActionTypes, IChangeStatusAction } from "../interfaces/AppAction";
+import { AppActionTypes, IChangeStatusAction } from "../interfaces/IAppAction";
 import { LogStatus } from "../components/log/enums/LogStatus";
 import { ILog } from "../components/log/interfaces/ILog";
 
 export function toggleLogStatusActionCreator(
   id: number,
-  log: ILog
+  currentStatus: LogStatus
 ): IChangeStatusAction {
   return {
     type: AppActionTypes.ChangeStatus,
     data: {
       logId: id || +new Date(),
       status:
-        log.status === LogStatus.Shown ? LogStatus.Minimized : LogStatus.Shown
+        currentStatus === LogStatus.Shown
+          ? LogStatus.Minimized
+          : LogStatus.Shown
     }
   };
 }

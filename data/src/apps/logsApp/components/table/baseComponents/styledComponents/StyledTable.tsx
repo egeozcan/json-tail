@@ -2,13 +2,14 @@ import styled from "styled-components";
 
 export const StyledTable = styled.table`
   border-spacing: 0;
-  width: 100%;
   border: 1px solid #a7a7a7;
   border-collapse: collapse;
   border-left-width: 0;
+  flex: 1;
 
   & .jsonTable {
     border-bottom-width: 0;
+    width: 100%;
   }
 
   &,
@@ -19,20 +20,6 @@ export const StyledTable = styled.table`
     margin: 0;
     padding: 0;
     vertical-align: text-top;
-  }
-
-  & th {
-    padding-bottom: 0;
-    background: #ececec;
-  }
-
-  & td {
-    padding-bottom: 0;
-    background: #fff;
-  }
-
-  & td.odd {
-    background: #fbfde5;
   }
 
   & tr:last-child > th,

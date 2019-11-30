@@ -5,5 +5,10 @@ export const StyledTr = styled.tr`
 
   &:hover {
     border-left-color: #615f5f;
+
+    > tr,
+    > td {
+      background: yellow;
+    }
   }
 `;

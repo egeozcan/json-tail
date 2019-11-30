@@ -21,8 +21,9 @@ export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
           return (
             <BaseRow
               key={key}
-              title={path.join(".")}
+              title={path.concat([key]).join(".")}
               headerType={HeaderType.Single}
+              cellCssClass={"simpleRow"}
             >
               {key}
               <ContentDisplay content={curElement} />

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { AppAction } from "../interfaces/AppAction";
+import { AppAction } from "../interfaces/IAppAction";
 import { useContext } from "react";
 
 type DispatchContextType = React.Dispatch<AppAction>;

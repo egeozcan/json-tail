@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { createLog } from "../actionCreators/createLog";
-import { AppAction } from "../interfaces/AppAction";
+import { AppAction } from "../interfaces/IAppAction";
 
 export default function useWebSocketLogSourceEffect(
   logWebSocketSourceUrl: string,

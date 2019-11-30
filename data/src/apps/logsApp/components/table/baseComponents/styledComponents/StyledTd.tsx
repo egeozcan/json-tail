@@ -5,4 +5,15 @@ export const StyledTd = styled.td`
   text-align: left;
   padding: 3px;
   font-weight: normal;
+  padding-bottom: 0;
+  background: #fff;
+
+  &.odd {
+    background: #fbfde5;
+  }
+
+  &.simpleRow {
+    width: 100%;
+    padding-left: 10px !important;
+  }
 `;
