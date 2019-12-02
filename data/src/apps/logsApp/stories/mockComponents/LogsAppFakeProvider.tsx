@@ -2,12 +2,11 @@ import * as React from "react";
 import { FunctionComponent } from "react";
 import { useImmerReducer } from "use-immer";
 import { logsAppReducer } from "../../reducers/logsAppReducer";
-import useWebSocketLogSourceEffect from "../../hooks/useWebSocketLogSourceEffect";
 import { LogsAppDispatchContext } from "../../hooks/useLogsAppDispatchContext";
 import { LogsAppStateContext } from "../../hooks/useLogsAppStateContext";
 import { ILogsAppProviderProps, initialState } from "../../LogsAppProvider";
 import { useFakeLogSourceEffect } from "../mockHooks/useFakeLogSourceEffect";
-import { ILog } from "../../components/log/interfaces/ILog";
+import { LogCreateForm } from "../../components/log/LogCreateForm";
 
 export const LogsAppFakeProvider: FunctionComponent<ILogsAppProviderProps> = ({
   children
@@ -18,6 +17,7 @@ export const LogsAppFakeProvider: FunctionComponent<ILogsAppProviderProps> = ({
 
   return (
     <LogsAppDispatchContext.Provider value={dispatch}>
+      <LogCreateForm />
       <LogsAppStateContext.Provider value={state}>
         {children}
       </LogsAppStateContext.Provider>

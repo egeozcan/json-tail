@@ -34,8 +34,16 @@ export interface IChangeStatusAction extends IAppAction {
   };
 }
 
+export interface ISetJsonPathAction extends IAppAction {
+  type: AppActionTypes.SetJsonPath;
+  data: {
+    path: string;
+  };
+}
+
 export type AppAction =
   | IChangeStatusAction
   | IRemoveAction
   | IAddAction
-  | IResetAction;
+  | IResetAction
+  | ISetJsonPathAction;
