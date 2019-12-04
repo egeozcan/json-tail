@@ -33,9 +33,10 @@ func main() {
 	log.Println("usePolling:", *usePolling)
 
 	clients := make([]*websocket.Conn, 0)
+	messages := make([]*message, 0)
 	broadcast := make(chan message)
 
-	http.HandleFunc("/tail", createClientHandler(&clients, broadcast))
+	http.HandleFunc("/tail", createClientHandler(&clients, &messages))
 	http.Handle("/", http.FileServer(assetFS()))
 
 	fileTail, err := tail.TailFile(*file, tail.Config{Follow: true, Poll: *usePolling})
@@ -44,7 +45,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	go handleMessages(&clients, broadcast)
+	go handleMessages(&clients, broadcast, &messages)
 	go handleNewLines(fileTail.Lines, broadcast)
 
 	err = http.ListenAndServe(":"+*port, nil)
@@ -53,7 +54,7 @@ func main() {
 	}
 }
 
-func createClientHandler(clients *[]*websocket.Conn, broadcast chan message) http.HandlerFunc {
+func createClientHandler(clients *[]*websocket.Conn, messages *[]*message) http.HandlerFunc {
 	var upgrader = websocket.Upgrader{
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024,
@@ -73,13 +74,19 @@ func createClientHandler(clients *[]*websocket.Conn, broadcast chan message) htt
 			return
 		}
 
+		for _, message := range *messages {
+			_ = ws.WriteJSON(message)
+		}
+
 		*clients = append(*clients, ws)
 	}
 }
 
-func handleMessages(clients *[]*websocket.Conn, broadcast chan message) {
+func handleMessages(clients *[]*websocket.Conn, broadcast chan message, messages *[]*message) {
 	for {
 		msg := <-broadcast
+
+		*messages = append(*messages, &msg)
 
 		for i, client := range *clients {
 			err := client.WriteJSON(msg)
