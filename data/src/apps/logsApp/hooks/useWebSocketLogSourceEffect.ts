@@ -10,7 +10,10 @@ export default function useWebSocketLogSourceEffect(
     const conn = new WebSocket(logWebSocketSourceUrl);
 
     conn.onmessage = function(evt) {
-      const messages = evt.data.split("\n");
+      const messages = (<string>evt.data)
+        .split("\n")
+        .map(x => x.trim())
+        .filter(x => x.length);
 
       for (let i = 0; i < messages.length; i++) {
         let log = messages[i];
