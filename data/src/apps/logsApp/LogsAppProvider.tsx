@@ -7,6 +7,7 @@ import useWebSocketLogSourceEffect from "./hooks/useWebSocketLogSourceEffect";
 import { LogsAppDispatchContext } from "./hooks/useLogsAppDispatchContext";
 import { LogsAppStateContext } from "./hooks/useLogsAppStateContext";
 import { ILog } from "./components/log/interfaces/ILog";
+import { resetLogs } from "./actionCreators/resetLogs";
 
 export const initialState: IAppState = {
   logs: [],
@@ -29,6 +30,11 @@ export const LogsAppProvider: FunctionComponent<ILogsAppProviderProps> = ({
 
   return (
     <LogsAppDispatchContext.Provider value={dispatch}>
+      <input
+        type={"button"}
+        onClick={() => dispatch(resetLogs())}
+        value={"reset"}
+      />
       <LogsAppStateContext.Provider value={state}>
         {children}
       </LogsAppStateContext.Provider>
