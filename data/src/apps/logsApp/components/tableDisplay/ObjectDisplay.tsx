@@ -4,12 +4,10 @@ import { FunctionComponent } from "react";
 import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
 import { isRenderableAsString } from "./helpers/isRenderableAsString";
 import { ContentDisplay } from "./ContentDisplay";
-import { LogDisplay } from "./LogDisplay";
+import { IBaseLogDisplayProps, LogDisplay } from "./LogDisplay";
 
-export interface IObjectDisplayProps {
+export interface IObjectDisplayProps extends IBaseLogDisplayProps {
   obj: object;
-  level: number;
-  path: string[];
 }
 
 export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
@@ -26,7 +24,7 @@ export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
           return (
             <BaseRow
               key={key}
-              title={path.concat([key]).join(".")}
+              title={(path || []).concat([key]).join(".")}
               headerType={HeaderType.Single}
               cellCssClass={"simpleRow"}
             >
@@ -44,7 +42,10 @@ export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
             >
               <div className={"subTable"}>
                 {key}
-                <LogDisplay log={curElement} path={path.concat([key])} />
+                <LogDisplay
+                  log={curElement}
+                  path={(path || []).concat([key])}
+                />
               </div>
             </BaseRow>
           );

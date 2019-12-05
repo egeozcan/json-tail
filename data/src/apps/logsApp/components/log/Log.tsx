@@ -1,11 +1,12 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
 import { LogStatus } from "./enums/LogStatus";
-import { LogDisplay } from "../table/LogDisplay";
+import { LogDisplay } from "../tableDisplay/LogDisplay";
 import { ILog } from "./interfaces/ILog";
 import { LogContainer } from "./styledComponents/LogContainer";
 import { LogToggleButton } from "./styledComponents/LogToggleButton";
 import { LogTitle } from "./styledComponents/LogTitle";
+import { LogCopyButton } from "./styledComponents/LogCopyButton";
 
 export interface ILogProps {
   log: ILog;
@@ -22,6 +23,7 @@ export const Log: FunctionComponent<ILogProps> = ({
 
   return (
     <LogContainer className={"logContainer"} key={log.id}>
+      <LogCopyButton getCopyString={() => JSON.stringify(log)} />
       {toggleState ? (
         <LogToggleButton onClick={toggleState}>
           [{logIsShown ? "-" : "+"}]

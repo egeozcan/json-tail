@@ -7,9 +7,9 @@ import {
 import { createLog } from "../../actionCreators/createLog";
 import { StyledInputWrapper } from "./styledComponents/StyledInputWrapper";
 
-export interface ILofFormProps {}
+export interface ILogFormProps {}
 
-export const LogCreateForm: FunctionComponent<ILofFormProps> = () => {
+export const LogCreateForm: FunctionComponent<ILogFormProps> = () => {
   const [text, setText] = useState("");
   const dispatch = useLogsAppDispatchContext();
 

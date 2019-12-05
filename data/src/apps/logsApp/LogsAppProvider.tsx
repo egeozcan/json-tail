@@ -30,11 +30,6 @@ export const LogsAppProvider: FunctionComponent<ILogsAppProviderProps> = ({
 
   return (
     <LogsAppDispatchContext.Provider value={dispatch}>
-      <input
-        type={"button"}
-        onClick={() => dispatch(resetLogs())}
-        value={"reset"}
-      />
       <LogsAppStateContext.Provider value={state}>
         {children}
       </LogsAppStateContext.Provider>

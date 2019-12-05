@@ -1,21 +1,19 @@
 import { isObjectWithGivenKeys } from "./helpers/isObjectWithGivenKeys";
-import { LogDisplay } from "./LogDisplay";
+import { IBaseLogDisplayProps, LogDisplay } from "./LogDisplay";
 import * as React from "react";
 import { FunctionComponent } from "react";
 import { BaseTable } from "./baseComponents/BaseTable";
 import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
 import { ContentDisplay } from "./ContentDisplay";
 
-export interface IArrayDisplayProps {
+export interface IArrayDisplayProps extends IBaseLogDisplayProps {
   arr: any[];
-  level: number;
-  path: string[];
 }
 
 export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
   arr,
-  level,
-  path
+  level = 1,
+  path = []
 }) => {
   if (arr.length === 0) {
     return <BaseTable />;

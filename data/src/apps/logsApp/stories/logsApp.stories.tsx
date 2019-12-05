@@ -16,7 +16,7 @@ const atlassianLog = {
   status: LogStatus.Shown
 };
 
-storiesOf("Log Message", module)
+storiesOf("Logs App", module)
   .add("Topping", () => <Log log={toppingsLog} />)
   .add("Atlassian", () => <Log log={atlassianLog} />)
-  .add("InfiniteLogs", () => <FakeLogsApp logWebSocketSourceUrl={"foo"} />);
+  .add("Simulation", () => <FakeLogsApp logWebSocketSourceUrl={"foo"} />);

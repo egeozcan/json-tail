@@ -8,6 +8,8 @@ export default function useWebSocketLogSourceEffect(
 ) {
   useEffect(() => {
     const conn = new WebSocket(logWebSocketSourceUrl);
+    let keepAlive = true;
+    let aliveTimer: number | null = null;
 
     conn.onmessage = function(evt) {
       const messages = (<string>evt.data)
@@ -23,10 +25,9 @@ export default function useWebSocketLogSourceEffect(
         try {
           const parsedLog = JSON.parse(log);
           parsedLog.data = JSON.parse(parsedLog.data);
-          dispatch(createLog(parsedLog));
-          return;
-        } catch (e) {
-          //no-op
+          return dispatch(createLog(parsedLog));
+        } catch {
+          //no-op. todo: try parsing as other formats perhaps?
         }
 
         dispatch(createLog(log));
@@ -35,6 +36,10 @@ export default function useWebSocketLogSourceEffect(
 
     return () => {
       conn.close();
+
+      if (aliveTimer !== null) {
+        clearTimeout(aliveTimer);
+      }
     };
   }, [dispatch, logWebSocketSourceUrl]);
 }

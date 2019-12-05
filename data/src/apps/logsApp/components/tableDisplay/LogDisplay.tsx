@@ -5,10 +5,13 @@ import { FunctionComponent } from "react";
 import { ContentDisplay } from "./ContentDisplay";
 import { isRenderableAsString } from "./helpers/isRenderableAsString";
 
-export interface ILogDisplayProps {
-  log: any;
+export interface IBaseLogDisplayProps {
   level?: number;
   path?: string[];
+}
+
+export interface ILogDisplayProps extends IBaseLogDisplayProps {
+  log: any;
 }
 
 export const LogDisplay: FunctionComponent<ILogDisplayProps> = ({
@@ -31,3 +34,5 @@ export const LogDisplay: FunctionComponent<ILogDisplayProps> = ({
   //fingers crossed at this point
   return <ContentDisplay title={path.join(".")} content={String(log)} />;
 };
+
+export const ConnectedLogDisplay: FunctionComponent = () => <></>;
