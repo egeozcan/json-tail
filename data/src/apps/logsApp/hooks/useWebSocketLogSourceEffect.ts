@@ -18,8 +18,13 @@ export default function useWebSocketLogSourceEffect(
       for (let i = 0; i < messages.length; i++) {
         let log = messages[i];
 
+        console.log(log);
+
         try {
-          log = JSON.parse(log);
+          const parsedLog = JSON.parse(log);
+          parsedLog.data = JSON.parse(parsedLog.data);
+          dispatch(createLog(parsedLog));
+          return;
         } catch (e) {
           //no-op
         }
