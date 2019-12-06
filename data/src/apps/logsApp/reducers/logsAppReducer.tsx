@@ -3,7 +3,8 @@ import { AppAction } from "../interfaces/IAppAction";
 import { initialState } from "../LogsAppProvider";
 import { IAppState } from "../interfaces/IAppState";
 import { AppActionTypes } from "../enums/AppActionTypes";
-import { query, parse } from "jsonpath";
+import { parse } from "jsonpath";
+import { ILog } from "../components/log/interfaces/ILog";
 
 export function logsAppReducer(
   draft: Draft<IAppState>,
@@ -14,11 +15,12 @@ export function logsAppReducer(
       return initialState;
 
     case AppActionTypes.Add:
-      draft.logs.push({
+      const log: ILog = {
         id: action.data.logId,
         data: action.data.logData,
         status: action.data.status
-      });
+      };
+      draft.logs.push(log);
       return draft;
 
     case AppActionTypes.ChangeStatus:
@@ -40,23 +42,18 @@ export function logsAppReducer(
       return draft;
 
     case AppActionTypes.SetJsonPath:
-      if (!action.data.path) {
-        draft.logs = draft.logs.map(log => {
-          log.filteredData = undefined;
-          return log;
-        });
+      const path = action.data.path;
+      if (!path) {
+        draft.pathSelector = undefined;
         return draft;
       }
       try {
-        parse(action.data.path);
+        parse(path);
       } catch {
+        draft.pathSelector = undefined;
         return draft;
       }
-      draft.logs = draft.logs.map(log => {
-        log.filteredData = query(log.data, action.data.path);
-        return log;
-      });
-
+      draft.pathSelector = path;
       return draft;
   }
 }

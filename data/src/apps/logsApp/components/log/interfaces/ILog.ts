@@ -4,5 +4,4 @@ export interface ILog {
   id: number;
   data: unknown;
   status: LogStatus;
-  filteredData?: unknown;
 }

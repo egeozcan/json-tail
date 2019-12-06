@@ -27,7 +27,11 @@ export const LogCreateForm: FunctionComponent<ILogFormProps> = () => {
   //StyledInputWrapper... lol... such laziness :)
   return (
     <StyledInputWrapper>
-      <textarea value={text} onChange={changeHandler} />
+      <textarea
+        placeholder={"Paste JSON Here"}
+        value={text}
+        onChange={changeHandler}
+      />
       <input type={"button"} value={"add log"} onClick={addLog} />
     </StyledInputWrapper>
   );

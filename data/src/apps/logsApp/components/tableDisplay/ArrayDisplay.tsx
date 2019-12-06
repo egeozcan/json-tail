@@ -5,6 +5,7 @@ import { FunctionComponent } from "react";
 import { BaseTable } from "./baseComponents/BaseTable";
 import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
 import { ContentDisplay } from "./ContentDisplay";
+import { addArrayIndexToLastElement } from "./helpers/addArrayIndexToLastElement";
 
 export interface IArrayDisplayProps extends IBaseLogDisplayProps {
   arr: any[];
@@ -30,12 +31,8 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
     return (
       <BaseTable>
         {arr.map((el, idx) => {
-          const currentPath = ([] as string[]).concat(path);
-          currentPath.splice(
-            path.length - 1,
-            1,
-            path[path.length - 1] + [`[${idx}]`]
-          );
+          const currentPath = addArrayIndexToLastElement(path, idx);
+
           return (
             <BaseRow title={currentPath.join(".")} key={idx}>
               <LogDisplay log={el} level={level + 1} path={currentPath} />
@@ -60,13 +57,7 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
         return (
           <BaseRow title={path.join(".")} key={idx} cellCssClass={cssClass}>
             {titles.map((title, i) => {
-              const currentPath = ([] as string[]).concat(path);
-              currentPath.splice(
-                path.length - 1,
-                1,
-                path[path.length - 1] + [`[${idx}]`],
-                title
-              );
+              const currentPath = addArrayIndexToLastElement(path, idx);
               return (
                 <LogDisplay
                   log={el[title]}

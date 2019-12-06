@@ -12,7 +12,7 @@ export function useFakeLogSourceEffect(dispatch: React.Dispatch<AppAction>) {
   useEffect(() => {
     let numLogs = 0;
     const faker = () => {
-      const randWaitTime = 1000 + 2000 * Math.random();
+      const randWaitTime = 100 + 200 * Math.random();
       dispatch(createLog(fakeData[getRandomInt(0, fakeData.length)]));
       numLogs++;
       if (numLogs < 10) {

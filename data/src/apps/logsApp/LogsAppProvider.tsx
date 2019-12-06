@@ -11,8 +11,8 @@ import { resetLogs } from "./actionCreators/resetLogs";
 
 export const initialState: IAppState = {
   logs: [],
-  titleSelector: (log: ILog) => JSON.stringify(log.data),
-  filterPath: ""
+  titleSelector: (log: ILog) => JSON.stringify(log),
+  pathSelector: ""
 };
 
 export interface ILogsAppProviderProps {

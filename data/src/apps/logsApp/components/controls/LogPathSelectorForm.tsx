@@ -6,7 +6,7 @@ import { AppActionTypes } from "../../enums/AppActionTypes";
 
 export interface ILofFormProps {}
 
-export const LogForm: FunctionComponent<ILofFormProps> = () => {
+export const LogPathSelectorForm: FunctionComponent<ILofFormProps> = () => {
   const [text, setText] = useState("");
   const dispatch = useLogsAppDispatchContext();
 
@@ -14,7 +14,8 @@ export const LogForm: FunctionComponent<ILofFormProps> = () => {
     setText(e.currentTarget.value);
   };
 
-  const setPath = () => {
+  const setPath = (e: React.FormEvent) => {
+    e.preventDefault();
     dispatch({
       type: AppActionTypes.SetJsonPath,
       data: {
@@ -25,8 +26,10 @@ export const LogForm: FunctionComponent<ILofFormProps> = () => {
 
   return (
     <StyledInputWrapper>
-      <input value={text} onChange={changeHandler} />
-      <input type={"button"} value={"set path"} onClick={setPath} />
+      <form onSubmit={setPath}>
+        <input value={text} onChange={changeHandler} />
+        <input type={"submit"} value={"set path"} onClick={setPath} />
+      </form>
     </StyledInputWrapper>
   );
 };

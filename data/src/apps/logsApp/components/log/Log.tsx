@@ -7,33 +7,52 @@ import { LogContainer } from "./styledComponents/LogContainer";
 import { LogToggleButton } from "./styledComponents/LogToggleButton";
 import { LogTitle } from "./styledComponents/LogTitle";
 import { LogCopyButton } from "./styledComponents/LogCopyButton";
+import { nodes } from "jsonpath";
 
 export interface ILogProps {
   log: ILog;
   toggleState?: () => void;
-  titleSelector?: (log: ILog) => string;
+  titleSelector?: (log: any) => string;
+  pathSelector?: string;
 }
 
 export const Log: FunctionComponent<ILogProps> = ({
   log,
   toggleState,
-  titleSelector
+  titleSelector = log => String(log.id),
+  pathSelector
 }) => {
   const logIsShown = log.status === LogStatus.Shown;
+  let data = log.data;
+  if (pathSelector) {
+    data = nodes(data, pathSelector);
+  }
+
+  if (
+    (Array.isArray(data) && data.length === 0) ||
+    typeof data === "undefined" ||
+    data === null
+  ) {
+    return <></>;
+  }
+
+  const toggleButton = toggleState ? (
+    <LogToggleButton onClick={toggleState}>
+      [{logIsShown ? "-" : "+"}]
+    </LogToggleButton>
+  ) : null;
+
+  const logElement = logIsShown ? (
+    <LogDisplay log={data} />
+  ) : (
+    <LogTitle onClick={toggleState}>{titleSelector(data)}</LogTitle>
+  );
 
   return (
     <LogContainer className={"logContainer"} key={log.id}>
-      <LogCopyButton getCopyString={() => JSON.stringify(log)} />
-      {toggleState ? (
-        <LogToggleButton onClick={toggleState}>
-          [{logIsShown ? "-" : "+"}]
-        </LogToggleButton>
-      ) : null}
-      {logIsShown ? (
-        <LogDisplay log={log.data} />
-      ) : titleSelector ? (
-        <LogTitle onClick={toggleState}>{titleSelector(log)}</LogTitle>
-      ) : null}
+      <LogCopyButton getCopyString={() => JSON.stringify(log.data)} />
+      {toggleButton}
+      {logElement}
     </LogContainer>
   );
 };

@@ -37,7 +37,7 @@ export interface IChangeStatusAction extends IAppAction {
 export interface ISetJsonPathAction extends IAppAction {
   type: AppActionTypes.SetJsonPath;
   data: {
-    path: string;
+    path?: string;
   };
 }
 
