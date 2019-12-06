@@ -28,14 +28,6 @@ export const Log: FunctionComponent<ILogProps> = ({
     data = nodes(data, pathSelector);
   }
 
-  if (
-    (Array.isArray(data) && data.length === 0) ||
-    typeof data === "undefined" ||
-    data === null
-  ) {
-    return <></>;
-  }
-
   const toggleButton = toggleState ? (
     <LogToggleButton onClick={toggleState}>
       [{logIsShown ? "-" : "+"}]
