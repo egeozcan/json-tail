@@ -24,12 +24,12 @@ export const LogList: FunctionComponent<ILogListProps> = ({
 }) => (
   <div className={"LogsContainer"}>
     {logs.map(log => (
-      <ErrorBoundary>
+      <ErrorBoundary key={log.id}>
         <Log
+          key={log.id}
           titleSelector={titleSelector}
           toggleState={() => toggleState(log.id, log.status)}
           log={log}
-          key={log.id}
           pathSelector={pathSelector}
         />
       </ErrorBoundary>
