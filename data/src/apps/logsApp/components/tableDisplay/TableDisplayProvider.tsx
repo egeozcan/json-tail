@@ -9,7 +9,8 @@ import { LogDisplay } from "./LogDisplay";
 import { ILog } from "../log/interfaces/ILog";
 
 export const initialState: ITableDisplayState = {
-  hiddenPaths: []
+  hiddenPaths: [],
+  maxLevel: 50
 };
 
 export interface ITableDisplayProviderProps {
@@ -17,7 +18,6 @@ export interface ITableDisplayProviderProps {
 }
 
 export const TableDisplayProvider: FunctionComponent<ITableDisplayProviderProps> = ({
-  children,
   log
 }) => {
   const [state, dispatch] = useImmerReducer(tableDisplayReducer, initialState);
@@ -25,7 +25,7 @@ export const TableDisplayProvider: FunctionComponent<ITableDisplayProviderProps>
   return (
     <TableDisplayDispatchContext.Provider value={dispatch}>
       <TableDisplayStateContext.Provider value={state}>
-        <LogDisplay log={log} />
+        <LogDisplay log={log} path={[]} />
       </TableDisplayStateContext.Provider>
     </TableDisplayDispatchContext.Provider>
   );

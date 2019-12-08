@@ -35,7 +35,7 @@ export const Log: FunctionComponent<ILogProps> = ({
   ) : null;
 
   const logElement = logIsShown ? (
-    <LogDisplay log={data} />
+    <LogDisplay log={data} path={[]} />
   ) : (
     <LogTitle onClick={toggleState}>{titleSelector(data)}</LogTitle>
   );

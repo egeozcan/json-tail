@@ -4,21 +4,33 @@ import * as React from "react";
 import { FunctionComponent } from "react";
 import { ContentDisplay } from "./ContentDisplay";
 import { isRenderableAsString } from "./helpers/isRenderableAsString";
+import { ITableDisplayState } from "./interfaces/ITableDisplayState";
+import { arraysAreSame } from "./helpers/arraysAreSame";
 
 export interface IBaseLogDisplayProps {
   level?: number;
-  path?: string[];
+  path: string[];
 }
 
 export interface ILogDisplayProps extends IBaseLogDisplayProps {
   log: any;
 }
 
-export const LogDisplay: FunctionComponent<ILogDisplayProps> = ({
+export const LogDisplay: FunctionComponent<ILogDisplayProps &
+  Partial<ITableDisplayState>> = ({
   path = [],
   level = 0,
-  log
+  log,
+  hiddenPaths,
+  maxLevel
 }) => {
+  if (
+    hiddenPaths &&
+    hiddenPaths.find(hiddenPath => arraysAreSame(path, hiddenPath))
+  ) {
+    return <></>;
+  }
+
   if (isRenderableAsString(log)) {
     return <ContentDisplay title={path.join(".")} content={log} />;
   }
@@ -35,4 +47,8 @@ export const LogDisplay: FunctionComponent<ILogDisplayProps> = ({
   return <ContentDisplay title={path.join(".")} content={String(log)} />;
 };
 
-export const ConnectedLogDisplay: FunctionComponent = () => <></>;
+export const ConnectedLogDisplay: FunctionComponent<ILogDisplayProps> = ({
+  level,
+  log,
+  path
+}) => <></>;
