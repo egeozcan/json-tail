@@ -3,7 +3,7 @@ import { Draft } from "immer";
 import { ITableDisplayAction } from "../interfaces/ITableDisplayAction";
 import { TableDisplayActionTypes } from "../enums/TableDisplayActionTypes";
 
-export function TableDisplayReducer(
+export function tableDisplayReducer(
   draft: Draft<ITableDisplayState>,
   action: ITableDisplayAction
 ): ITableDisplayState {
