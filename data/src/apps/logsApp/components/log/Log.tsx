@@ -25,7 +25,7 @@ export const Log: FunctionComponent<ILogProps> = ({
   const logIsShown = log.status === LogStatus.Shown;
   let data = log.data;
   if (pathSelector) {
-    data = nodes(data, pathSelector);
+    data = nodes(data || {}, pathSelector);
   }
 
   const toggleButton = toggleState ? (

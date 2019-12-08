@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledTr = styled.tr`
+export const StyledSubTableContainer = styled.div`
   border-left: 1px solid #a7a7a7;
 
   &:hover {

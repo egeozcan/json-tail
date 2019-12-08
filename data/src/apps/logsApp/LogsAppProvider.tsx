@@ -6,12 +6,10 @@ import { IAppState } from "./interfaces/IAppState";
 import useWebSocketLogSourceEffect from "./hooks/useWebSocketLogSourceEffect";
 import { LogsAppDispatchContext } from "./hooks/useLogsAppDispatchContext";
 import { LogsAppStateContext } from "./hooks/useLogsAppStateContext";
-import { ILog } from "./components/log/interfaces/ILog";
-import { resetLogs } from "./actionCreators/resetLogs";
 
 export const initialState: IAppState = {
   logs: [],
-  titleSelector: (log: ILog) => JSON.stringify(log),
+  titleSelector: (log: any) => JSON.stringify(log),
   pathSelector: ""
 };
 
