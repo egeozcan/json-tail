@@ -5,27 +5,33 @@ import { tableDisplayReducer } from "./reducers/tableDisplayReducer";
 import { TableDisplayDispatchContext } from "./hooks/useTableDisplayDispatchContext";
 import { TableDisplayStateContext } from "./hooks/useTableDisplayStateContext";
 import { ITableDisplayState } from "./interfaces/ITableDisplayState";
-import { LogDisplay } from "./LogDisplay";
 import { ILog } from "../log/interfaces/ILog";
 
-export const initialState: ITableDisplayState = {
-  hiddenPaths: [],
-  maxLevel: 50
-};
+export function getInitialState(log: ILog): ITableDisplayState {
+  return {
+    hiddenPaths: [],
+    maxLevel: 50,
+    log
+  };
+}
 
 export interface ITableDisplayProviderProps {
   log: ILog;
 }
 
 export const TableDisplayProvider: FunctionComponent<ITableDisplayProviderProps> = ({
-  log
+  log,
+  children
 }) => {
-  const [state, dispatch] = useImmerReducer(tableDisplayReducer, initialState);
+  const [state, dispatch] = useImmerReducer(
+    tableDisplayReducer,
+    getInitialState(log)
+  );
 
   return (
     <TableDisplayDispatchContext.Provider value={dispatch}>
       <TableDisplayStateContext.Provider value={state}>
-        <LogDisplay log={log} path={[]} />
+        {children}
       </TableDisplayStateContext.Provider>
     </TableDisplayDispatchContext.Provider>
   );

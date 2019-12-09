@@ -7,4 +7,5 @@ export function arraysAreSame<T>(arrayFist: T[], arraySecond: T[]) {
       return false;
     }
   }
+  return true;
 }

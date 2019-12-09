@@ -16,8 +16,8 @@ export function tableDisplayReducer(
       return draft;
 
     case TableDisplayActionTypes.ShowPath:
-      draft.hiddenPaths = paths.filter(path =>
-        arraysAreSame(path, action.data.path)
+      draft.hiddenPaths = paths.filter(
+        path => !arraysAreSame(path, action.data.path)
       );
       return draft;
   }

@@ -1,5 +1,5 @@
 import { isObjectWithGivenKeys } from "./helpers/isObjectWithGivenKeys";
-import { IBaseLogDisplayProps, LogDisplay } from "./LogDisplay";
+import { IBaseLogDisplayProps, TableDisplay } from "./TableDisplay";
 import * as React from "react";
 import { FunctionComponent } from "react";
 import { BaseTable } from "./baseComponents/BaseTable";
@@ -35,7 +35,7 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
 
           return (
             <BaseRow title={currentPath.join(".")} key={idx}>
-              <LogDisplay log={el} level={level + 1} path={currentPath} />
+              <TableDisplay logRec={el} level={level + 1} path={currentPath} />
             </BaseRow>
           );
         })}
@@ -59,8 +59,8 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
             {titles.map((title, i) => {
               const currentPath = addArrayIndexToLastElement(path, idx);
               return (
-                <LogDisplay
-                  log={el[title]}
+                <TableDisplay
+                  logRec={el[title]}
                   level={level + 1}
                   path={currentPath}
                   key={i}

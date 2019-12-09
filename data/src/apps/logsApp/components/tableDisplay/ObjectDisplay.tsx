@@ -4,7 +4,7 @@ import { FunctionComponent } from "react";
 import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
 import { isRenderableAsString } from "./helpers/isRenderableAsString";
 import { ContentDisplay } from "./ContentDisplay";
-import { IBaseLogDisplayProps, LogDisplay } from "./LogDisplay";
+import { IBaseLogDisplayProps, TableDisplay } from "./TableDisplay";
 
 export interface IObjectDisplayProps extends IBaseLogDisplayProps {
   obj: object;
@@ -12,7 +12,7 @@ export interface IObjectDisplayProps extends IBaseLogDisplayProps {
 
 export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
   obj,
-  level,
+  level = 0,
   path
 }) => {
   return (
@@ -42,9 +42,10 @@ export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
             >
               <div className={"subTable"}>
                 {key}
-                <LogDisplay
-                  log={curElement}
+                <TableDisplay
+                  logRec={curElement}
                   path={(path || []).concat([key])}
+                  level={level + 1}
                 />
               </div>
             </BaseRow>

@@ -1,8 +1,10 @@
 import * as React from "react";
-import { initialState } from "../TableDisplayProvider";
 import { useContext } from "react";
+import { ITableDisplayState } from "../interfaces/ITableDisplayState";
 
-export const TableDisplayStateContext = React.createContext(initialState);
+export const TableDisplayStateContext = React.createContext(
+  {} as ITableDisplayState
+);
 
 export const useTableDisplayStateContext = () => {
   return useContext(TableDisplayStateContext);

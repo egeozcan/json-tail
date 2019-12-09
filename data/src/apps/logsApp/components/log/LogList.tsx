@@ -5,7 +5,7 @@ import { useLogsAppStateContext } from "../../hooks/useLogsAppStateContext";
 import { useLogsAppDispatchContext } from "../../hooks/useLogsAppDispatchContext";
 import { ILog } from "./interfaces/ILog";
 import { LogStatus } from "./enums/LogStatus";
-import { toggleLogStatusActionCreator } from "../../actionCreators/toggleLog";
+import { toggleLog } from "../../actionCreators/toggleLog";
 import { parse } from "jsonpath";
 import { ErrorBoundary } from "./LogErrorBoundary";
 
@@ -41,7 +41,7 @@ export const ConnectedLogList: FunctionComponent = () => {
   const appState = useLogsAppStateContext();
   const dispatch = useLogsAppDispatchContext();
   const toggleState = (id: number, status: LogStatus) =>
-    dispatch(toggleLogStatusActionCreator(id, status));
+    dispatch(toggleLog(id, status));
 
   let pathSelector: string | undefined;
 

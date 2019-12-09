@@ -1,13 +1,14 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
 import { LogStatus } from "./enums/LogStatus";
-import { LogDisplay } from "../tableDisplay/LogDisplay";
+import { TableDisplay } from "../tableDisplay/TableDisplay";
 import { ILog } from "./interfaces/ILog";
 import { LogContainer } from "./styledComponents/LogContainer";
 import { LogToggleButton } from "./styledComponents/LogToggleButton";
 import { LogTitle } from "./styledComponents/LogTitle";
 import { LogCopyButton } from "./styledComponents/LogCopyButton";
 import { nodes } from "jsonpath";
+import { TableDisplayProvider } from "../tableDisplay/TableDisplayProvider";
 
 export interface ILogProps {
   log: ILog;
@@ -35,7 +36,9 @@ export const Log: FunctionComponent<ILogProps> = ({
   ) : null;
 
   const logElement = logIsShown ? (
-    <LogDisplay log={data} path={[]} />
+    <TableDisplayProvider log={log}>
+      <TableDisplay level={0} path={[]} />
+    </TableDisplayProvider>
   ) : (
     <LogTitle onClick={toggleState}>{titleSelector(data)}</LogTitle>
   );
