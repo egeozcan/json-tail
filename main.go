@@ -32,7 +32,7 @@ func main() {
 	log.Println("file:", *file)
 	log.Println("usePolling:", *usePolling)
 
-	clients := make([]*websocket.Conn, 0)
+	var clients SocketQueue
 	messages := make([]*message, 0)
 	broadcast := make(chan message)
 
@@ -54,7 +54,7 @@ func main() {
 	}
 }
 
-func createClientHandler(clients *[]*websocket.Conn, messages *[]*message) http.HandlerFunc {
+func createClientHandler(clients *SocketQueue, messages *[]*message) http.HandlerFunc {
 	var upgrader = websocket.Upgrader{
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024,
@@ -78,25 +78,24 @@ func createClientHandler(clients *[]*websocket.Conn, messages *[]*message) http.
 			_ = ws.WriteJSON(message)
 		}
 
-		*clients = append(*clients, ws)
+		clients.Add(ws)
 	}
 }
 
-func handleMessages(clients *[]*websocket.Conn, broadcast chan message, messages *[]*message) {
+func handleMessages(clients *SocketQueue, broadcast chan message, messages *[]*message) {
 	for {
 		msg := <-broadcast
 
 		*messages = append(*messages, &msg)
 
-		for i, client := range *clients {
+		for i, client := range clients.connections {
+			log.Printf("%s %s", client.LocalAddr().String(), i)
 			err := client.WriteJSON(msg)
 
 			if err != nil {
 				log.Printf("error: %v", err)
-				//ded clients are ded
 				_ = client.Close()
-				clientList := *clients
-				*clients = append(clientList[:i], clientList[i+1:]...)
+				go clients.Remove(client)
 			}
 		}
 	}
@@ -114,8 +113,8 @@ func handleNewLines(lines chan *tail.Line, broadcast chan message) {
 
 func newMessage(text string) message {
 	msg := message{}
-
 	msg.Text = text
 	msg.Date = time.Now()
+
 	return msg
 }
