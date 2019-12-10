@@ -9,6 +9,7 @@ import { useTableDisplayStateContext } from "./hooks/useTableDisplayStateContext
 import { useTableDisplayDispatchContext } from "./hooks/useTableDisplayDispatchContext";
 import { showSubTree } from "./actionCreators/showSubTree";
 import { collapseSubTree } from "./actionCreators/collapseSubTree";
+import { StyledCollapseRestoreButton } from "./baseComponents/styledComponents/StyledCollapseRestoreButton";
 
 export interface IBaseLogDisplayProps {
   level: number;
@@ -33,9 +34,9 @@ export const TableDisplay: FunctionComponent<IBaseLogDisplayProps> = ({
     hiddenPaths.find(hiddenPath => arraysAreSame(path, hiddenPath))
   ) {
     return (
-      <span className={"pathToggle"} onClick={() => showLevel(path)}>
+      <StyledCollapseRestoreButton onClick={() => showLevel(path)}>
         [+]
-      </span>
+      </StyledCollapseRestoreButton>
     );
   }
 
@@ -47,12 +48,17 @@ export const TableDisplay: FunctionComponent<IBaseLogDisplayProps> = ({
     return <ContentDisplay title={path.join(".")} content={log} />;
   }
 
+  const collapseButton =
+    path.length > 0 ? (
+      <StyledCollapseRestoreButton onClick={() => hideLevel(path)}>
+        [-]
+      </StyledCollapseRestoreButton>
+    ) : null;
+
   if (Array.isArray(log)) {
     return (
       <>
-        <span className={"pathToggle"} onClick={() => hideLevel(path)}>
-          [-]
-        </span>
+        {collapseButton}
         <ArrayDisplay arr={log} level={level} path={path} />
       </>
     );
@@ -61,9 +67,7 @@ export const TableDisplay: FunctionComponent<IBaseLogDisplayProps> = ({
   if (typeof log === "object" && log !== null) {
     return (
       <>
-        <span className={"pathToggle"} onClick={() => hideLevel(path)}>
-          [-]
-        </span>
+        {collapseButton}
         <ObjectDisplay obj={log} level={level} path={path} />
       </>
     );

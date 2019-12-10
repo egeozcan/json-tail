@@ -58,6 +58,7 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
           <BaseRow title={path.join(".")} key={idx} cellCssClass={cssClass}>
             {titles.map((title, i) => {
               const currentPath = addArrayIndexToLastElement(path, idx);
+              currentPath.push(title);
               return (
                 <TableDisplay
                   logRec={el[title]}
