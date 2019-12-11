@@ -1,7 +1,7 @@
 import { ObjectDisplay } from "./ObjectDisplay";
 import { ArrayDisplay } from "./ArrayDisplay";
 import * as React from "react";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useCallback } from "react";
 import { ContentDisplay } from "./ContentDisplay";
 import { isRenderableAsString } from "./helpers/isRenderableAsString";
 import { arraysAreSame } from "./helpers/arraysAreSame";
@@ -25,8 +25,15 @@ export const TableDisplay: FunctionComponent<IBaseLogDisplayProps> = ({
   const state = useTableDisplayStateContext();
   const dispatch = useTableDisplayDispatchContext();
   const { log: originalLog, maxLevel, hiddenPaths } = state;
-  const showLevel = (path: string[]) => dispatch(showSubTree(path));
-  const hideLevel = (path: string[]) => dispatch(collapseSubTree(path));
+  const showLevel = useCallback(
+    (path: string[]) => dispatch(showSubTree(path)),
+    [dispatch, path]
+  );
+  const hideLevel = useCallback(
+    (path: string[]) => dispatch(collapseSubTree(path)),
+    [dispatch, path]
+  );
+  const hide = useCallback(() => hideLevel(path), [path]);
   const log = logRec || originalLog;
 
   if (
@@ -50,7 +57,7 @@ export const TableDisplay: FunctionComponent<IBaseLogDisplayProps> = ({
 
   const collapseButton =
     path.length > 0 ? (
-      <StyledCollapseRestoreButton onClick={() => hideLevel(path)}>
+      <StyledCollapseRestoreButton onClick={hide}>
         [-]
       </StyledCollapseRestoreButton>
     ) : null;
