@@ -10,7 +10,7 @@ import { ILog } from "../log/interfaces/ILog";
 export function getInitialState(log: ILog): ITableDisplayState {
   return {
     hiddenPaths: [],
-    maxLevel: 6,
+    maxLevel: 0,
     log
   };
 }

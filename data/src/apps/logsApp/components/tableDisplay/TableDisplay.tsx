@@ -32,7 +32,7 @@ export const TableDisplay: FunctionComponent<IBaseLogDisplayProps> = ({
     [dispatch, path]
   );
   const hide = useCallback(() => hideLevel(path), [path]);
-  const log = logRec || originalLog;
+  const log = typeof(logRec) === "undefined" && path.length === 0 ? originalLog : logRec;
 
   if (maxLevel !== 0 && path.length >= maxLevel) {
     return <span style={{ background: "red", display: "block" }}>HALT</span>;
