@@ -1,11 +1,15 @@
 import styled from "styled-components";
 
 export const StyledInputWrapper = styled.div`
-  display: flex;
-  align-items: flex-start;
-  box-sizing: border-box;
+  &,
+  & > form {
+    display: flex;
+    align-items: flex-start;
+    box-sizing: border-box;
+  }
 
-  & > * {
+  & > *,
+  & > form > * {
     flex: 1;
     margin: 0 4px 4px 0;
     box-sizing: border-box;

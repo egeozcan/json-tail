@@ -12,6 +12,7 @@ import { collapseSubTree } from "./actionCreators/collapseSubTree";
 import { StyledCollapseRestoreButton } from "./baseComponents/styledComponents/StyledCollapseRestoreButton";
 
 export interface IBaseLogDisplayProps {
+  //this is here because it will be recursively passed to itself
   path: string[];
   logRec?: unknown;
 }
@@ -32,7 +33,8 @@ export const TableDisplay: FunctionComponent<IBaseLogDisplayProps> = ({
     [dispatch, path]
   );
   const hide = useCallback(() => hideLevel(path), [path]);
-  const log = typeof(logRec) === "undefined" && path.length === 0 ? originalLog : logRec;
+  const log =
+    typeof logRec === "undefined" && path.length === 0 ? originalLog : logRec;
 
   if (maxLevel !== 0 && path.length >= maxLevel) {
     return <span style={{ background: "red", display: "block" }}>HALT</span>;

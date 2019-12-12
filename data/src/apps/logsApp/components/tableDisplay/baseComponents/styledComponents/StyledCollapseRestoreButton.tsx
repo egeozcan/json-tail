@@ -14,4 +14,8 @@ export const StyledCollapseRestoreButton = styled.span`
     cursor: pointer;
     user-select: none;
   }
+
+  & + * {
+    width: calc(100% - 22px) !important;
+  }
 `;

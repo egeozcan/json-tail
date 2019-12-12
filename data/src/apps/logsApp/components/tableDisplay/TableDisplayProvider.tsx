@@ -27,7 +27,6 @@ export const TableDisplayProvider: FunctionComponent<ITableDisplayProviderProps>
     tableDisplayReducer,
     getInitialState(log)
   );
-  debugger;
 
   return (
     <TableDisplayDispatchContext.Provider value={dispatch}>
