@@ -13,7 +13,6 @@ export interface IArrayDisplayProps extends IBaseLogDisplayProps {
 
 export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
   arr,
-  level = 1,
   path = []
 }) => {
   if (arr.length === 0) {
@@ -35,7 +34,7 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
 
           return (
             <BaseRow title={currentPath.join(".")} key={idx}>
-              <TableDisplay logRec={el} level={level + 1} path={currentPath} />
+              <TableDisplay logRec={el} path={currentPath} />
             </BaseRow>
           );
         })}
@@ -60,12 +59,7 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
               const currentPath = addArrayIndexToLastElement(path, idx);
               currentPath.push(title);
               return (
-                <TableDisplay
-                  logRec={el[title]}
-                  level={level + 1}
-                  path={currentPath}
-                  key={i}
-                />
+                <TableDisplay logRec={el[title]} path={currentPath} key={i} />
               );
             })}
           </BaseRow>

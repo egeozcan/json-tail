@@ -12,14 +12,12 @@ import { collapseSubTree } from "./actionCreators/collapseSubTree";
 import { StyledCollapseRestoreButton } from "./baseComponents/styledComponents/StyledCollapseRestoreButton";
 
 export interface IBaseLogDisplayProps {
-  level: number;
   path: string[];
   logRec?: unknown;
 }
 
 export const TableDisplay: FunctionComponent<IBaseLogDisplayProps> = ({
   path = [],
-  level = 0,
   logRec
 }) => {
   const state = useTableDisplayStateContext();
@@ -36,6 +34,10 @@ export const TableDisplay: FunctionComponent<IBaseLogDisplayProps> = ({
   const hide = useCallback(() => hideLevel(path), [path]);
   const log = logRec || originalLog;
 
+  if (maxLevel !== 0 && path.length >= maxLevel) {
+    return <span style={{ background: "red", display: "block" }}>HALT</span>;
+  }
+
   if (
     hiddenPaths &&
     hiddenPaths.find(hiddenPath => arraysAreSame(path, hiddenPath))
@@ -45,10 +47,6 @@ export const TableDisplay: FunctionComponent<IBaseLogDisplayProps> = ({
         [+]
       </StyledCollapseRestoreButton>
     );
-  }
-
-  if (maxLevel && level >= maxLevel) {
-    return <></>;
   }
 
   if (isRenderableAsString(log)) {
@@ -66,7 +64,7 @@ export const TableDisplay: FunctionComponent<IBaseLogDisplayProps> = ({
     return (
       <>
         {collapseButton}
-        <ArrayDisplay arr={log} level={level} path={path} />
+        <ArrayDisplay arr={log} path={path} />
       </>
     );
   }
@@ -75,7 +73,7 @@ export const TableDisplay: FunctionComponent<IBaseLogDisplayProps> = ({
     return (
       <>
         {collapseButton}
-        <ObjectDisplay obj={log} level={level} path={path} />
+        <ObjectDisplay obj={log} path={path} />
       </>
     );
   }

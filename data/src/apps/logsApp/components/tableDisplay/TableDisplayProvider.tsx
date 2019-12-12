@@ -10,7 +10,7 @@ import { ILog } from "../log/interfaces/ILog";
 export function getInitialState(log: ILog): ITableDisplayState {
   return {
     hiddenPaths: [],
-    maxLevel: 50,
+    maxLevel: 6,
     log
   };
 }
@@ -27,6 +27,7 @@ export const TableDisplayProvider: FunctionComponent<ITableDisplayProviderProps>
     tableDisplayReducer,
     getInitialState(log)
   );
+  debugger;
 
   return (
     <TableDisplayDispatchContext.Provider value={dispatch}>

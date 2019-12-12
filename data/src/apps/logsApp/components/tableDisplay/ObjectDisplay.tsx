@@ -12,7 +12,6 @@ export interface IObjectDisplayProps extends IBaseLogDisplayProps {
 
 export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
   obj,
-  level = 0,
   path
 }) => {
   return (
@@ -45,7 +44,6 @@ export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
                 <TableDisplay
                   logRec={curElement}
                   path={(path || []).concat([key])}
-                  level={level + 1}
                 />
               </div>
             </BaseRow>
