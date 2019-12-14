@@ -34,7 +34,7 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
 
           return (
             <BaseRow title={currentPath.join(".")} key={idx}>
-              <TableDisplay logRec={el} path={currentPath} />
+              <TableDisplay log={el} path={currentPath} />
             </BaseRow>
           );
         })}
@@ -59,7 +59,7 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
               const currentPath = addArrayIndexToLastElement(path, idx);
               currentPath.push(title);
               return (
-                <TableDisplay logRec={el[title]} path={currentPath} key={i} />
+                <TableDisplay log={el[title]} path={currentPath} key={i} />
               );
             })}
           </BaseRow>

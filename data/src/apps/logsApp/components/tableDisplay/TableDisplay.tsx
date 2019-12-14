@@ -9,21 +9,24 @@ import { useTableDisplayStateContext } from "./hooks/useTableDisplayStateContext
 import { useTableDisplayDispatchContext } from "./hooks/useTableDisplayDispatchContext";
 import { showSubTree } from "./actionCreators/showSubTree";
 import { collapseSubTree } from "./actionCreators/collapseSubTree";
-import { StyledCollapseRestoreButton } from "./baseComponents/styledComponents/StyledCollapseRestoreButton";
+import { StyledButtonWrapper } from "./baseComponents/styledComponents/StyledButtonWrapper";
 
 export interface IBaseLogDisplayProps {
   //this is here because it will be recursively passed to itself
   path: string[];
-  logRec?: unknown;
 }
 
-export const TableDisplay: FunctionComponent<IBaseLogDisplayProps> = ({
+export interface ITableDisplayProps extends IBaseLogDisplayProps {
+  log: unknown;
+}
+
+export const TableDisplay: FunctionComponent<ITableDisplayProps> = ({
   path = [],
-  logRec
+  log
 }) => {
   const state = useTableDisplayStateContext();
   const dispatch = useTableDisplayDispatchContext();
-  const { log: originalLog, maxLevel, hiddenPaths } = state;
+  const { maxLevel, hiddenPaths } = state;
   const showLevel = useCallback(
     (path: string[]) => dispatch(showSubTree(path)),
     [dispatch, path]
@@ -33,11 +36,13 @@ export const TableDisplay: FunctionComponent<IBaseLogDisplayProps> = ({
     [dispatch, path]
   );
   const hide = useCallback(() => hideLevel(path), [path]);
-  const log =
-    typeof logRec === "undefined" && path.length === 0 ? originalLog : logRec;
 
   if (maxLevel !== 0 && path.length >= maxLevel) {
-    return <span style={{ background: "red", display: "block" }}>HALT</span>;
+    return (
+      <span style={{ background: "red", display: "block", color: "white" }}>
+        MAX DEPTH
+      </span>
+    );
   }
 
   if (
@@ -45,9 +50,9 @@ export const TableDisplay: FunctionComponent<IBaseLogDisplayProps> = ({
     hiddenPaths.find(hiddenPath => arraysAreSame(path, hiddenPath))
   ) {
     return (
-      <StyledCollapseRestoreButton onClick={() => showLevel(path)}>
+      <StyledButtonWrapper onClick={() => showLevel(path)}>
         [+]
-      </StyledCollapseRestoreButton>
+      </StyledButtonWrapper>
     );
   }
 
@@ -57,9 +62,7 @@ export const TableDisplay: FunctionComponent<IBaseLogDisplayProps> = ({
 
   const collapseButton =
     path.length > 0 ? (
-      <StyledCollapseRestoreButton onClick={hide}>
-        [-]
-      </StyledCollapseRestoreButton>
+      <StyledButtonWrapper onClick={hide}>[-]</StyledButtonWrapper>
     ) : null;
 
   if (Array.isArray(log)) {

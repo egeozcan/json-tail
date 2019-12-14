@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 // language=LESS
-export const StyledCollapseRestoreButton = styled.span`
+export const StyledButtonWrapper = styled.span`
   & {
     float: left;
     display: block;
@@ -16,6 +16,6 @@ export const StyledCollapseRestoreButton = styled.span`
   }
 
   & + * {
-    width: calc(100% - 22px) !important;
+    width: calc(100% - 24px) !important;
   }
 `;

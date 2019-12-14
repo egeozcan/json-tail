@@ -42,7 +42,7 @@ export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
               <div className={"subTable"}>
                 {key}
                 <TableDisplay
-                  logRec={curElement}
+                  log={curElement}
                   path={(path || []).concat([key])}
                 />
               </div>
