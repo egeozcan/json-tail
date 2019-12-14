@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
 import { LogStatus } from "./enums/LogStatus";
-import { TableDisplay } from "../tableDisplay/TableDisplay";
+import { MemoizedTableDisplay } from "../tableDisplay/TableDisplay";
 import { ILog } from "./interfaces/ILog";
 import { LogContainer } from "./styledComponents/LogContainer";
 import { LogToggleButton } from "./styledComponents/LogToggleButton";
@@ -25,6 +25,7 @@ export const Log: FunctionComponent<ILogProps> = ({
 }) => {
   const logIsShown = log.status === LogStatus.Shown;
   let data = log.data;
+
   if (pathSelector) {
     data = nodes(data || {}, pathSelector);
   }
@@ -37,7 +38,7 @@ export const Log: FunctionComponent<ILogProps> = ({
 
   const logElement = logIsShown ? (
     <TableDisplayProvider>
-      <TableDisplay path={[]} log={data} />
+      <MemoizedTableDisplay path={[]} log={data} />
     </TableDisplayProvider>
   ) : (
     <LogTitle onClick={toggleState}>{titleSelector(data)}</LogTitle>

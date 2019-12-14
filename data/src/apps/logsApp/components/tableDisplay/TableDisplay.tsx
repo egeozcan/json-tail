@@ -86,3 +86,10 @@ export const TableDisplay: FunctionComponent<ITableDisplayProps> = ({
   //fingers crossed at this point
   return <ContentDisplay title={path.join(".")} content={String(log)} />;
 };
+
+export const MemoizedTableDisplay = React.memo(
+  TableDisplay,
+  (prevProps, nextProps) => {
+    return prevProps.log === nextProps.log;
+  }
+);

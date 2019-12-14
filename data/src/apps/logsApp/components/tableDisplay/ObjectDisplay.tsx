@@ -4,7 +4,7 @@ import { FunctionComponent } from "react";
 import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
 import { isRenderableAsString } from "./helpers/isRenderableAsString";
 import { ContentDisplay } from "./ContentDisplay";
-import { IBaseLogDisplayProps, TableDisplay } from "./TableDisplay";
+import { IBaseLogDisplayProps, MemoizedTableDisplay } from "./TableDisplay";
 
 export interface IObjectDisplayProps extends IBaseLogDisplayProps {
   obj: object;
@@ -41,7 +41,7 @@ export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
             >
               <div className={"subTable"}>
                 {key}
-                <TableDisplay
+                <MemoizedTableDisplay
                   log={curElement}
                   path={(path || []).concat([key])}
                 />
