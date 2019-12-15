@@ -1,7 +1,7 @@
 import { isObjectWithGivenKeys } from "./helpers/isObjectWithGivenKeys";
-import { IBaseLogDisplayProps, MemoizedTableDisplay } from "./TableDisplay";
+import { IBaseLogDisplayProps, TableDisplay } from "./TableDisplay";
 import * as React from "react";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useMemo } from "react";
 import { BaseTable } from "./baseComponents/BaseTable";
 import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
 import { ContentDisplay } from "./ContentDisplay";
@@ -26,49 +26,51 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
     !isObjectWithGivenKeys(firstRow) ||
     arr.some(el => !isObjectWithGivenKeys(el, titles));
 
-  if (notSuitableForTableView) {
+  return useMemo(() => {
+    if (notSuitableForTableView) {
+      return (
+        <BaseTable>
+          {arr.map((el, idx) => {
+            const currentPath = addArrayIndexToLastElement(path, idx);
+
+            return (
+              <BaseRow title={currentPath.join(".")} key={idx}>
+                <TableDisplay log={el} path={currentPath} />
+              </BaseRow>
+            );
+          })}
+        </BaseTable>
+      );
+    }
+
     return (
       <BaseTable>
+        <BaseRow
+          title={path.join(".")}
+          key={"title"}
+          headerType={HeaderType.All}
+        >
+          {titles.map(title => (
+            <ContentDisplay key={title} content={title} />
+          ))}
+        </BaseRow>
+
         {arr.map((el, idx) => {
-          const currentPath = addArrayIndexToLastElement(path, idx);
+          const cssClass = idx % 2 === 0 ? "even" : "odd";
 
           return (
-            <BaseRow title={currentPath.join(".")} key={idx}>
-              <MemoizedTableDisplay log={el} path={currentPath} />
+            <BaseRow title={path.join(".")} key={idx} cellCssClass={cssClass}>
+              {titles.map((title, i) => {
+                const currentPath = addArrayIndexToLastElement(path, idx);
+                currentPath.push(title);
+                return (
+                  <TableDisplay log={el[title]} path={currentPath} key={i} />
+                );
+              })}
             </BaseRow>
           );
         })}
       </BaseTable>
     );
-  }
-
-  return (
-    <BaseTable>
-      <BaseRow title={path.join(".")} key={"title"} headerType={HeaderType.All}>
-        {titles.map(title => (
-          <ContentDisplay key={title} content={title} />
-        ))}
-      </BaseRow>
-
-      {arr.map((el, idx) => {
-        const cssClass = idx % 2 === 0 ? "even" : "odd";
-
-        return (
-          <BaseRow title={path.join(".")} key={idx} cellCssClass={cssClass}>
-            {titles.map((title, i) => {
-              const currentPath = addArrayIndexToLastElement(path, idx);
-              currentPath.push(title);
-              return (
-                <MemoizedTableDisplay
-                  log={el[title]}
-                  path={currentPath}
-                  key={i}
-                />
-              );
-            })}
-          </BaseRow>
-        );
-      })}
-    </BaseTable>
-  );
+  }, [arr]);
 };

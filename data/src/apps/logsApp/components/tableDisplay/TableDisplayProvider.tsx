@@ -5,24 +5,31 @@ import { tableDisplayReducer } from "./reducers/tableDisplayReducer";
 import { TableDisplayDispatchContext } from "./hooks/useTableDisplayDispatchContext";
 import { TableDisplayStateContext } from "./hooks/useTableDisplayStateContext";
 import { ITableDisplayState } from "./interfaces/ITableDisplayState";
-import { ILog } from "../log/interfaces/ILog";
+import { TableDisplayActionTypes } from "./enums/TableDisplayActionTypes";
 
-export function getInitialState(): ITableDisplayState {
-  return {
-    hiddenPaths: [],
-    maxLevel: 0
-  };
+export const initialState: ITableDisplayState = {
+  hiddenPaths: [],
+  maxLevel: 0
+};
+
+export interface ITableDisplayProviderProps {
+  maxLevel: number;
 }
 
-export interface ITableDisplayProviderProps {}
-
 export const TableDisplayProvider: FunctionComponent<ITableDisplayProviderProps> = ({
-  children
+  children,
+  maxLevel
 }) => {
-  const [state, dispatch] = useImmerReducer(
-    tableDisplayReducer,
-    getInitialState()
-  );
+  const [state, dispatch] = useImmerReducer(tableDisplayReducer, initialState);
+
+  if (state.maxLevel !== maxLevel) {
+    dispatch({
+      type: TableDisplayActionTypes.SetMaxLevel,
+      data: {
+        level: maxLevel
+      }
+    });
+  }
 
   return (
     <TableDisplayDispatchContext.Provider value={dispatch}>

@@ -20,5 +20,9 @@ export function tableDisplayReducer(
         path => !arraysAreSame(path, action.data.path)
       );
       return draft;
+
+    case TableDisplayActionTypes.SetMaxLevel:
+      draft.maxLevel = action.data.level;
+      return draft;
   }
 }

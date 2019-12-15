@@ -4,4 +4,5 @@ export interface IAppState {
   logs: ILog[];
   titleSelector: (log: any) => string;
   pathSelector?: string;
+  maxLevel: number;
 }

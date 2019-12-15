@@ -3,8 +3,8 @@ import { FunctionComponent } from "react";
 import { ConnectedResetControl } from "./ResetControl";
 import { StyledInputWrapper } from "./styledComponents/StyledInputWrapper";
 import { LogCreateForm } from "./LogCreateForm";
-import { LogsAppDispatchContext } from "../../hooks/useLogsAppDispatchContext";
 import { LogPathSelectorForm } from "./LogPathSelectorForm";
+import { ConnectedMaxLevelControl } from "./MaxLevelControl";
 
 export const Controls: FunctionComponent = () => (
   <>
@@ -14,6 +14,7 @@ export const Controls: FunctionComponent = () => (
     <StyledInputWrapper>
       <LogCreateForm />
       <ConnectedResetControl />
+      <ConnectedMaxLevelControl />
     </StyledInputWrapper>
   </>
 );

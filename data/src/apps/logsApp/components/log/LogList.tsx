@@ -14,17 +14,20 @@ export interface ILogListProps {
   toggleState: (id: number, status: LogStatus) => void;
   titleSelector: (log: ILog) => string;
   pathSelector?: string;
+  maxLevel: number;
 }
 
 export const LogList: FunctionComponent<ILogListProps> = ({
   logs,
   toggleState,
   titleSelector,
-  pathSelector
+  pathSelector,
+  maxLevel
 }) => (
   <div className={"LogsContainer"}>
     {logs.map(log => (
       <Log
+        maxLevel={maxLevel}
         key={log.id}
         titleSelector={titleSelector}
         toggleState={() => toggleState(log.id, log.status)}
@@ -58,6 +61,7 @@ export const ConnectedLogList: FunctionComponent = () => {
       logs={appState.logs}
       toggleState={toggleState}
       pathSelector={pathSelector}
+      maxLevel={appState.maxLevel}
     />
   );
 };

@@ -3,5 +3,6 @@ export enum AppActionTypes {
   Add,
   Remove,
   ChangeStatus,
-  SetJsonPath
+  SetJsonPath,
+  ChangeMaxLevel
 }

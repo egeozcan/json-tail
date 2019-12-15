@@ -55,5 +55,9 @@ export function logsAppReducer(
       }
       draft.pathSelector = path;
       return draft;
+
+    case AppActionTypes.ChangeMaxLevel:
+      draft.maxLevel = action.data.level;
+      return draft;
   }
 }

@@ -1,7 +1,7 @@
 import { ObjectDisplay } from "./ObjectDisplay";
 import { ArrayDisplay } from "./ArrayDisplay";
 import * as React from "react";
-import { FunctionComponent, useCallback } from "react";
+import { FunctionComponent, useCallback, useMemo } from "react";
 import { ContentDisplay } from "./ContentDisplay";
 import { isRenderableAsString } from "./helpers/isRenderableAsString";
 import { arraysAreSame } from "./helpers/arraysAreSame";
@@ -45,6 +45,11 @@ export const TableDisplay: FunctionComponent<ITableDisplayProps> = ({
     );
   }
 
+  const collapseButton =
+    path.length > 0 ? (
+      <StyledButtonWrapper onClick={hide}>[-]</StyledButtonWrapper>
+    ) : null;
+
   if (
     hiddenPaths &&
     hiddenPaths.find(hiddenPath => arraysAreSame(path, hiddenPath))
@@ -59,11 +64,6 @@ export const TableDisplay: FunctionComponent<ITableDisplayProps> = ({
   if (isRenderableAsString(log)) {
     return <ContentDisplay title={path.join(".")} content={log} />;
   }
-
-  const collapseButton =
-    path.length > 0 ? (
-      <StyledButtonWrapper onClick={hide}>[-]</StyledButtonWrapper>
-    ) : null;
 
   if (Array.isArray(log)) {
     return (
@@ -86,10 +86,3 @@ export const TableDisplay: FunctionComponent<ITableDisplayProps> = ({
   //fingers crossed at this point
   return <ContentDisplay title={path.join(".")} content={String(log)} />;
 };
-
-export const MemoizedTableDisplay = React.memo(
-  TableDisplay,
-  (prevProps, nextProps) => {
-    return prevProps.log === nextProps.log;
-  }
-);

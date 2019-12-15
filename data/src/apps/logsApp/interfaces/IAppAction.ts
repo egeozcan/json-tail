@@ -41,9 +41,17 @@ export interface ISetJsonPathAction extends IAppAction {
   };
 }
 
+export interface IChangeLevelAction extends IAppAction {
+  type: AppActionTypes.ChangeMaxLevel;
+  data: {
+    level: number;
+  };
+}
+
 export type AppAction =
   | IChangeStatusAction
   | IRemoveAction
   | IAddAction
   | IResetAction
-  | ISetJsonPathAction;
+  | ISetJsonPathAction
+  | IChangeLevelAction;

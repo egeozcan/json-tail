@@ -10,6 +10,7 @@ export interface IHideAction extends IBaseTableDisplayAction {
     path: string[];
   };
 }
+
 export interface IShowAction extends IBaseTableDisplayAction {
   type: TableDisplayActionTypes.ShowPath;
   data: {
@@ -17,4 +18,14 @@ export interface IShowAction extends IBaseTableDisplayAction {
   };
 }
 
-export type ITableDisplayAction = IHideAction | IShowAction;
+export interface ISetMaxLevelAction extends IBaseTableDisplayAction {
+  type: TableDisplayActionTypes.SetMaxLevel;
+  data: {
+    level: number;
+  };
+}
+
+export type ITableDisplayAction =
+  | IHideAction
+  | IShowAction
+  | ISetMaxLevelAction;

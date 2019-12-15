@@ -10,7 +10,8 @@ import { LogsAppStateContext } from "./hooks/useLogsAppStateContext";
 export const initialState: IAppState = {
   logs: [],
   titleSelector: (log: any) => JSON.stringify(log),
-  pathSelector: ""
+  pathSelector: "",
+  maxLevel: 0
 };
 
 export interface ILogsAppProviderProps {
