@@ -26,7 +26,9 @@ export const TableDisplay: FunctionComponent<ITableDisplayProps> = ({
 }) => {
   const state = useTableDisplayStateContext();
   const dispatch = useTableDisplayDispatchContext();
+
   const { maxLevel, hiddenPaths, shownPaths } = state;
+
   const showLevel = useCallback(
     (path: string[]) => dispatch(showSubTree(path)),
     [dispatch, path]
