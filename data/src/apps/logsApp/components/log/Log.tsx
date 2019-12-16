@@ -9,6 +9,7 @@ import { LogTitle } from "./styledComponents/LogTitle";
 import { LogCopyButton } from "./styledComponents/LogCopyButton";
 import { nodes } from "jsonpath";
 import { TableDisplayProvider } from "../tableDisplay/TableDisplayProvider";
+import { LogDownloadButton } from "./styledComponents/LogDownloadButton";
 
 export interface ILogProps {
   log: ILog;
@@ -50,6 +51,7 @@ export const Log: FunctionComponent<ILogProps> = ({
     return (
       <LogContainer className={"logContainer"} key={log.id}>
         <LogCopyButton getCopyString={() => JSON.stringify(log.data)} />
+        <LogDownloadButton getUrl={() => `/download?logId=${log.id}`} />
         {toggleButton}
         {logElement}
       </LogContainer>

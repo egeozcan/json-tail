@@ -8,17 +8,25 @@ export function tableDisplayReducer(
   draft: Draft<ITableDisplayState>,
   action: ITableDisplayAction
 ): ITableDisplayState {
-  const paths = draft.hiddenPaths;
-
   switch (action.type) {
     case TableDisplayActionTypes.HidePath:
-      paths.push(action.data.path);
+      for (const [i, path] of draft.shownPaths.entries()) {
+        if (arraysAreSame(path, action.data.path)) {
+          draft.shownPaths.splice(i, 1);
+          break;
+        }
+      }
+      draft.hiddenPaths.push(action.data.path);
       return draft;
 
     case TableDisplayActionTypes.ShowPath:
-      draft.hiddenPaths = paths.filter(
-        path => !arraysAreSame(path, action.data.path)
-      );
+      for (const [i, path] of draft.hiddenPaths.entries()) {
+        if (arraysAreSame(path, action.data.path)) {
+          draft.hiddenPaths.splice(i, 1);
+          break;
+        }
+      }
+      draft.shownPaths.push(action.data.path);
       return draft;
 
     case TableDisplayActionTypes.SetMaxLevel:

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { createLog } from "../actionCreators/createLog";
 import { AppAction } from "../interfaces/IAppAction";
+import { LogStatus } from "../components/log/enums/LogStatus";
 
 export default function useWebSocketLogSourceEffect(
   logWebSocketSourceUrl: string,
@@ -23,7 +24,13 @@ export default function useWebSocketLogSourceEffect(
         try {
           const parsedLog = JSON.parse(log);
           parsedLog.data = JSON.parse(parsedLog.data);
-          return dispatch(createLog(parsedLog));
+          return dispatch(
+            createLog(
+              parsedLog.data ?? parsedLog,
+              LogStatus.Minimized,
+              parsedLog.id
+            )
+          );
         } catch {
           //no-op. todo: try parsing as other formats perhaps?
         }

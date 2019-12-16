@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/hpcloud/tail"
+	"github.com/matoous/go-nanoid"
 	"log"
 	"net/http"
 	"os"
@@ -14,6 +15,7 @@ import (
 type message struct {
 	Date time.Time `json:"date"`
 	Text string    `json:"data"`
+	Id string      `json:"id"`
 }
 
 func main() {
@@ -37,6 +39,7 @@ func main() {
 	broadcast := make(chan message)
 
 	http.HandleFunc("/tail", createClientHandler(&clients, &messages))
+	http.HandleFunc("/download", createLogDownloadHandler(&messages))
 	http.Handle("/", http.FileServer(assetFS()))
 
 	fileTail, err := tail.TailFile(*file, tail.Config{Follow: true, Poll: *usePolling})
@@ -82,6 +85,34 @@ func createClientHandler(clients *SocketQueue, messages *[]*message) http.Handle
 	}
 }
 
+
+
+func createLogDownloadHandler(messages *[]*message) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		keys, ok := r.URL.Query()["logId"]
+
+		if !ok || len(keys[0]) < 1 {
+			w.WriteHeader(http.StatusInternalServerError)
+			_, _ = w.Write([]byte("500 - Y U NO SEND logId?!"))
+			return
+		}
+
+		logId := keys[0]
+
+		for _, msg := range *messages  {
+			if msg.Id == logId {
+				w.Header().Set("Content-Type", "application/json")
+				_, _ = w.Write([]byte(msg.Text))
+				return
+			}
+		}
+
+		w.WriteHeader(http.StatusInternalServerError)
+		_, _ = w.Write([]byte("500 - Y U SEND NOT EXISTING logId?!"))
+
+	}
+}
+
 func handleMessages(clients *SocketQueue, broadcast chan message, messages *[]*message) {
 	for {
 		msg := <-broadcast
@@ -115,6 +146,13 @@ func newMessage(text string) message {
 	msg := message{}
 	msg.Text = text
 	msg.Date = time.Now()
+
+	id, err := gonanoid.Nanoid()
+	if err != nil {
+		return msg
+	}
+
+	msg.Id = id
 
 	return msg
 }

@@ -26,7 +26,7 @@ export const TableDisplay: FunctionComponent<ITableDisplayProps> = ({
 }) => {
   const state = useTableDisplayStateContext();
   const dispatch = useTableDisplayDispatchContext();
-  const { maxLevel, hiddenPaths } = state;
+  const { maxLevel, hiddenPaths, shownPaths } = state;
   const showLevel = useCallback(
     (path: string[]) => dispatch(showSubTree(path)),
     [dispatch, path]
@@ -37,33 +37,32 @@ export const TableDisplay: FunctionComponent<ITableDisplayProps> = ({
   );
   const hide = useCallback(() => hideLevel(path), [path]);
 
-  if (maxLevel !== 0 && path.length >= maxLevel) {
-    return (
-      <span style={{ background: "red", display: "block", color: "white" }}>
-        MAX DEPTH
-      </span>
-    );
+  if (isRenderableAsString(log)) {
+    return <ContentDisplay title={path.join(".")} content={log} />;
+  }
+
+  const expandButton = (
+    <StyledButtonWrapper onClick={() => showLevel(path)}>
+      [+]
+    </StyledButtonWrapper>
+  );
+
+  if (
+    maxLevel !== 0 &&
+    path.length >= maxLevel &&
+    !shownPaths.find(shownPath => arraysAreSame(path, shownPath))
+  ) {
+    return expandButton;
+  }
+
+  if (hiddenPaths.find(hiddenPath => arraysAreSame(path, hiddenPath))) {
+    return expandButton;
   }
 
   const collapseButton =
     path.length > 0 ? (
       <StyledButtonWrapper onClick={hide}>[-]</StyledButtonWrapper>
     ) : null;
-
-  if (
-    hiddenPaths &&
-    hiddenPaths.find(hiddenPath => arraysAreSame(path, hiddenPath))
-  ) {
-    return (
-      <StyledButtonWrapper onClick={() => showLevel(path)}>
-        [+]
-      </StyledButtonWrapper>
-    );
-  }
-
-  if (isRenderableAsString(log)) {
-    return <ContentDisplay title={path.join(".")} content={log} />;
-  }
 
   if (Array.isArray(log)) {
     return (

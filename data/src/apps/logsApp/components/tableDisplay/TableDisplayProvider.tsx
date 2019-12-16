@@ -9,6 +9,7 @@ import { TableDisplayActionTypes } from "./enums/TableDisplayActionTypes";
 
 export const initialState: ITableDisplayState = {
   hiddenPaths: [],
+  shownPaths: [],
   maxLevel: 0
 };
 
