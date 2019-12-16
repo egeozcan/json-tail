@@ -10,11 +10,11 @@ export const Controls: FunctionComponent = () => (
   <>
     <StyledInputWrapper>
       <LogPathSelectorForm />
+      <ConnectedMaxLevelControl />
     </StyledInputWrapper>
     <StyledInputWrapper>
       <LogCreateForm />
       <ConnectedResetControl />
-      <ConnectedMaxLevelControl />
     </StyledInputWrapper>
   </>
 );

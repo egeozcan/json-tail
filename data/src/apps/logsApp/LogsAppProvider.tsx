@@ -11,7 +11,7 @@ export const initialState: IAppState = {
   logs: [],
   titleSelector: (log: any) => JSON.stringify(log),
   pathSelector: "",
-  maxLevel: 0
+  maxLevel: 5
 };
 
 export interface ILogsAppProviderProps {

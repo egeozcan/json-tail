@@ -14,14 +14,17 @@ export const MaxLevelControl: FunctionComponent<IMaxLevelControlProps> = ({
   currentLevel
 }) => {
   return (
-    <select
-      value={currentLevel}
-      onChange={e => onChangeLevel(parseInt(e.target.value))}
-    >
-      {[...new Array(10).keys()].map(i => (
-        <option value={i}>{i === 0 ? "All" : i}</option>
-      ))}
-    </select>
+    <>
+      Max Level:
+      <select
+        value={currentLevel}
+        onChange={e => onChangeLevel(parseInt(e.target.value))}
+      >
+        {[...new Array(10).keys()].map(i => (
+          <option value={i}>{i === 0 ? "All" : i}</option>
+        ))}
+      </select>
+    </>
   );
 };
 
