@@ -1,15 +1,12 @@
 import { ObjectDisplay } from "./ObjectDisplay";
 import { ArrayDisplay } from "./ArrayDisplay";
 import * as React from "react";
-import { FunctionComponent, useCallback, useMemo } from "react";
+import { FunctionComponent, useCallback } from "react";
 import { ContentDisplay } from "./ContentDisplay";
 import { isRenderableAsString } from "./helpers/isRenderableAsString";
-import { arraysAreSame } from "./helpers/arraysAreSame";
 import { useTableDisplayStateContext } from "./hooks/useTableDisplayStateContext";
-import { useTableDisplayDispatchContext } from "./hooks/useTableDisplayDispatchContext";
-import { showSubTree } from "./actionCreators/showSubTree";
-import { collapseSubTree } from "./actionCreators/collapseSubTree";
-import { StyledButtonWrapper } from "./baseComponents/styledComponents/StyledButtonWrapper";
+import { ConnectedToggleButton, ToggleButtonType } from "./ToggleButton";
+import { isLevelCollapsed } from "./helpers/isLevelCollapsed";
 
 export interface IBaseLogDisplayProps {
   //this is here because it will be recursively passed to itself
@@ -25,45 +22,27 @@ export const TableDisplay: FunctionComponent<ITableDisplayProps> = ({
   log
 }) => {
   const state = useTableDisplayStateContext();
-  const dispatch = useTableDisplayDispatchContext();
-
   const { maxLevel, hiddenPaths, shownPaths } = state;
 
-  const showLevel = useCallback(
-    (path: string[]) => dispatch(showSubTree(path)),
-    [dispatch, path]
-  );
-  const hideLevel = useCallback(
-    (path: string[]) => dispatch(collapseSubTree(path)),
-    [dispatch, path]
-  );
-  const hide = useCallback(() => hideLevel(path), [path]);
-
+  //not collapsible if renderable as string
   if (isRenderableAsString(log)) {
     return <ContentDisplay title={path.join(".")} content={log} />;
   }
 
   const expandButton = (
-    <StyledButtonWrapper onClick={() => showLevel(path)}>
-      [+]
-    </StyledButtonWrapper>
+    <ConnectedToggleButton path={path} buttonType={ToggleButtonType.Maximize} />
   );
 
-  if (
-    maxLevel !== 0 &&
-    path.length >= maxLevel &&
-    !shownPaths.find(shownPath => arraysAreSame(path, shownPath))
-  ) {
-    return expandButton;
-  }
-
-  if (hiddenPaths.find(hiddenPath => arraysAreSame(path, hiddenPath))) {
+  if (isLevelCollapsed(maxLevel, path, shownPaths, hiddenPaths)) {
     return expandButton;
   }
 
   const collapseButton =
     path.length > 0 ? (
-      <StyledButtonWrapper onClick={hide}>[-]</StyledButtonWrapper>
+      <ConnectedToggleButton
+        path={path}
+        buttonType={ToggleButtonType.Minimize}
+      />
     ) : null;
 
   if (Array.isArray(log)) {

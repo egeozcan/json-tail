@@ -15,7 +15,7 @@ export const MaxLevelControl: FunctionComponent<IMaxLevelControlProps> = ({
 }) => {
   return (
     <>
-      Max Level:
+      <span>Max Level:</span>
       <select
         value={currentLevel}
         onChange={e => onChangeLevel(parseInt(e.target.value))}

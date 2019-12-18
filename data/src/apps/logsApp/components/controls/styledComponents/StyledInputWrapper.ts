@@ -22,10 +22,17 @@ export const StyledInputWrapper = styled.div`
     margin-bottom: 10px;
   }
 
-  input {
+  input,
+  select,
+  span {
     margin-bottom: 20px;
     padding: 5px;
     height: 30px;
+  }
+
+  span {
+    flex: 0;
+    white-space: nowrap;
   }
 
   input[type="button"],
