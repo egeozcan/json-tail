@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FunctionComponent, useState } from "react";
 import { useLogsAppDispatchContext } from "../../hooks/useLogsAppDispatchContext";
-import { StyledInputWrapper } from "./styledComponents/StyledInputWrapper";
+import { StyledInputWrapper } from "../common/StyledInputWrapper";
 import { AppActionTypes } from "../../enums/AppActionTypes";
 
 export interface ILofFormProps {}

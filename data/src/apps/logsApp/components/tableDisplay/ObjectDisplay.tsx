@@ -28,7 +28,7 @@ export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
                 headerType={HeaderType.Single}
                 cellCssClass={"simpleRow"}
               >
-                {key}
+                <ContentDisplay content={key} />
                 <ContentDisplay content={curElement} />
               </BaseRow>
             );
@@ -41,7 +41,7 @@ export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
                 key={key}
               >
                 <div className={"subTable"}>
-                  {key}
+                  <ContentDisplay content={key} />
                   <TableDisplay
                     log={curElement}
                     path={(path || []).concat([key])}

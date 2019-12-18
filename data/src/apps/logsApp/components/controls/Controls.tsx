@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
 import { ConnectedResetControl } from "./ResetControl";
-import { StyledInputWrapper } from "./styledComponents/StyledInputWrapper";
+import { StyledInputWrapper } from "../common/StyledInputWrapper";
 import { LogCreateForm } from "./LogCreateForm";
 import { LogPathSelectorForm } from "./LogPathSelectorForm";
 import { ConnectedMaxLevelControl } from "./MaxLevelControl";

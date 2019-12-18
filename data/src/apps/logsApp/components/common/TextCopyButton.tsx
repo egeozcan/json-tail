@@ -1,13 +1,5 @@
 import * as React from "react";
-import styled from "styled-components";
-
-const LogCopyButtonContainer = styled.div`
-  margin-right: 5px;
-  user-select: none;
-  cursor: pointer;
-  background: #eee;
-  padding: 5px;
-`;
+import { StyledButtonWrapper } from "./StyledButtonWrapper";
 
 const copyIconPath =
   "M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 " +
@@ -15,14 +7,14 @@ const copyIconPath =
   "24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 " +
   "0 0 0-7.029-16.97z";
 
-export interface LogCopyButtonProps {
+export interface TextCopyButtonProps {
   getCopyString: () => string;
 }
 
-export const LogCopyButton: React.FunctionComponent<LogCopyButtonProps> = ({
+export const TextCopyButton: React.FunctionComponent<TextCopyButtonProps> = ({
   getCopyString
 }) => (
-  <LogCopyButtonContainer
+  <StyledButtonWrapper
     onClick={() => navigator.clipboard.writeText(getCopyString())}
   >
     <svg
@@ -36,5 +28,5 @@ export const LogCopyButton: React.FunctionComponent<LogCopyButtonProps> = ({
     >
       <path d={copyIconPath}></path>
     </svg>
-  </LogCopyButtonContainer>
+  </StyledButtonWrapper>
 );

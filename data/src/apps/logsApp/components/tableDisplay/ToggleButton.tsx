@@ -1,9 +1,9 @@
 import * as React from "react";
 import { FunctionComponent, useCallback, useMemo } from "react";
-import { StyledButtonWrapper } from "./baseComponents/styledComponents/StyledButtonWrapper";
 import { useTableDisplayDispatchContext } from "./hooks/useTableDisplayDispatchContext";
 import { showSubTree } from "./actionCreators/showSubTree";
 import { collapseSubTree } from "./actionCreators/collapseSubTree";
+import { StyledButtonWrapper } from "../common/StyledButtonWrapper";
 
 export interface IToggleButtonProps {
   path: string[];

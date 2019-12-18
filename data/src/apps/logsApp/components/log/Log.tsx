@@ -4,12 +4,12 @@ import { LogStatus } from "./enums/LogStatus";
 import { TableDisplay } from "../tableDisplay/TableDisplay";
 import { ILog } from "./interfaces/ILog";
 import { LogContainer } from "./styledComponents/LogContainer";
-import { LogToggleButton } from "./styledComponents/LogToggleButton";
 import { LogTitle } from "./styledComponents/LogTitle";
-import { LogCopyButton } from "./styledComponents/LogCopyButton";
+import { TextCopyButton } from "../common/TextCopyButton";
 import { nodes } from "jsonpath";
 import { TableDisplayProvider } from "../tableDisplay/TableDisplayProvider";
 import { LogDownloadButton } from "./styledComponents/LogDownloadButton";
+import { StyledButtonWrapper } from "../common/StyledButtonWrapper";
 
 export interface ILogProps {
   log: ILog;
@@ -34,9 +34,9 @@ export const Log: FunctionComponent<ILogProps> = ({
   }
 
   const toggleButton = toggleState ? (
-    <LogToggleButton onClick={toggleState}>
+    <StyledButtonWrapper onClick={toggleState}>
       [{logIsShown ? "-" : "+"}]
-    </LogToggleButton>
+    </StyledButtonWrapper>
   ) : null;
 
   const logElement = logIsShown ? (
@@ -50,7 +50,7 @@ export const Log: FunctionComponent<ILogProps> = ({
   return useMemo(() => {
     return (
       <LogContainer className={"logContainer"} key={log.id}>
-        <LogCopyButton getCopyString={() => JSON.stringify(log.data)} />
+        <TextCopyButton getCopyString={() => JSON.stringify(log.data)} />
         <LogDownloadButton getUrl={() => `/download?logId=${log.id}`} />
         {toggleButton}
         {logElement}

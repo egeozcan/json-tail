@@ -5,7 +5,7 @@ import {
   useLogsAppDispatchContext
 } from "../../hooks/useLogsAppDispatchContext";
 import { createLog } from "../../actionCreators/createLog";
-import { StyledInputWrapper } from "./styledComponents/StyledInputWrapper";
+import { StyledInputWrapper } from "../common/StyledInputWrapper";
 
 export interface ILogFormProps {}
 
