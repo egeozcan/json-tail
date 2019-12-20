@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FunctionComponent, useState } from "react";
 import { useLogsAppDispatchContext } from "../../hooks/useLogsAppDispatchContext";
-import { StyledInputWrapper } from "../common/StyledInputWrapper";
+import { InputWrapper } from "../common/InputWrapper";
 import { AppActionTypes } from "../../enums/AppActionTypes";
 
 export interface ILofFormProps {}
@@ -25,11 +25,11 @@ export const LogPathSelectorForm: FunctionComponent<ILofFormProps> = () => {
   };
 
   return (
-    <StyledInputWrapper>
+    <InputWrapper>
       <form onSubmit={setPath}>
         <input value={text} onChange={changeHandler} />
         <input type={"submit"} value={"set path"} onClick={setPath} />
       </form>
-    </StyledInputWrapper>
+    </InputWrapper>
   );
 };

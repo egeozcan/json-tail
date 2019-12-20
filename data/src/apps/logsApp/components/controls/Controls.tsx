@@ -1,20 +1,20 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
 import { ConnectedResetControl } from "./ResetControl";
-import { StyledInputWrapper } from "../common/StyledInputWrapper";
+import { InputWrapper } from "../common/InputWrapper";
 import { LogCreateForm } from "./LogCreateForm";
 import { LogPathSelectorForm } from "./LogPathSelectorForm";
 import { ConnectedMaxLevelControl } from "./MaxLevelControl";
 
 export const Controls: FunctionComponent = () => (
   <>
-    <StyledInputWrapper>
+    <InputWrapper>
       <LogPathSelectorForm />
       <ConnectedMaxLevelControl />
-    </StyledInputWrapper>
-    <StyledInputWrapper>
+    </InputWrapper>
+    <InputWrapper>
       <LogCreateForm />
       <ConnectedResetControl />
-    </StyledInputWrapper>
+    </InputWrapper>
   </>
 );

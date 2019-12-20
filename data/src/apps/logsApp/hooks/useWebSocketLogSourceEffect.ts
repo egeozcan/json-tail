@@ -20,22 +20,22 @@ export default function useWebSocketLogSourceEffect(
 
       for (let i = 0; i < messages.length; i++) {
         let log = messages[i];
+        const parsedLog = JSON.parse(log);
 
         try {
-          const parsedLog = JSON.parse(log);
           parsedLog.data = JSON.parse(parsedLog.data);
-          return dispatch(
-            createLog(
-              parsedLog.data ?? parsedLog,
-              LogStatus.Minimized,
-              parsedLog.id
-            )
-          );
         } catch {
           //no-op. todo: try parsing as other formats perhaps?
         }
 
-        dispatch(createLog(log));
+        dispatch(
+          createLog(
+            parsedLog.data,
+            LogStatus.Minimized,
+            parsedLog.id,
+            parsedLog.time
+          )
+        );
       }
     };
 

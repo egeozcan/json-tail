@@ -1,5 +1,6 @@
 import * as React from "react";
 import { StyledButtonWrapper } from "./StyledButtonWrapper";
+import { copyIcon } from "../icons/copyIcon";
 
 const copyIconPath =
   "M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 " +
@@ -17,16 +18,6 @@ export const TextCopyButton: React.FunctionComponent<TextCopyButtonProps> = ({
   <StyledButtonWrapper
     onClick={() => navigator.clipboard.writeText(getCopyString())}
   >
-    <svg
-      stroke="currentColor"
-      fill="currentColor"
-      strokeWidth="0"
-      viewBox="0 0 448 512"
-      height="1em"
-      width="1em"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d={copyIconPath}></path>
-    </svg>
+    {copyIcon}
   </StyledButtonWrapper>
 );

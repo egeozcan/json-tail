@@ -5,7 +5,7 @@ import {
   useLogsAppDispatchContext
 } from "../../hooks/useLogsAppDispatchContext";
 import { createLog } from "../../actionCreators/createLog";
-import { StyledInputWrapper } from "../common/StyledInputWrapper";
+import { InputWrapper } from "../common/InputWrapper";
 
 export interface ILogFormProps {}
 
@@ -26,13 +26,13 @@ export const LogCreateForm: FunctionComponent<ILogFormProps> = () => {
 
   //StyledInputWrapper... lol... such laziness :)
   return (
-    <StyledInputWrapper>
+    <InputWrapper>
       <textarea
         placeholder={"Paste JSON Here"}
         value={text}
         onChange={changeHandler}
       />
       <input type={"button"} value={"add log"} onClick={addLog} />
-    </StyledInputWrapper>
+    </InputWrapper>
   );
 };

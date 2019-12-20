@@ -7,13 +7,15 @@ import { FakeLogsApp } from "./FakeLogsApp";
 const toppingsLog = {
   data: require("./example-data/topping.json"),
   id: Math.random(),
-  status: LogStatus.Shown
+  status: LogStatus.Shown,
+  time: new Date()
 };
 
 const atlassianLog = {
   data: require("./example-data/atlassian.json"),
   id: Math.random(),
-  status: LogStatus.Shown
+  status: LogStatus.Shown,
+  time: new Date()
 };
 
 storiesOf("Logs App", module)

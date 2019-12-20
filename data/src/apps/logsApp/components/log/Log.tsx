@@ -2,14 +2,16 @@ import * as React from "react";
 import { FunctionComponent, useMemo } from "react";
 import { LogStatus } from "./enums/LogStatus";
 import { TableDisplay } from "../tableDisplay/TableDisplay";
-import { ILog } from "./interfaces/ILog";
-import { LogContainer } from "./styledComponents/LogContainer";
+import { ILog } from "../../interfaces/ILog";
+import { ExpandChild, RowContainer } from "../common/RowContainer";
 import { LogTitle } from "./styledComponents/LogTitle";
-import { TextCopyButton } from "../common/TextCopyButton";
+import { TextCopyButton } from "../common/buttons/TextCopyButton";
 import { nodes } from "jsonpath";
 import { TableDisplayProvider } from "../tableDisplay/TableDisplayProvider";
-import { LogDownloadButton } from "./styledComponents/LogDownloadButton";
-import { StyledButtonWrapper } from "../common/StyledButtonWrapper";
+import { DownloadButton } from "../common/buttons/DownloadButton";
+import { StyledButtonWrapper } from "../common/buttons/StyledButtonWrapper";
+import { plusIcon } from "../common/icons/plusIcon";
+import { minusIcon } from "../common/icons/minusIcon";
 
 export interface ILogProps {
   log: ILog;
@@ -35,26 +37,31 @@ export const Log: FunctionComponent<ILogProps> = ({
 
   const toggleButton = toggleState ? (
     <StyledButtonWrapper onClick={toggleState}>
-      [{logIsShown ? "-" : "+"}]
+      {logIsShown ? minusIcon : plusIcon}
     </StyledButtonWrapper>
   ) : null;
 
+  const title = `${log.time.toISOString()} ${titleSelector(data)}`;
   const logElement = logIsShown ? (
     <TableDisplayProvider maxLevel={maxLevel}>
       <TableDisplay path={[]} log={data} />
     </TableDisplayProvider>
   ) : (
-    <LogTitle onClick={toggleState}>{titleSelector(data)}</LogTitle>
+    <LogTitle onClick={toggleState}>{title}</LogTitle>
   );
 
   return useMemo(() => {
     return (
-      <LogContainer className={"logContainer"} key={log.id}>
+      <RowContainer
+        className={"logContainer"}
+        key={log.id}
+        expandedChild={ExpandChild.Last}
+      >
         <TextCopyButton getCopyString={() => JSON.stringify(log.data)} />
-        <LogDownloadButton getUrl={() => `/download?logId=${log.id}`} />
+        <DownloadButton getUrl={() => `/download?logId=${log.id}`} />
         {toggleButton}
         {logElement}
-      </LogContainer>
+      </RowContainer>
     );
   }, [log, titleSelector, maxLevel, pathSelector]);
 };

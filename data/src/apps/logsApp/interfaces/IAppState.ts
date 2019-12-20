@@ -1,4 +1,4 @@
-import { ILog } from "../components/log/interfaces/ILog";
+import { ILog } from "./ILog";
 
 export interface IAppState {
   logs: ILog[];

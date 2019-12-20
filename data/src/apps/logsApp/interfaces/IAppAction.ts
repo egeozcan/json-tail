@@ -16,6 +16,7 @@ export interface IAddAction extends IAppAction {
     logId: number;
     logData: unknown;
     status: LogStatus;
+    time: Date;
   };
 }
 

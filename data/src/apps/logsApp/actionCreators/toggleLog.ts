@@ -1,6 +1,6 @@
 import { IChangeStatusAction } from "../interfaces/IAppAction";
 import { LogStatus } from "../components/log/enums/LogStatus";
-import { ILog } from "../components/log/interfaces/ILog";
+import { ILog } from "../interfaces/ILog";
 import { AppActionTypes } from "../enums/AppActionTypes";
 
 export function toggleLog(

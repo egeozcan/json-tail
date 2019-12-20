@@ -4,7 +4,7 @@ import { initialState } from "../LogsAppProvider";
 import { IAppState } from "../interfaces/IAppState";
 import { AppActionTypes } from "../enums/AppActionTypes";
 import { parse } from "jsonpath";
-import { ILog } from "../components/log/interfaces/ILog";
+import { ILog } from "../interfaces/ILog";
 
 export function logsAppReducer(
   draft: Draft<IAppState>,
@@ -18,7 +18,8 @@ export function logsAppReducer(
       const log: ILog = {
         id: action.data.logId,
         data: action.data.logData,
-        status: action.data.status
+        status: action.data.status,
+        time: action.data.time
       };
       draft.logs.push(log);
       return draft;

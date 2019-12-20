@@ -3,7 +3,7 @@ import { FunctionComponent, useCallback, useMemo } from "react";
 import { useTableDisplayDispatchContext } from "./hooks/useTableDisplayDispatchContext";
 import { showSubTree } from "./actionCreators/showSubTree";
 import { collapseSubTree } from "./actionCreators/collapseSubTree";
-import { StyledButtonWrapper } from "../common/StyledButtonWrapper";
+import { StyledButtonWrapper } from "../common/buttons/StyledButtonWrapper";
 
 export interface IToggleButtonProps {
   path: string[];

@@ -1,4 +1,4 @@
-import { ILog } from "../../log/interfaces/ILog";
+import { ILog } from "../../../interfaces/ILog";
 
 export type HiddenPath = string[];
 export type ShownPath = string[];

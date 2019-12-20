@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-export const StyledInputWrapper = styled.div`
+// language=LESS
+export const InputWrapper = styled.div`
   &,
   & > form {
     display: flex;
