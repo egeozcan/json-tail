@@ -1,21 +1,21 @@
 import * as React from "react";
-import { BackgroundType, CursorType, RowColumn } from "../RowColumn";
+import { BackgroundType, CursorType, Block, Size } from "../Block";
 
 export interface IButtonWrapperProps {
   onClick: (...args: any[]) => any;
 }
 
-// language=LESS
-export const StyledButtonWrapper: React.FunctionComponent<IButtonWrapperProps> = ({
+export const ButtonWrapper: React.FunctionComponent<IButtonWrapperProps> = ({
   children,
   onClick
 }) => (
-  <RowColumn
+  <Block
     onClick={onClick}
     background={BackgroundType.Dark}
     cursor={CursorType.Pointer}
     selectable={false}
+    size={Size.Contract}
   >
     {children}
-  </RowColumn>
+  </Block>
 );

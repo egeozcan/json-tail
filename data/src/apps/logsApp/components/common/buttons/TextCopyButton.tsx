@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyledButtonWrapper } from "./StyledButtonWrapper";
+import { ButtonWrapper } from "./ButtonWrapper";
 import { copyIcon } from "../icons/copyIcon";
 
 const copyIconPath =
@@ -15,9 +15,7 @@ export interface TextCopyButtonProps {
 export const TextCopyButton: React.FunctionComponent<TextCopyButtonProps> = ({
   getCopyString
 }) => (
-  <StyledButtonWrapper
-    onClick={() => navigator.clipboard.writeText(getCopyString())}
-  >
+  <ButtonWrapper onClick={() => navigator.clipboard.writeText(getCopyString())}>
     {copyIcon}
-  </StyledButtonWrapper>
+  </ButtonWrapper>
 );

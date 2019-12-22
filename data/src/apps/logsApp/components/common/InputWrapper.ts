@@ -38,7 +38,6 @@ export const InputWrapper = styled.div`
 
   input[type="button"],
   input[type="submit"] {
-    width: 160px;
     max-width: 150px;
   }
 `;

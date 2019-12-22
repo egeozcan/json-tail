@@ -9,7 +9,7 @@ import { TextCopyButton } from "../common/buttons/TextCopyButton";
 import { nodes } from "jsonpath";
 import { TableDisplayProvider } from "../tableDisplay/TableDisplayProvider";
 import { DownloadButton } from "../common/buttons/DownloadButton";
-import { StyledButtonWrapper } from "../common/buttons/StyledButtonWrapper";
+import { ButtonWrapper } from "../common/buttons/ButtonWrapper";
 import { plusIcon } from "../common/icons/plusIcon";
 import { minusIcon } from "../common/icons/minusIcon";
 
@@ -36,9 +36,9 @@ export const Log: FunctionComponent<ILogProps> = ({
   }
 
   const toggleButton = toggleState ? (
-    <StyledButtonWrapper onClick={toggleState}>
+    <ButtonWrapper onClick={toggleState}>
       {logIsShown ? minusIcon : plusIcon}
-    </StyledButtonWrapper>
+    </ButtonWrapper>
   ) : null;
 
   const title = `${log.time.toISOString()} ${titleSelector(data)}`;

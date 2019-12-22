@@ -3,7 +3,7 @@ import { FunctionComponent, useCallback, useMemo } from "react";
 import { useTableDisplayDispatchContext } from "./hooks/useTableDisplayDispatchContext";
 import { showSubTree } from "./actionCreators/showSubTree";
 import { collapseSubTree } from "./actionCreators/collapseSubTree";
-import { StyledButtonWrapper } from "../common/buttons/StyledButtonWrapper";
+import { ButtonWrapper } from "../common/buttons/ButtonWrapper";
 
 export interface IToggleButtonProps {
   path: string[];
@@ -22,7 +22,7 @@ export const ToggleButton: FunctionComponent<IToggleButtonProps> = ({
   buttonType
 }) => {
   return (
-    <StyledButtonWrapper onClick={() => action(path)}>
+    <ButtonWrapper onClick={() => action(path)}>
       [
       {buttonType === ToggleButtonType.Maximize
         ? "+"
@@ -30,7 +30,7 @@ export const ToggleButton: FunctionComponent<IToggleButtonProps> = ({
         ? "-"
         : "?"}
       ]
-    </StyledButtonWrapper>
+    </ButtonWrapper>
   );
 };
 
