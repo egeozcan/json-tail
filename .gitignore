@@ -114,3 +114,5 @@ public/
 .dynamodb/
 
 /.idea/dictionaries/
+/bindata.go
+/json-tail
