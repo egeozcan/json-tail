@@ -4,6 +4,7 @@ import { useTableDisplayDispatchContext } from "./hooks/useTableDisplayDispatchC
 import { showSubTree } from "./actionCreators/showSubTree";
 import { collapseSubTree } from "./actionCreators/collapseSubTree";
 import { ButtonWrapper } from "../common/buttons/ButtonWrapper";
+import { BackgroundType, Block, CursorType, Size } from "../common/Block";
 
 export interface IToggleButtonProps {
   path: string[];
@@ -22,7 +23,15 @@ export const ToggleButton: FunctionComponent<IToggleButtonProps> = ({
   buttonType
 }) => {
   return (
-    <ButtonWrapper onClick={() => action(path)}>
+    <Block
+      background={BackgroundType.Dark}
+      cursor={CursorType.Pointer}
+      selectable={false}
+      size={Size.Contract}
+      onClick={() => action(path)}
+      noPadding={true}
+      float={true}
+    >
       [
       {buttonType === ToggleButtonType.Maximize
         ? "+"
@@ -30,7 +39,7 @@ export const ToggleButton: FunctionComponent<IToggleButtonProps> = ({
         ? "-"
         : "?"}
       ]
-    </ButtonWrapper>
+    </Block>
   );
 };
 

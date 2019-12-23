@@ -6,6 +6,8 @@ export interface IRowColumnProps {
   cursor?: CursorType;
   background?: BackgroundType;
   size?: Size;
+  float?: boolean;
+  noPadding?: boolean;
 }
 
 export enum CursorType {
@@ -31,10 +33,11 @@ export const Block = styled.div<IRowColumnProps>`
       props.cursor === CursorType.Pointer ? "pointer" : null};
     background: ${props =>
       props.background === BackgroundType.Dark ? "#eee" : "#fff"};
-    padding: 5px;
+    padding: ${props => (props.noPadding ? null : "5px")};
     flex: ${props => (props.size === Size.Contract ? 0 : 1)};
     white-space: nowrap;
     overflow: ${props => (props.useEllipsis ? "hidden" : "unset")};
     text-overflow: ${props => (props.useEllipsis ? "ellipsis" : "clip")};
+    float: ${props => (props.float ? "left" : "none")};
   }
 `;
