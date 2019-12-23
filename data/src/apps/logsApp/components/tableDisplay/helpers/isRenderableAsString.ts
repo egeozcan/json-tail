@@ -1,7 +1,13 @@
 export function isRenderableAsString(obj: any) {
+  if (Array.isArray(obj)) {
+    return false;
+  }
+
+  if (["string", "number", "undefined", "boolean"].includes(typeof obj)) {
+    return true;
+  }
+
   return (
-    ["string", "number", "undefined", "boolean"].includes(typeof obj) ||
-    obj === null ||
-    (typeof obj === "object" && Object.keys(obj).length === 0)
+    obj === null || (typeof obj === "object" && Object.keys(obj).length === 0)
   );
 }

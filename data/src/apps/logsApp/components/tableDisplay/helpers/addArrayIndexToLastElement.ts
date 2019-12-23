@@ -1,3 +1,7 @@
+/**
+ * For JS paths like ["obj", "prop", "list"] adds the array indicator with the given index to the last path
+ * @example addArrayIndexToLastElement(["foo", "bar"], 3) would return ["foo", "bar[3]"]
+ */
 export function addArrayIndexToLastElement(
   arr: string[],
   idx: number
