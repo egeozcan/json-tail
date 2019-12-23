@@ -1,68 +1,69 @@
-import { ObjectDisplay } from "./ObjectDisplay";
-import { ArrayDisplay } from "./ArrayDisplay";
 import * as React from "react";
-import { FunctionComponent, useCallback } from "react";
-import { ContentDisplay } from "./ContentDisplay";
-import { isRenderableAsString } from "./helpers/isRenderableAsString";
-import { useTableDisplayStateContext } from "./hooks/useTableDisplayStateContext";
-import { ConnectedToggleButton, ToggleButtonType } from "./ToggleButton";
-import { isLevelCollapsed } from "./helpers/isLevelCollapsed";
+import { FunctionComponent } from "react";
+import { useImmerReducer } from "use-immer";
+import { tableDisplayReducer } from "./reducers/tableDisplayReducer";
+import { TableDisplayDispatchContext } from "./hooks/useTableDisplayDispatchContext";
+import { TableDisplayStateContext } from "./hooks/useTableDisplayStateContext";
+import { ITableDisplayState } from "./interfaces/ITableDisplayState";
+import { TableDisplayActionTypes } from "./enums/TableDisplayActionTypes";
+import { InnerTableDisplay } from "./InnerTableDisplay";
 
-export interface IBaseLogDisplayProps {
-  //this is here because it will be recursively passed to itself
+const initialState: ITableDisplayState = {
+  hiddenPaths: [],
+  shownPaths: [],
+  maxLevel: 0
+};
+
+interface ITableDisplayProviderProps {
+  maxLevel: number;
+}
+
+/**
+ * Provides the required contexts to the InnerTableDisplay
+ * @see InnerTableDisplay
+ */
+const TableDisplayProvider: FunctionComponent<ITableDisplayProviderProps> = ({
+  children,
+  maxLevel
+}) => {
+  const [state, dispatch] = useImmerReducer(tableDisplayReducer, initialState);
+
+  if (state.maxLevel !== maxLevel) {
+    dispatch({
+      type: TableDisplayActionTypes.SetMaxLevel,
+      data: {
+        level: maxLevel
+      }
+    });
+  }
+
+  return (
+    <TableDisplayDispatchContext.Provider value={dispatch}>
+      <TableDisplayStateContext.Provider value={state}>
+        {children}
+      </TableDisplayStateContext.Provider>
+    </TableDisplayDispatchContext.Provider>
+  );
+};
+
+export interface ITableDisplayProps extends ITableDisplayProviderProps {
+  displayObject: unknown;
   path: string[];
 }
 
-export interface ITableDisplayProps extends IBaseLogDisplayProps {
-  log: unknown;
-}
-
+/**
+ * A component that takes an arbitrary JSON-compatible data structure and displays it as a table.
+ * @param maxLevel The max level of depth the object will be displayed
+ * @param displayObject The data to display. Confusingly this can also be a non-object.
+ * @param path The starting path for label display. Helpful when rendering partial data.
+ * @constructor
+ */
 export const TableDisplay: FunctionComponent<ITableDisplayProps> = ({
-  path = [],
-  log
-}) => {
-  const state = useTableDisplayStateContext();
-  const { maxLevel, hiddenPaths, shownPaths } = state;
-
-  //not collapsible if renderable as string
-  if (isRenderableAsString(log)) {
-    return <ContentDisplay title={path.join(".")} content={log} />;
-  }
-
-  const expandButton = (
-    <ConnectedToggleButton path={path} buttonType={ToggleButtonType.Maximize} />
-  );
-
-  if (isLevelCollapsed(maxLevel, path, shownPaths, hiddenPaths)) {
-    return expandButton;
-  }
-
-  const collapseButton =
-    path.length > 0 ? (
-      <ConnectedToggleButton
-        path={path}
-        buttonType={ToggleButtonType.Minimize}
-      />
-    ) : null;
-
-  if (Array.isArray(log)) {
-    return (
-      <>
-        {collapseButton}
-        <ArrayDisplay arr={log} path={path} />
-      </>
-    );
-  }
-
-  if (typeof log === "object" && log !== null) {
-    return (
-      <>
-        {collapseButton}
-        <ObjectDisplay obj={log} path={path} />
-      </>
-    );
-  }
-
-  //fingers crossed at this point
-  return <ContentDisplay title={path.join(".")} content={String(log)} />;
-};
+  maxLevel = 0,
+  displayObject,
+  path = []
+}) => (
+  <TableDisplayProvider maxLevel={maxLevel}>
+    <InnerTableDisplay displayObject={displayObject} path={path} />
+  </TableDisplayProvider>
+);

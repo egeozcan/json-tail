@@ -1,13 +1,12 @@
 import * as React from "react";
 import { FunctionComponent, useMemo } from "react";
 import { LogStatus } from "./enums/LogStatus";
-import { TableDisplay } from "../tableDisplay/TableDisplay";
 import { ILog } from "../../interfaces/ILog";
 import { ExpandChild, RowContainer } from "../common/RowContainer";
 import { LogTitle } from "./styledComponents/LogTitle";
 import { TextCopyButton } from "../common/buttons/TextCopyButton";
 import { nodes } from "jsonpath";
-import { TableDisplayProvider } from "../tableDisplay/TableDisplayProvider";
+import { TableDisplay } from "../tableDisplay/TableDisplay";
 import { DownloadButton } from "../common/buttons/DownloadButton";
 import { ButtonWrapper } from "../common/buttons/ButtonWrapper";
 import { plusIcon } from "../common/icons/plusIcon";
@@ -43,9 +42,7 @@ export const Log: FunctionComponent<ILogProps> = ({
 
   const title = `${log.time.toISOString()} ${titleSelector(data)}`;
   const logElement = logIsShown ? (
-    <TableDisplayProvider maxLevel={maxLevel}>
-      <TableDisplay path={[]} log={data} />
-    </TableDisplayProvider>
+    <TableDisplay path={[]} maxLevel={maxLevel} displayObject={data} />
   ) : (
     <LogTitle onClick={toggleState}>{title}</LogTitle>
   );

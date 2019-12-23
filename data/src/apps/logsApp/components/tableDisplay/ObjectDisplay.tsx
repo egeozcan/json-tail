@@ -4,9 +4,12 @@ import { FunctionComponent, useMemo } from "react";
 import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
 import { isRenderableAsString } from "./helpers/isRenderableAsString";
 import { ContentDisplay } from "./ContentDisplay";
-import { IBaseLogDisplayProps, TableDisplay } from "./TableDisplay";
+import {
+  IBaseInnerTableDisplayProps,
+  InnerTableDisplay
+} from "./InnerTableDisplay";
 
-export interface IObjectDisplayProps extends IBaseLogDisplayProps {
+export interface IObjectDisplayProps extends IBaseInnerTableDisplayProps {
   obj: object;
 }
 
@@ -42,8 +45,8 @@ export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
               >
                 <div className={"subTable"}>
                   <ContentDisplay content={key} />
-                  <TableDisplay
-                    log={curElement}
+                  <InnerTableDisplay
+                    displayObject={curElement}
                     path={(path || []).concat([key])}
                   />
                 </div>

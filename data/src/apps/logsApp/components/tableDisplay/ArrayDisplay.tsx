@@ -1,5 +1,8 @@
 import { isObjectWithGivenKeys } from "./helpers/isObjectWithGivenKeys";
-import { IBaseLogDisplayProps, TableDisplay } from "./TableDisplay";
+import {
+  IBaseInnerTableDisplayProps,
+  InnerTableDisplay
+} from "./InnerTableDisplay";
 import * as React from "react";
 import { FunctionComponent, useMemo } from "react";
 import { BaseTable } from "./baseComponents/BaseTable";
@@ -7,7 +10,7 @@ import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
 import { ContentDisplay } from "./ContentDisplay";
 import { addArrayIndexToLastElement } from "./helpers/addArrayIndexToLastElement";
 
-export interface IArrayDisplayProps extends IBaseLogDisplayProps {
+export interface IArrayDisplayProps extends IBaseInnerTableDisplayProps {
   arr: any[];
 }
 
@@ -35,7 +38,7 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
 
             return (
               <BaseRow title={currentPath.join(".")} key={idx}>
-                <TableDisplay log={el} path={currentPath} />
+                <InnerTableDisplay displayObject={el} path={currentPath} />
               </BaseRow>
             );
           })}
@@ -64,7 +67,11 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
                 const currentPath = addArrayIndexToLastElement(path, idx);
                 currentPath.push(title);
                 return (
-                  <TableDisplay log={el[title]} path={currentPath} key={i} />
+                  <InnerTableDisplay
+                    displayObject={el[title]}
+                    path={currentPath}
+                    key={i}
+                  />
                 );
               })}
             </BaseRow>
