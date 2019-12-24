@@ -7,6 +7,7 @@ export enum ExpandChild {
 
 export interface IRowContainerProps {
   expandedChild?: ExpandChild;
+  vertical?: boolean;
 }
 
 // language=LESS
@@ -14,14 +15,17 @@ export const RowContainer = styled.div<IRowContainerProps>`
   & {
     display: flex;
     margin-bottom: 10px;
+    flex-direction: ${props => (props.vertical ? "column" : "row")};
   }
 
   & > * {
     flex: 0;
-    margin-right: 5px;
+    margin-right: ${props => (props.vertical ? "0" : "5px")};
+    margin-bottom: ${props => (props.vertical ? "5px" : "0")};
 
     &:last-child {
       margin-right: 0;
+      margin-bottom: 0;
       flex: ${props => (props.expandedChild === ExpandChild.Last ? 1 : 0)};
     }
 

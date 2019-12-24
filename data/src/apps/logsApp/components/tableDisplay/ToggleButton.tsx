@@ -1,9 +1,7 @@
-import * as React from "react";
-import { FunctionComponent, useCallback, useMemo } from "react";
+import { default as React, FunctionComponent, useCallback } from "react";
 import { useTableDisplayDispatchContext } from "./hooks/useTableDisplayDispatchContext";
 import { showSubTree } from "./actionCreators/showSubTree";
 import { collapseSubTree } from "./actionCreators/collapseSubTree";
-import { ButtonWrapper } from "../common/buttons/ButtonWrapper";
 import { BackgroundType, Block, CursorType, Size } from "../common/Block";
 
 export interface IToggleButtonProps {
@@ -22,13 +20,15 @@ export const ToggleButton: FunctionComponent<IToggleButtonProps> = ({
   action,
   buttonType
 }) => {
+  const onClick = useCallback(() => action(path), [action, path]);
+
   return (
     <Block
       background={BackgroundType.Dark}
       cursor={CursorType.Pointer}
       selectable={false}
       size={Size.Contract}
-      onClick={() => action(path)}
+      onClick={onClick}
       noPadding={true}
       float={true}
     >

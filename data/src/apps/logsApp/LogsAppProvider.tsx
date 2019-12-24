@@ -1,5 +1,4 @@
-import * as React from "react";
-import { FunctionComponent } from "react";
+import { default as React, FunctionComponent } from "react";
 import { useImmerReducer } from "use-immer";
 import { logsAppReducer } from "./reducers/logsAppReducer";
 import { IAppState } from "./interfaces/IAppState";

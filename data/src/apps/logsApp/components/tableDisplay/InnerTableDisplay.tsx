@@ -1,7 +1,6 @@
 import { ObjectDisplay } from "./ObjectDisplay";
 import { ArrayDisplay } from "./ArrayDisplay";
-import * as React from "react";
-import { FunctionComponent, useCallback } from "react";
+import { default as React, FunctionComponent } from "react";
 import { ContentDisplay } from "./ContentDisplay";
 import { isRenderableAsString } from "./helpers/isRenderableAsString";
 import { useTableDisplayStateContext } from "./hooks/useTableDisplayStateContext";
@@ -19,8 +18,10 @@ export interface IInnerTableDisplayProps extends IBaseInnerTableDisplayProps {
 
 /**
  * The table display for an arbitrary object. It needs to be in the table display state and dispatch contexts.
+ * You may have meant to import TableDisplay
  * @see useTableDisplayStateContext
  * @see useTableDisplayDispatchContext
+ * @see TableDisplay
  */
 export const InnerTableDisplay: FunctionComponent<IInnerTableDisplayProps> = ({
   path = [],
@@ -31,7 +32,13 @@ export const InnerTableDisplay: FunctionComponent<IInnerTableDisplayProps> = ({
 
   //not collapsible if renderable as string
   if (isRenderableAsString(displayObject)) {
-    return <ContentDisplay title={path.join(".")} content={displayObject} />;
+    return (
+      <ContentDisplay
+        path={path}
+        title={path.join(".")}
+        content={displayObject}
+      />
+    );
   }
 
   const expandButton = (
@@ -70,6 +77,10 @@ export const InnerTableDisplay: FunctionComponent<IInnerTableDisplayProps> = ({
 
   //fingers crossed at this point
   return (
-    <ContentDisplay title={path.join(".")} content={String(displayObject)} />
+    <ContentDisplay
+      path={path}
+      title={path.join(".")}
+      content={String(displayObject)}
+    />
   );
 };

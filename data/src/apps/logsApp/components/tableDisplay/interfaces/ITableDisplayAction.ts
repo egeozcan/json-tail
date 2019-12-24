@@ -25,7 +25,15 @@ export interface ISetMaxLevelAction extends IBaseTableDisplayAction {
   };
 }
 
+export interface ISetPathAction extends IBaseTableDisplayAction {
+  type: TableDisplayActionTypes.SetPath;
+  data: {
+    path: string[];
+  };
+}
+
 export type ITableDisplayAction =
   | IHideAction
   | IShowAction
-  | ISetMaxLevelAction;
+  | ISetMaxLevelAction
+  | ISetPathAction;

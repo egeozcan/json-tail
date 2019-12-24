@@ -32,5 +32,9 @@ export function tableDisplayReducer(
     case TableDisplayActionTypes.SetMaxLevel:
       draft.maxLevel = action.data.level;
       return draft;
+
+    case TableDisplayActionTypes.SetPath:
+      draft.currentPath = action.data.path;
+      return draft;
   }
 }
