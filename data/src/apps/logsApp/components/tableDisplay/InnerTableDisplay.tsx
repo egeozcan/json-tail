@@ -7,12 +7,12 @@ import { useTableDisplayStateContext } from "./hooks/useTableDisplayStateContext
 import { ConnectedToggleButton, ToggleButtonType } from "./ToggleButton";
 import { isLevelCollapsed } from "./helpers/isLevelCollapsed";
 
-export interface IBaseInnerTableDisplayProps {
+export interface ITableDisplayTreeProps {
   //this is here because it will be recursively passed to itself
   path: string[];
 }
 
-export interface IInnerTableDisplayProps extends IBaseInnerTableDisplayProps {
+export interface IInnerTableDisplayProps extends ITableDisplayTreeProps {
   displayObject: unknown;
 }
 

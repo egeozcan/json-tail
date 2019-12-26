@@ -4,12 +4,9 @@ import { FunctionComponent, useMemo } from "react";
 import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
 import { isRenderableAsString } from "./helpers/isRenderableAsString";
 import { ContentDisplay } from "./ContentDisplay";
-import {
-  IBaseInnerTableDisplayProps,
-  InnerTableDisplay
-} from "./InnerTableDisplay";
+import { ITableDisplayTreeProps, InnerTableDisplay } from "./InnerTableDisplay";
 
-export interface IObjectDisplayProps extends IBaseInnerTableDisplayProps {
+export interface IObjectDisplayProps extends ITableDisplayTreeProps {
   obj: object;
 }
 
@@ -23,16 +20,17 @@ export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
         {Object.keys(obj || {}).map(key => {
           const curElement: any = (obj as any)[key];
 
+          const currentPath = (path || []).concat([key]);
           if (isRenderableAsString(curElement)) {
             return (
               <BaseRow
                 key={key}
-                title={(path || []).concat([key]).join(".")}
+                title={currentPath.join(".")}
                 headerType={HeaderType.Single}
                 cellCssClass={"simpleRow"}
               >
-                <ContentDisplay path={path} content={key} />
-                <ContentDisplay path={path} content={curElement} />
+                <ContentDisplay path={currentPath} content={key} />
+                <ContentDisplay path={currentPath} content={curElement} />
               </BaseRow>
             );
           } else {
@@ -47,7 +45,7 @@ export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
                   <ContentDisplay path={path} content={key} />
                   <InnerTableDisplay
                     displayObject={curElement}
-                    path={(path || []).concat([key])}
+                    path={currentPath}
                   />
                 </div>
               </BaseRow>

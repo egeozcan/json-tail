@@ -8,7 +8,11 @@ export interface ICurrentPathDisplayProps {
 
 export const CurrentPathDisplay: FunctionComponent<ICurrentPathDisplayProps> = ({
   path
-}) => (path.length > 0 ? <Block>{path.join(".")}</Block> : null);
+}) => (
+  <Block>
+    {path.length > 0 ? path.join(".") : "Click on a value to show the path"}
+  </Block>
+);
 
 export const ConnectedPathDisplay: FunctionComponent = () => {
   const state = useTableDisplayStateContext();

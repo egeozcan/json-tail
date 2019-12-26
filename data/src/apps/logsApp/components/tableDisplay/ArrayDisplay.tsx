@@ -1,8 +1,5 @@
 import { isObjectWithGivenKeys } from "./helpers/isObjectWithGivenKeys";
-import {
-  IBaseInnerTableDisplayProps,
-  InnerTableDisplay
-} from "./InnerTableDisplay";
+import { ITableDisplayTreeProps, InnerTableDisplay } from "./InnerTableDisplay";
 import * as React from "react";
 import { FunctionComponent, useMemo } from "react";
 import { BaseTable } from "./baseComponents/BaseTable";
@@ -10,7 +7,7 @@ import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
 import { ContentDisplay } from "./ContentDisplay";
 import { addArrayIndexToLastElement } from "./helpers/addArrayIndexToLastElement";
 
-export interface IArrayDisplayProps extends IBaseInnerTableDisplayProps {
+export interface IArrayDisplayProps extends ITableDisplayTreeProps {
   arr: any[];
 }
 
