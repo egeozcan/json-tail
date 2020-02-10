@@ -21,7 +21,9 @@ export const MaxLevelControl: FunctionComponent<IMaxLevelControlProps> = ({
         onChange={e => onChangeLevel(parseInt(e.target.value))}
       >
         {[...new Array(10).keys()].map(i => (
-          <option value={i}>{i === 0 ? "All" : i}</option>
+          <option key={i} value={i}>
+            {i === 0 ? "All" : i}
+          </option>
         ))}
       </select>
     </>

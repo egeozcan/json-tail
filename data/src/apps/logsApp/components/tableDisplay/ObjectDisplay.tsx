@@ -29,7 +29,11 @@ export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
                 headerType={HeaderType.Single}
                 cellCssClass={"simpleRow"}
               >
-                <ContentDisplay path={currentPath} content={key} />
+                <ContentDisplay
+                  allowHTML={false}
+                  path={currentPath}
+                  content={key}
+                />
                 <ContentDisplay path={currentPath} content={curElement} />
               </BaseRow>
             );
@@ -42,7 +46,7 @@ export const ObjectDisplay: FunctionComponent<IObjectDisplayProps> = ({
                 key={key}
               >
                 <div className={"subTable"}>
-                  <ContentDisplay path={path} content={key} />
+                  <ContentDisplay allowHTML={false} path={path} content={key} />
                   <InnerTableDisplay
                     displayObject={curElement}
                     path={currentPath}

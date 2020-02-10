@@ -51,7 +51,7 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
           headerType={HeaderType.All}
         >
           {titles.map(title => (
-            <ContentDisplay key={title} content={title} />
+            <ContentDisplay allowHTML={false} key={title} content={title} />
           ))}
         </BaseRow>
 
