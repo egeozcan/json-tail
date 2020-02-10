@@ -36,5 +36,12 @@ export function tableDisplayReducer(
     case TableDisplayActionTypes.SetPath:
       draft.currentPath = action.data.path;
       return draft;
+
+    case TableDisplayActionTypes.SetRenderType:
+      draft.specialHandledPaths.set(
+        action.data.path.join(","),
+        action.data.type
+      );
+      return draft;
   }
 }

@@ -2,5 +2,6 @@ export enum TableDisplayActionTypes {
   HidePath,
   ShowPath,
   SetMaxLevel,
-  SetPath
+  SetPath,
+  SetRenderType
 }

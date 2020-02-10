@@ -5,6 +5,7 @@ import { TableDisplayActionTypes } from "./enums/TableDisplayActionTypes";
 import { TableDisplayDispatchContext } from "./hooks/useTableDisplayDispatchContext";
 import { TableDisplayStateContext } from "./hooks/useTableDisplayStateContext";
 import { ITableDisplayState } from "./interfaces/ITableDisplayState";
+import { TableDisplayRenderTypes } from "./enums/TableDisplayRenderTypes";
 
 export interface ITableDisplayProviderProps {
   maxLevel: number;
@@ -14,7 +15,8 @@ const initialState: ITableDisplayState = {
   hiddenPaths: [],
   shownPaths: [],
   maxLevel: 0,
-  currentPath: []
+  currentPath: [],
+  specialHandledPaths: new Map<string, TableDisplayRenderTypes>()
 };
 
 /**

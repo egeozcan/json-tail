@@ -1,4 +1,5 @@
 import { TableDisplayActionTypes } from "../enums/TableDisplayActionTypes";
+import { TableDisplayRenderTypes } from "../enums/TableDisplayRenderTypes";
 
 export interface IBaseTableDisplayAction {
   type: TableDisplayActionTypes;
@@ -32,8 +33,17 @@ export interface ISetPathAction extends IBaseTableDisplayAction {
   };
 }
 
+export interface ISetRenderTypeAction extends IBaseTableDisplayAction {
+  type: TableDisplayActionTypes.SetRenderType;
+  data: {
+    path: string[];
+    type: TableDisplayRenderTypes;
+  };
+}
+
 export type ITableDisplayAction =
   | IHideAction
   | IShowAction
   | ISetMaxLevelAction
-  | ISetPathAction;
+  | ISetPathAction
+  | ISetRenderTypeAction;
