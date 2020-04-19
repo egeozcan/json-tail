@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"github.com/gorilla/websocket"
@@ -16,6 +17,10 @@ type message struct {
 	Date time.Time `json:"date"`
 	Text string    `json:"data"`
 	Id string      `json:"id"`
+}
+
+type anonymousMessage struct {
+	Text string    `json:"data"`
 }
 
 func main() {
@@ -40,6 +45,7 @@ func main() {
 
 	http.HandleFunc("/tail", createClientHandler(&clients, &messages))
 	http.HandleFunc("/download", createLogDownloadHandler(&messages))
+	http.HandleFunc("/log", createUploadLogHandler(broadcast))
 	http.Handle("/", http.FileServer(assetFS()))
 
 	fileTail, err := tail.TailFile(*file, tail.Config{Follow: true, Poll: *usePolling})
@@ -85,7 +91,18 @@ func createClientHandler(clients *SocketQueue, messages *[]*message) http.Handle
 	}
 }
 
-
+func createUploadLogHandler(broadcast chan message) http.HandlerFunc {
+	return func(writer http.ResponseWriter, request *http.Request) {
+		var msg anonymousMessage
+		decoder := json.NewDecoder(request.Body)
+		err := decoder.Decode(&msg)
+		if err != nil {
+			writer.WriteHeader(500)
+			return
+		}
+		broadcast <- newMessage(msg.Text)
+	}
+}
 
 func createLogDownloadHandler(messages *[]*message) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {

@@ -1,4 +1,4 @@
-import { IAddAction } from "../interfaces/IAppAction";
+import { AppAction, IAddAction } from "../interfaces/IAppAction";
 import { LogStatus } from "../components/log/enums/LogStatus";
 import { AppActionTypes } from "../enums/AppActionTypes";
 
@@ -17,4 +17,14 @@ export function createLog(
       time: time || new Date()
     }
   };
+}
+
+export function createLogInternal(data: unknown) {
+  return fetch("/log", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ data })
+  });
 }

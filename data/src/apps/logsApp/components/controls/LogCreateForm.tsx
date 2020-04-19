@@ -1,28 +1,17 @@
 import * as React from "react";
-import { FunctionComponent, useContext, useState } from "react";
-import {
-  LogsAppDispatchContext,
-  useLogsAppDispatchContext
-} from "../../hooks/useLogsAppDispatchContext";
-import { createLog } from "../../actionCreators/createLog";
+import { FunctionComponent, useState } from "react";
+import { createLogInternal } from "../../actionCreators/createLog";
 import { InputWrapper } from "../common/InputWrapper";
 
 export interface ILogFormProps {}
 
 export const LogCreateForm: FunctionComponent<ILogFormProps> = () => {
   const [text, setText] = useState("");
-  const dispatch = useLogsAppDispatchContext();
 
   const changeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setText(e.currentTarget.value);
 
-  const addLog = () => {
-    try {
-      dispatch(createLog(JSON.parse(text)));
-    } catch {
-      dispatch(createLog(text));
-    }
-  };
+  const addLog = () => createLogInternal(text);
 
   //StyledInputWrapper... lol... such laziness :)
   return (
