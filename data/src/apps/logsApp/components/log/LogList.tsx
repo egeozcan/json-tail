@@ -8,10 +8,12 @@ import { LogStatus } from "./enums/LogStatus";
 import { toggleLog } from "../../actionCreators/toggleLog";
 import { parse } from "jsonpath";
 import { ErrorBoundary } from "./LogErrorBoundary";
+import { removeLog } from "../../actionCreators/removeLog";
 
 export interface ILogListProps {
   logs: ILog[];
   toggleState: (id: number, status: LogStatus) => void;
+  setDeleted: (id: number) => void;
   titleSelector: (log: ILog) => string;
   pathSelector?: string;
   maxLevel: number;
@@ -20,17 +22,19 @@ export interface ILogListProps {
 export const LogList: FunctionComponent<ILogListProps> = ({
   logs,
   toggleState,
+  setDeleted,
   titleSelector,
   pathSelector,
-  maxLevel
+  maxLevel,
 }) => (
   <div className={"LogsContainer"}>
-    {logs.map(log => (
+    {logs.map((log) => (
       <Log
         maxLevel={maxLevel}
         key={log.id}
         titleSelector={titleSelector}
         toggleState={() => toggleState(log.id, log.status)}
+        setDeleted={() => setDeleted(log.id)}
         log={log}
         pathSelector={pathSelector}
       />
@@ -43,6 +47,7 @@ export const ConnectedLogList: FunctionComponent = () => {
   const dispatch = useLogsAppDispatchContext();
   const toggleState = (id: number, status: LogStatus) =>
     dispatch(toggleLog(id, status));
+  const setDeleted = (id: number) => removeLog(id, dispatch, appState.host);
 
   let pathSelector: string | undefined;
 
@@ -60,6 +65,7 @@ export const ConnectedLogList: FunctionComponent = () => {
       titleSelector={appState.titleSelector}
       logs={appState.logs}
       toggleState={toggleState}
+      setDeleted={setDeleted}
       pathSelector={pathSelector}
       maxLevel={appState.maxLevel}
     />

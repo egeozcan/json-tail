@@ -2,7 +2,7 @@ import { default as React, FunctionComponent } from "react";
 import { InnerTableDisplay } from "./InnerTableDisplay";
 import {
   ITableDisplayProviderProps,
-  TableDisplayProvider
+  TableDisplayProvider,
 } from "./TableDisplayProvider";
 import { Block } from "../common/Block";
 import { ConnectedPathDisplay } from "./CurrentPathDisplay";
@@ -11,7 +11,6 @@ import { RowContainer } from "../common/RowContainer";
 export interface ITableDisplayProps extends ITableDisplayProviderProps {
   displayObject: unknown;
   path: string[];
-  showCurrentPath?: boolean;
 }
 
 /**
@@ -26,7 +25,6 @@ export const TableDisplay: FunctionComponent<ITableDisplayProps> = ({
   maxLevel = 0,
   displayObject,
   path = [],
-  showCurrentPath = true
 }) => (
   <TableDisplayProvider maxLevel={maxLevel}>
     <RowContainer vertical={true}>

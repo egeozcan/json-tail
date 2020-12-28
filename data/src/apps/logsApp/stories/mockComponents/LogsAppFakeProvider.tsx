@@ -8,9 +8,12 @@ import { ILogsAppProviderProps, initialState } from "../../LogsAppProvider";
 import { useFakeLogSourceEffect } from "../mockHooks/useFakeLogSourceEffect";
 
 export const LogsAppFakeProvider: FunctionComponent<ILogsAppProviderProps> = ({
-  children
+  children,
 }) => {
-  const [state, dispatch] = useImmerReducer(logsAppReducer, initialState);
+  const [state, dispatch] = useImmerReducer(logsAppReducer, {
+    ...initialState,
+    host: "",
+  });
 
   useFakeLogSourceEffect(dispatch);
 

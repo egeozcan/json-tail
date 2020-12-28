@@ -16,11 +16,15 @@ import (
 type message struct {
 	Date time.Time `json:"date"`
 	Text string    `json:"data"`
-	Id string      `json:"id"`
+	Id   string    `json:"id"`
 }
 
 type anonymousMessage struct {
-	Text string    `json:"data"`
+	Text string `json:"data"`
+}
+
+type messageIdentifier struct {
+	Id string `json:"id"`
 }
 
 func main() {
@@ -45,6 +49,7 @@ func main() {
 
 	http.HandleFunc("/tail", createClientHandler(&clients, &messages))
 	http.HandleFunc("/download", createLogDownloadHandler(&messages))
+	http.HandleFunc("/delete", createDeleteLogHandler(&messages))
 	http.HandleFunc("/log", createUploadLogHandler(broadcast))
 	http.Handle("/", http.FileServer(assetFS()))
 
@@ -92,15 +97,42 @@ func createClientHandler(clients *SocketQueue, messages *[]*message) http.Handle
 }
 
 func createUploadLogHandler(broadcast chan message) http.HandlerFunc {
-	return func(writer http.ResponseWriter, request *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 		var msg anonymousMessage
-		decoder := json.NewDecoder(request.Body)
+		decoder := json.NewDecoder(r.Body)
 		err := decoder.Decode(&msg)
 		if err != nil {
-			writer.WriteHeader(500)
+			w.WriteHeader(500)
 			return
 		}
 		broadcast <- newMessage(msg.Text)
+	}
+}
+
+func createDeleteLogHandler(messages *[]*message) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var messageId messageIdentifier
+		decoder := json.NewDecoder(r.Body)
+		err := decoder.Decode(&messageId)
+
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			_, _ = w.Write([]byte("500 - Y U NO SEND logId?!"))
+			return
+		}
+
+		for i, msg := range *messages {
+			if msg.Id == messageId.Id {
+				msgVal := *messages
+				*messages = append(msgVal[:i], msgVal[i+1:]...)
+				w.WriteHeader(http.StatusOK)
+				_, _ = w.Write([]byte("200 - that key is no more"))
+				return
+			}
+		}
+
+		w.WriteHeader(http.StatusNotFound)
+		_, _ = w.Write([]byte("404 - Key not found"))
 	}
 }
 
@@ -116,7 +148,7 @@ func createLogDownloadHandler(messages *[]*message) http.HandlerFunc {
 
 		logId := keys[0]
 
-		for _, msg := range *messages  {
+		for _, msg := range *messages {
 			if msg.Id == logId {
 				w.Header().Set("Content-Type", "application/json")
 				_, _ = w.Write([]byte(msg.Text))
@@ -164,7 +196,7 @@ func newMessage(text string) message {
 	msg.Text = text
 	msg.Date = time.Now()
 
-	id, err := gonanoid.Nanoid()
+	id, err := gonanoid.New()
 	if err != nil {
 		return msg
 	}

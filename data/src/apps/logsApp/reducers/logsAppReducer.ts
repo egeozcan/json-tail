@@ -19,13 +19,13 @@ export function logsAppReducer(
         id: action.data.logId,
         data: action.data.logData,
         status: action.data.status,
-        time: action.data.time
+        time: action.data.time,
       };
       draft.logs.push(log);
       return draft;
 
     case AppActionTypes.ChangeStatus:
-      const minMsg = draft.logs.find(m => m.id === action.data.logId);
+      const minMsg = draft.logs.find((m) => m.id === action.data.logId);
 
       if (!minMsg) {
         return draft;
@@ -36,7 +36,7 @@ export function logsAppReducer(
 
     case AppActionTypes.Remove:
       draft.logs.splice(
-        draft.logs.findIndex(m => m.id === action.data.logId),
+        draft.logs.findIndex((m) => m.id === action.data.logId),
         1
       );
 
@@ -59,6 +59,10 @@ export function logsAppReducer(
 
     case AppActionTypes.ChangeMaxLevel:
       draft.maxLevel = action.data.level;
+      return draft;
+
+    case AppActionTypes.SetHost:
+      draft.host = action.data.host;
       return draft;
   }
 }

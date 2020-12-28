@@ -5,4 +5,5 @@ export interface IAppState {
   titleSelector: (log: any) => string;
   pathSelector?: string;
   maxLevel: number;
+  host: string;
 }

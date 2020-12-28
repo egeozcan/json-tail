@@ -10,7 +10,8 @@ export const initialState: IAppState = {
   logs: [],
   titleSelector: (log: any) => JSON.stringify(log),
   pathSelector: "",
-  maxLevel: 5
+  maxLevel: 5,
+  host: "/",
 };
 
 export interface ILogsAppProviderProps {
@@ -20,7 +21,7 @@ export interface ILogsAppProviderProps {
 
 export const LogsAppProvider: FunctionComponent<ILogsAppProviderProps> = ({
   children,
-  logWebSocketSourceUrl
+  logWebSocketSourceUrl,
 }) => {
   const [state, dispatch] = useImmerReducer(logsAppReducer, initialState);
 

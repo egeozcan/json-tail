@@ -1,4 +1,5 @@
 export enum LogStatus {
   Shown,
-  Minimized
+  Minimized,
+  Unloading,
 }

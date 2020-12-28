@@ -49,10 +49,18 @@ export interface IChangeLevelAction extends IAppAction {
   };
 }
 
+export interface ISetHostAction extends IAppAction {
+  type: AppActionTypes.SetHost;
+  data: {
+    host: string;
+  };
+}
+
 export type AppAction =
   | IChangeStatusAction
   | IRemoveAction
   | IAddAction
   | IResetAction
   | ISetJsonPathAction
-  | IChangeLevelAction;
+  | IChangeLevelAction
+  | ISetHostAction;

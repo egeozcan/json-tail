@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "storybook": "start-storybook",
-    "build": "node ../build.js"
+    "build": "node ../build.js",
+    "upgrade": "npm-check --update"
   },
   "keywords": [],
   "author": "",
@@ -37,6 +38,7 @@
   "dependencies": {
     "immer": "^6.0.3",
     "jsonpath": "^1.0.2",
+    "npm-check": "^5.9.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "styled-components": "^5.1.0",
