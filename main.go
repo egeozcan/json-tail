@@ -25,14 +25,14 @@ func main() {
 	messages := make([]*message, 0)
 	tailers := make(map[string]*tail.Tail)
 	broadcast := make(chan *message)
-	stateUpdate := make(chan *string)
+	stateUpdate := make(chan string)
 
 	http.HandleFunc("/tail", createClientTailHandler(&tailClients, &messages))
 	http.HandleFunc("/state", createClientStateHandler(&stateClients, &stateUpdate, &tailers))
 	http.HandleFunc("/download", createLogDownloadHandler(&messages))
 	http.HandleFunc("/delete", createDeleteLogHandler(&messages))
-	http.HandleFunc("/addFile", createStartTailHandler(&broadcast, usePolling, &tailers, &mux))
-	http.HandleFunc("/removeFile", createStopTailHandler(&tailers, &mux))
+	http.HandleFunc("/addFile", createStartTailHandler(&broadcast, usePolling, &tailers, &mux, &stateUpdate))
+	http.HandleFunc("/removeFile", createStopTailHandler(&tailers, &mux, &stateUpdate))
 	http.HandleFunc("/log", createUploadLogHandler(&broadcast))
 	http.Handle("/", http.FileServer(assetFS()))
 

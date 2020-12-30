@@ -39,7 +39,7 @@ func createClientTailHandler(clients *SocketQueue, messages *[]*message) http.Ha
 	}
 }
 
-func createClientStateHandler(stateClients *SocketQueue, stateUpdate *chan *string, tailers *map[string]*tail.Tail) http.HandlerFunc {
+func createClientStateHandler(stateClients *SocketQueue, stateUpdate *chan string, tailers *map[string]*tail.Tail) http.HandlerFunc {
 	var upgrader = websocket.Upgrader{
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024,

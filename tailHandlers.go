@@ -9,7 +9,7 @@ import (
 	"sync"
 )
 
-func createStartTailHandler(broadcast *chan *message, usePolling *bool, tailers *map[string]*tail.Tail, tailMux *sync.Mutex) http.HandlerFunc {
+func createStartTailHandler(broadcast *chan *message, usePolling *bool, tailers *map[string]*tail.Tail, tailMux *sync.Mutex, stateUpdate *chan string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var fileIdent fileIdentifier
 		decoder := json.NewDecoder(r.Body)
@@ -31,6 +31,7 @@ func createStartTailHandler(broadcast *chan *message, usePolling *bool, tailers 
 		}
 
 		(*tailers)[fileIdent.FilePath] = fileTail
+		*stateUpdate <- fileIdent.FilePath
 
 		tailMux.Unlock()
 
@@ -48,7 +49,7 @@ func handleNewLines(lines *chan *tail.Line, broadcast *chan *message, filePath s
 	}
 }
 
-func createStopTailHandler(tailers *map[string]*tail.Tail, tailMux *sync.Mutex) http.HandlerFunc {
+func createStopTailHandler(tailers *map[string]*tail.Tail, tailMux *sync.Mutex, stateUpdate *chan string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var fileIdent fileIdentifier
 		decoder := json.NewDecoder(r.Body)
@@ -62,6 +63,7 @@ func createStopTailHandler(tailers *map[string]*tail.Tail, tailMux *sync.Mutex) 
 		}
 
 		delete(*tailers, fileIdent.FilePath)
+		*stateUpdate <- fileIdent.FilePath
 
 		tailMux.Unlock()
 	}
