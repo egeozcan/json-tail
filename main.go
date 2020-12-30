@@ -7,17 +7,11 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/hpcloud/tail"
 	"github.com/matoous/go-nanoid"
+	"github.com/pkg/browser"
 	"log"
 	"net/http"
-	"os"
 	"time"
 )
-
-type message struct {
-	Date time.Time `json:"date"`
-	Text string    `json:"data"`
-	Id   string    `json:"id"`
-}
 
 type anonymousMessage struct {
 	Text string `json:"data"`
@@ -27,44 +21,54 @@ type messageIdentifier struct {
 	Id string `json:"id"`
 }
 
+type fileIdentifier struct {
+	FilePath string `json:"path"`
+}
+
+type message struct {
+	messageIdentifier
+	anonymousMessage
+	fileIdentifier
+	Date time.Time `json:"date"`
+}
+
 func main() {
 	port := flag.String("port", "8080", "the port")
-	file := flag.String("file", "", "the file to tail")
 	usePolling := flag.Bool("usePolling", true, "use polling to detect changes")
+	openBrowser := flag.Bool("openBrowser", true, "open browser window directly")
 
 	flag.Parse()
 
-	if *file == "" {
-		flag.PrintDefaults()
-		os.Exit(1)
-	}
-
 	log.Println("port:", *port)
-	log.Println("file:", *file)
 	log.Println("usePolling:", *usePolling)
 
 	var clients SocketQueue
 	messages := make([]*message, 0)
-	broadcast := make(chan message)
+	tailers := make(map[string]*tail.Tail)
+	broadcast := make(chan *message)
 
 	http.HandleFunc("/tail", createClientHandler(&clients, &messages))
 	http.HandleFunc("/download", createLogDownloadHandler(&messages))
 	http.HandleFunc("/delete", createDeleteLogHandler(&messages))
-	http.HandleFunc("/log", createUploadLogHandler(broadcast))
+	http.HandleFunc("/addFile", createStartTailHandler(&broadcast, usePolling, &tailers))
+	http.HandleFunc("/removeFile", createStopTailHandler(&tailers))
+	http.HandleFunc("/log", createUploadLogHandler(&broadcast))
 	http.Handle("/", http.FileServer(assetFS()))
 
-	fileTail, err := tail.TailFile(*file, tail.Config{Follow: true, Poll: *usePolling})
+	go handleMessages(&clients, &broadcast, &messages)
 
-	if err != nil {
-		log.Fatal(err)
+	if *openBrowser {
+		go launchBrowser("localhost:" + *port)
 	}
 
-	go handleMessages(&clients, broadcast, &messages)
-	go handleNewLines(fileTail.Lines, broadcast)
+	log.Fatal("ListenAndServe: ", http.ListenAndServe(":"+*port, nil))
+}
 
-	err = http.ListenAndServe(":"+*port, nil)
+func launchBrowser(address string) {
+	err := browser.OpenURL(address)
+
 	if err != nil {
-		log.Fatal("ListenAndServe: ", err)
+		log.Println("error when opening the browser", err)
 	}
 }
 
@@ -96,7 +100,47 @@ func createClientHandler(clients *SocketQueue, messages *[]*message) http.Handle
 	}
 }
 
-func createUploadLogHandler(broadcast chan message) http.HandlerFunc {
+func createStartTailHandler(broadcast *chan *message, usePolling *bool, tailers *map[string]*tail.Tail) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var fileIdent fileIdentifier
+		decoder := json.NewDecoder(r.Body)
+		err := decoder.Decode(&fileIdent)
+
+		if err != nil || fileIdent.FilePath == "" || (*tailers)[fileIdent.FilePath] != nil {
+			w.WriteHeader(500)
+			return
+		}
+
+		fileTail, err := tail.TailFile(fileIdent.FilePath, tail.Config{Follow: true, Poll: *usePolling})
+
+		if err != nil {
+			log.Println(err)
+			w.WriteHeader(500)
+			return
+		}
+
+		(*tailers)[fileIdent.FilePath] = fileTail
+
+		go handleNewLines(&fileTail.Lines, broadcast, fileIdent.FilePath)
+	}
+}
+
+func createStopTailHandler(tailers *map[string]*tail.Tail) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var fileIdent fileIdentifier
+		decoder := json.NewDecoder(r.Body)
+		err := decoder.Decode(&fileIdent)
+
+		if err != nil || fileIdent.FilePath == "" || (*tailers)[fileIdent.FilePath] == nil {
+			w.WriteHeader(500)
+			return
+		}
+
+		delete(*tailers, fileIdent.FilePath)
+	}
+}
+
+func createUploadLogHandler(broadcast *chan *message) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var msg anonymousMessage
 		decoder := json.NewDecoder(r.Body)
@@ -105,7 +149,7 @@ func createUploadLogHandler(broadcast chan message) http.HandlerFunc {
 			w.WriteHeader(500)
 			return
 		}
-		broadcast <- newMessage(msg.Text)
+		*broadcast <- newMessage(msg.Text)
 	}
 }
 
@@ -162,11 +206,11 @@ func createLogDownloadHandler(messages *[]*message) http.HandlerFunc {
 	}
 }
 
-func handleMessages(clients *SocketQueue, broadcast chan message, messages *[]*message) {
+func handleMessages(clients *SocketQueue, broadcast *chan *message, messages *[]*message) {
 	for {
-		msg := <-broadcast
+		msg := <-*broadcast
 
-		*messages = append(*messages, &msg)
+		*messages = append(*messages, msg)
 
 		for i, client := range clients.connections {
 			log.Printf("%s %s", client.LocalAddr().String(), i)
@@ -181,27 +225,34 @@ func handleMessages(clients *SocketQueue, broadcast chan message, messages *[]*m
 	}
 }
 
-func handleNewLines(lines chan *tail.Line, broadcast chan message) {
-	for line := range lines {
+func handleNewLines(lines *chan *tail.Line, broadcast *chan *message, filePath string) {
+	for line := range *lines {
 		txt := line.Text
-		msg := newMessage(txt)
+		msg := newMessageWithFileName(txt, filePath)
 
-		broadcast <- msg
+		*broadcast <- msg
 		fmt.Println(txt)
 	}
 }
 
-func newMessage(text string) message {
+func newMessageWithFileName(text string, fileName string) *message {
+	msg := newMessage(text)
+	msg.FilePath = fileName
+
+	return msg
+}
+
+func newMessage(text string) *message {
 	msg := message{}
 	msg.Text = text
 	msg.Date = time.Now()
 
 	id, err := gonanoid.New()
 	if err != nil {
-		return msg
+		return &msg
 	}
 
 	msg.Id = id
 
-	return msg
+	return &msg
 }
