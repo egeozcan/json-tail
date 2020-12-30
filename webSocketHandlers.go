@@ -5,6 +5,7 @@ import (
 	"github.com/hpcloud/tail"
 	"log"
 	"net/http"
+	"time"
 )
 
 func createClientTailHandler(clients *SocketQueue, messages *[]*message) http.HandlerFunc {
@@ -39,7 +40,7 @@ func createClientTailHandler(clients *SocketQueue, messages *[]*message) http.Ha
 	}
 }
 
-func createClientStateHandler(stateClients *SocketQueue, stateUpdate *chan string, tailers *map[string]*tail.Tail) http.HandlerFunc {
+func createClientStateHandler(stateClients *SocketQueue, tailers *map[string]*tail.Tail) http.HandlerFunc {
 	var upgrader = websocket.Upgrader{
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024,
@@ -74,7 +75,7 @@ func createClientStateHandler(stateClients *SocketQueue, stateUpdate *chan strin
 		}
 
 		for {
-			<-*stateUpdate
+			time.Sleep(2 * time.Second)
 
 			keys := make([]string, 0, len(*tailers))
 			for k := range *tailers {

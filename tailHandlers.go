@@ -7,10 +7,9 @@ import (
 	"log"
 	"net/http"
 	"sync"
-	"time"
 )
 
-func createStartTailHandler(broadcast *chan *message, usePolling *bool, tailers *map[string]*tail.Tail, tailMux *sync.Mutex, stateUpdate *chan string) http.HandlerFunc {
+func createStartTailHandler(broadcast *chan *message, usePolling *bool, tailers *map[string]*tail.Tail, tailMux *sync.Mutex) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var fileIdent fileIdentifier
 		decoder := json.NewDecoder(r.Body)
@@ -35,11 +34,6 @@ func createStartTailHandler(broadcast *chan *message, usePolling *bool, tailers 
 
 		(*tailers)[fileIdent.FilePath] = fileTail
 
-		select {
-		case *stateUpdate <- fileIdent.FilePath:
-		case <-time.After(1 * time.Second):
-		}
-
 		tailMux.Unlock()
 
 		go handleNewLines(&fileTail.Lines, broadcast, fileIdent.FilePath)
@@ -56,7 +50,7 @@ func handleNewLines(lines *chan *tail.Line, broadcast *chan *message, filePath s
 	}
 }
 
-func createStopTailHandler(tailers *map[string]*tail.Tail, tailMux *sync.Mutex, stateUpdate *chan string) http.HandlerFunc {
+func createStopTailHandler(tailers *map[string]*tail.Tail, tailMux *sync.Mutex) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var fileIdent fileIdentifier
 		decoder := json.NewDecoder(r.Body)
@@ -87,10 +81,6 @@ func createStopTailHandler(tailers *map[string]*tail.Tail, tailMux *sync.Mutex, 
 		}
 
 		delete(*tailers, fileIdent.FilePath)
-		select {
-		case *stateUpdate <- fileIdent.FilePath:
-		case <-time.After(1 * time.Second):
-		}
 
 		tailMux.Unlock()
 	}
