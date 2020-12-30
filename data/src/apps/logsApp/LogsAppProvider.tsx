@@ -5,6 +5,7 @@ import { IAppState } from "./interfaces/IAppState";
 import useWebSocketLogSourceEffect from "./hooks/useWebSocketLogSourceEffect";
 import { LogsAppDispatchContext } from "./hooks/useLogsAppDispatchContext";
 import { LogsAppStateContext } from "./hooks/useLogsAppStateContext";
+import { enableMapSet } from "immer";
 
 export const initialState: IAppState = {
   logs: [],
@@ -12,6 +13,7 @@ export const initialState: IAppState = {
   pathSelector: "",
   maxLevel: 5,
   host: "/",
+  files: [],
 };
 
 export interface ILogsAppProviderProps {
@@ -24,6 +26,7 @@ export const LogsAppProvider: FunctionComponent<ILogsAppProviderProps> = ({
   logWebSocketSourceUrl,
 }) => {
   const [state, dispatch] = useImmerReducer(logsAppReducer, initialState);
+  enableMapSet();
 
   useWebSocketLogSourceEffect(logWebSocketSourceUrl, dispatch);
 

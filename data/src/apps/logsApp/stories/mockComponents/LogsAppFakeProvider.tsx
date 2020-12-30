@@ -6,6 +6,7 @@ import { LogsAppDispatchContext } from "../../hooks/useLogsAppDispatchContext";
 import { LogsAppStateContext } from "../../hooks/useLogsAppStateContext";
 import { ILogsAppProviderProps, initialState } from "../../LogsAppProvider";
 import { useFakeLogSourceEffect } from "../mockHooks/useFakeLogSourceEffect";
+import { enableMapSet } from "immer";
 
 export const LogsAppFakeProvider: FunctionComponent<ILogsAppProviderProps> = ({
   children,
@@ -14,6 +15,7 @@ export const LogsAppFakeProvider: FunctionComponent<ILogsAppProviderProps> = ({
     ...initialState,
     host: "",
   });
+  enableMapSet();
 
   useFakeLogSourceEffect(dispatch);
 

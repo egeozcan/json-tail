@@ -14,6 +14,7 @@ interface IContentDisplayProps {
   allowHTML?: boolean;
 }
 
+// language=LESS
 const ContentDisplayContainer = styled.span`
   & {
     margin-right: 5px;
@@ -38,7 +39,7 @@ export const ContentDisplay: FunctionComponent<IContentDisplayProps> = ({
   content,
   title,
   path = [],
-  allowHTML = true
+  allowHTML = true,
 }) => {
   const dispatch = useTableDisplayDispatchContext();
   const state = useTableDisplayStateContext();
@@ -56,15 +57,15 @@ export const ContentDisplay: FunctionComponent<IContentDisplayProps> = ({
           type: useHTMLRender
             ? TableDisplayRenderTypes.String
             : TableDisplayRenderTypes.HTML,
-          path
-        }
+          path,
+        },
       }),
     [path, state.specialHandledPaths]
   );
   const switchButton = !allowHTML ? null : (
     <a
       href={"#"}
-      onClick={e => {
+      onClick={(e) => {
         e.preventDefault();
         switchRendering();
       }}

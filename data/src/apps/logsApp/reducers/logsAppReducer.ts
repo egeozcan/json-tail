@@ -60,9 +60,5 @@ export function logsAppReducer(
     case AppActionTypes.ChangeMaxLevel:
       draft.maxLevel = action.data.level;
       return draft;
-
-    case AppActionTypes.SetHost:
-      draft.host = action.data.host;
-      return draft;
   }
 }
