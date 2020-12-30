@@ -1,5 +1,6 @@
 import { LogStatus } from "../components/log/enums/LogStatus";
 import { AppActionTypes } from "../enums/AppActionTypes";
+import { ILoggedFile } from "./IAppState";
 
 export interface IAppAction {
   type: AppActionTypes;
@@ -49,10 +50,18 @@ export interface IChangeLevelAction extends IAppAction {
   };
 }
 
+export interface ISetFilesAction extends IAppAction {
+  type: AppActionTypes.SetFiles;
+  data: {
+    files: ILoggedFile[];
+  };
+}
+
 export type AppAction =
   | IChangeStatusAction
   | IRemoveAction
   | IAddAction
   | IResetAction
   | ISetJsonPathAction
-  | IChangeLevelAction;
+  | IChangeLevelAction
+  | ISetFilesAction;
