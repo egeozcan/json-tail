@@ -42,7 +42,12 @@ export const LoggedFiles: FunctionComponent<ILoggedFilesControlProps> = () => {
   return (
     <InputWrapper>
       <form onSubmit={addFile}>
-        <input value={path} onChange={changeHandler} disabled={loading} />
+        <input
+          value={path}
+          style={{ flex: 1 }}
+          onChange={changeHandler}
+          disabled={loading}
+        />
         <input
           type="submit"
           value="add file"

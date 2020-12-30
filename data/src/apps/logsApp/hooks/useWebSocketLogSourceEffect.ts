@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { createLog } from "../actionCreators/createLog";
 import { AppAction } from "../interfaces/IAppAction";
 import { LogStatus } from "../components/log/enums/LogStatus";
+import { AppActionTypes } from "../enums/AppActionTypes";
 
 export default function useWebSocketLogSourceEffect(
   logWebSocketSourceUrl: string,
@@ -9,14 +10,12 @@ export default function useWebSocketLogSourceEffect(
 ) {
   useEffect(() => {
     const conn = new WebSocket(logWebSocketSourceUrl);
-    let keepAlive = true;
-    let aliveTimer: number | null = null;
 
-    conn.onmessage = function(evt) {
+    conn.onmessage = function (evt) {
       const messages = (<string>evt.data)
         .split("\n")
-        .map(x => x.trim())
-        .filter(x => x.length);
+        .map((x) => x.trim())
+        .filter((x) => x.length);
 
       for (let i = 0; i < messages.length; i++) {
         let log = messages[i];
@@ -41,10 +40,26 @@ export default function useWebSocketLogSourceEffect(
 
     return () => {
       conn.close();
+    };
+  }, [dispatch, logWebSocketSourceUrl]);
 
-      if (aliveTimer !== null) {
-        clearTimeout(aliveTimer);
-      }
+  useEffect(() => {
+    const conn = new WebSocket("ws://" + document.location.host + "/state");
+
+    conn.onmessage = function (evt) {
+      console.log(evt.data);
+      dispatch({
+        type: AppActionTypes.SetFiles,
+        data: {
+          files: (JSON.parse(evt.data) as string[]).map((x: string) => ({
+            path: x,
+          })),
+        },
+      });
+    };
+
+    return () => {
+      conn.close();
     };
   }, [dispatch, logWebSocketSourceUrl]);
 }

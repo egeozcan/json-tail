@@ -7,7 +7,9 @@
     "test": "jest",
     "storybook": "start-storybook",
     "build": "node ../build.js",
-    "upgrade": "npm-check --update"
+    "upgrade": "npm-check --update",
+    "build:client": "webpack",
+    "watch": "webpack --watch"
   },
   "keywords": [],
   "author": "",

@@ -25,7 +25,7 @@ func main() {
 	messages := make([]*message, 0)
 	tailers := make(map[string]*tail.Tail)
 	broadcast := make(chan *message)
-	stateUpdate := make(chan string)
+	stateUpdate := make(chan string, 10)
 
 	http.HandleFunc("/tail", createClientTailHandler(&tailClients, &messages))
 	http.HandleFunc("/state", createClientStateHandler(&stateClients, &stateUpdate, &tailers))

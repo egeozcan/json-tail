@@ -12,7 +12,7 @@ export function logsAppReducer(
 ): IAppState {
   switch (action.type) {
     case AppActionTypes.Reset:
-      return initialState;
+      return { ...initialState, files: [...draft.files] };
 
     case AppActionTypes.Add:
       const log: ILog = {
@@ -62,6 +62,8 @@ export function logsAppReducer(
       return draft;
 
     case AppActionTypes.SetFiles:
+      console.log(action.data.files);
+
       draft.files = action.data.files;
       return draft;
   }

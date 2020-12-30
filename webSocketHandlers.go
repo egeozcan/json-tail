@@ -61,6 +61,18 @@ func createClientStateHandler(stateClients *SocketQueue, stateUpdate *chan strin
 
 		stateClients.Add(ws)
 
+		keys := make([]string, 0, len(*tailers))
+		for k := range *tailers {
+			keys = append(keys, k)
+		}
+
+		err = ws.WriteJSON(keys)
+
+		if err != nil {
+			log.Println(err)
+			return
+		}
+
 		for {
 			<-*stateUpdate
 

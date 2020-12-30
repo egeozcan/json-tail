@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"sync"
+	"time"
 )
 
 func createStartTailHandler(broadcast *chan *message, usePolling *bool, tailers *map[string]*tail.Tail, tailMux *sync.Mutex, stateUpdate *chan string) http.HandlerFunc {
@@ -19,6 +20,7 @@ func createStartTailHandler(broadcast *chan *message, usePolling *bool, tailers 
 
 		if err != nil || fileIdent.FilePath == "" || (*tailers)[fileIdent.FilePath] != nil {
 			w.WriteHeader(500)
+			tailMux.Unlock()
 			return
 		}
 
@@ -27,11 +29,16 @@ func createStartTailHandler(broadcast *chan *message, usePolling *bool, tailers 
 		if err != nil {
 			log.Println(err)
 			w.WriteHeader(500)
+			tailMux.Unlock()
 			return
 		}
 
 		(*tailers)[fileIdent.FilePath] = fileTail
-		*stateUpdate <- fileIdent.FilePath
+
+		select {
+		case *stateUpdate <- fileIdent.FilePath:
+		case <-time.After(1 * time.Second):
+		}
 
 		tailMux.Unlock()
 
@@ -57,13 +64,33 @@ func createStopTailHandler(tailers *map[string]*tail.Tail, tailMux *sync.Mutex, 
 
 		tailMux.Lock()
 
-		if err != nil || fileIdent.FilePath == "" || (*tailers)[fileIdent.FilePath] == nil {
+		if err != nil {
 			w.WriteHeader(500)
+			fmt.Println(err)
+			fmt.Println("error when deleting")
+			tailMux.Unlock()
+			return
+		}
+
+		if fileIdent.FilePath == "" {
+			w.WriteHeader(500)
+			fmt.Println("filepath empty")
+			tailMux.Unlock()
+			return
+		}
+
+		if (*tailers)[fileIdent.FilePath] == nil {
+			w.WriteHeader(500)
+			fmt.Println("filepath nil")
+			tailMux.Unlock()
 			return
 		}
 
 		delete(*tailers, fileIdent.FilePath)
-		*stateUpdate <- fileIdent.FilePath
+		select {
+		case *stateUpdate <- fileIdent.FilePath:
+		case <-time.After(1 * time.Second):
+		}
 
 		tailMux.Unlock()
 	}
