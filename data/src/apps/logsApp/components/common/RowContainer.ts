@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export interface IRowContainerProps {
   vertical?: boolean;
+  expandChild?: number;
 }
 
 // language=LESS
@@ -19,6 +20,10 @@ export const RowContainer = styled.div<IRowContainerProps>`
     &:last-child {
       margin-right: 0;
       margin-bottom: 0;
+    }
+
+    &:nth-child(${(props) => props.expandChild ?? 0}) {
+      flex: 1;
     }
   }
 `;

@@ -23,6 +23,15 @@ export interface ILogProps {
   maxLevel?: number;
 }
 
+function getNodes(data: unknown, pathSelector: string) {
+  try {
+    return nodes(data || {}, pathSelector);
+  } catch (e) {
+    console.error(e);
+    return data;
+  }
+}
+
 export const Log: FunctionComponent<ILogProps> = ({
   log,
   toggleState,
@@ -33,7 +42,7 @@ export const Log: FunctionComponent<ILogProps> = ({
 }) => {
   const logIsShown = log.status === LogStatus.Shown;
   const isUnloading = log.status === LogStatus.Unloading;
-  const data = pathSelector ? nodes(log.data || {}, pathSelector) : log.data;
+  const data = pathSelector ? getNodes(log.data || {}, pathSelector) : log.data;
   const title = `${log.time.toISOString()} ${titleSelector(data)}`;
 
   const toggleButton = toggleState ? (
@@ -54,7 +63,7 @@ export const Log: FunctionComponent<ILogProps> = ({
 
   return useMemo(() => {
     return (
-      <RowContainer className={"logContainer"} key={log.id}>
+      <RowContainer className={"logContainer"} expandChild={4} key={log.id}>
         {isUnloading ? null : (
           <>
             <TextCopyButton getCopyString={() => JSON.stringify(log.data)} />
@@ -64,9 +73,13 @@ export const Log: FunctionComponent<ILogProps> = ({
         )}
 
         {logElement}
-        {logIsShown && setDeleted ? (
-          <DeleteButton onClick={setDeleted} />
-        ) : null}
+        <DeleteButton
+          onClick={() => {
+            if (!isUnloading) {
+              setDeleted?.();
+            }
+          }}
+        />
       </RowContainer>
     );
   }, [log, titleSelector, maxLevel, pathSelector]);

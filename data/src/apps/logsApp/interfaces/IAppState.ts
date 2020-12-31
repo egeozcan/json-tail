@@ -6,6 +6,7 @@ export interface ILoggedFile {
 
 export interface IAppState {
   logs: ILog[];
+  displayedLogs: ILog[];
   titleSelector: (log: any) => string;
   pathSelector?: string;
   maxLevel: number;

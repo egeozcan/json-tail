@@ -7,7 +7,6 @@ import { ILog } from "../../interfaces/ILog";
 import { LogStatus } from "./enums/LogStatus";
 import { toggleLog } from "../../actionCreators/toggleLog";
 import { parse } from "jsonpath";
-import { ErrorBoundary } from "./LogErrorBoundary";
 import { removeLog } from "../../actionCreators/removeLog";
 
 export interface ILogListProps {

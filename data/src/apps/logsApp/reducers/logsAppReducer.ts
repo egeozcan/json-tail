@@ -62,9 +62,12 @@ export function logsAppReducer(
       return draft;
 
     case AppActionTypes.SetFiles:
-      console.log(action.data.files);
-
       draft.files = action.data.files;
+      return draft;
+
+    case AppActionTypes.SetPage:
       return draft;
   }
 }
+
+function updateShown() {}

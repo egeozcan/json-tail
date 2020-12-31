@@ -38,7 +38,7 @@ func main() {
 	go handleMessages(&tailClients, &broadcast, &messages)
 
 	if *openBrowser {
-		go launchBrowser("localhost:" + *port)
+		go launchBrowser("http://localhost:" + *port)
 	}
 
 	log.Fatal("ListenAndServe: ", http.ListenAndServe(":"+*port, nil))

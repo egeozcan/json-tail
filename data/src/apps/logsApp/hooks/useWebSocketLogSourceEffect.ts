@@ -47,7 +47,6 @@ export default function useWebSocketLogSourceEffect(
     const conn = new WebSocket("ws://" + document.location.host + "/state");
 
     conn.onmessage = function (evt) {
-      console.log(evt.data);
       dispatch({
         type: AppActionTypes.SetFiles,
         data: {

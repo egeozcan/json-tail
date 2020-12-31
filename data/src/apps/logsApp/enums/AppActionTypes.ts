@@ -6,4 +6,5 @@ export enum AppActionTypes {
   SetJsonPath,
   ChangeMaxLevel,
   SetFiles,
+  SetPage,
 }

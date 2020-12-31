@@ -57,6 +57,13 @@ export interface ISetFilesAction extends IAppAction {
   };
 }
 
+export interface ISetPageAction extends IAppAction {
+  type: AppActionTypes.SetPage;
+  data: {
+    page: number;
+  };
+}
+
 export type AppAction =
   | IChangeStatusAction
   | IRemoveAction
@@ -64,4 +71,5 @@ export type AppAction =
   | IResetAction
   | ISetJsonPathAction
   | IChangeLevelAction
-  | ISetFilesAction;
+  | ISetFilesAction
+  | ISetPageAction;

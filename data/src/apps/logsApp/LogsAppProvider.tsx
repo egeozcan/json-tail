@@ -9,6 +9,7 @@ import { enableMapSet } from "immer";
 
 export const initialState: IAppState = {
   logs: [],
+  displayedLogs: [],
   titleSelector: (log: any) => JSON.stringify(log),
   pathSelector: "",
   maxLevel: 5,
