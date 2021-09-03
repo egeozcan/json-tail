@@ -38,7 +38,7 @@
     "webpack-cli": "^4.3.0"
   },
   "dependencies": {
-    "immer": "^8.0.0",
+    "immer": "^9.0.6",
     "jsonpath": "^1.0.2",
     "npm-check": "^5.9.2",
     "react": "^17.0.1",
