@@ -12,4 +12,6 @@ export interface IAppState {
   maxLevel: number;
   host: string;
   files: ILoggedFile[];
+  page: number;
+  itemsPerPage: number;
 }

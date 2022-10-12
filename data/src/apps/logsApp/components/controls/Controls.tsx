@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FunctionComponent } from "react";
+import { FunctionComponent, PropsWithChildren } from "react";
 import { ConnectedResetControl } from "./ResetControl";
 import { InputWrapper } from "../common/InputWrapper";
 import { LogCreateForm } from "./LogCreateForm";

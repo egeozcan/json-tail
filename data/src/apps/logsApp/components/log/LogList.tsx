@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FunctionComponent } from "react";
+import { FunctionComponent, PropsWithChildren } from "react";
 import { Log } from "./Log";
 import { useLogsAppStateContext } from "../../hooks/useLogsAppStateContext";
 import { useLogsAppDispatchContext } from "../../hooks/useLogsAppDispatchContext";
@@ -18,7 +18,7 @@ export interface ILogListProps {
   maxLevel: number;
 }
 
-export const LogList: FunctionComponent<ILogListProps> = ({
+export const LogList: FunctionComponent<PropsWithChildren<ILogListProps>> = ({
   logs,
   toggleState,
   setDeleted,

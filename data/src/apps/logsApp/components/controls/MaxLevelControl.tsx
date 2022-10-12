@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FunctionComponent, useCallback } from "react";
+import { FunctionComponent, useCallback, PropsWithChildren } from "react";
 import { useLogsAppDispatchContext } from "../../hooks/useLogsAppDispatchContext";
 import { useLogsAppStateContext } from "../../hooks/useLogsAppStateContext";
 import { changeLevel } from "../../actionCreators/changeLevel";
@@ -9,18 +9,17 @@ export interface IMaxLevelControlProps {
   currentLevel: number;
 }
 
-export const MaxLevelControl: FunctionComponent<IMaxLevelControlProps> = ({
-  onChangeLevel,
-  currentLevel
-}) => {
+export const MaxLevelControl: FunctionComponent<
+  PropsWithChildren<IMaxLevelControlProps>
+> = ({ onChangeLevel, currentLevel }) => {
   return (
     <>
       <span>Max Level:</span>
       <select
         value={currentLevel}
-        onChange={e => onChangeLevel(parseInt(e.target.value))}
+        onChange={(e) => onChangeLevel(parseInt(e.target.value))}
       >
-        {[...new Array(10).keys()].map(i => (
+        {[...new Array(10).keys()].map((i) => (
           <option key={i} value={i}>
             {i === 0 ? "All" : i}
           </option>

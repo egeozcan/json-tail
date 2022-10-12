@@ -1,9 +1,11 @@
 import * as React from "react";
-import { FunctionComponent } from "react";
 import { ICellProps } from "./ICellProps";
 import { StyledTh } from "./styledComponents/StyledTh";
+import { FunctionComponent, PropsWithChildren } from "react";
 
-export const TitleCell: FunctionComponent<ICellProps> = props => (
+export const TitleCell: FunctionComponent<PropsWithChildren<ICellProps>> = (
+  props
+) => (
   <StyledTh
     title={props.title}
     colSpan={props.colspan || 1}

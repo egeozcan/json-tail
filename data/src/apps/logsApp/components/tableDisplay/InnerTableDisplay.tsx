@@ -1,6 +1,6 @@
 import { ObjectDisplay } from "./ObjectDisplay";
 import { ArrayDisplay } from "./ArrayDisplay";
-import { default as React, FunctionComponent } from "react";
+import { default as React, FunctionComponent, PropsWithChildren } from "react";
 import { ContentDisplay } from "./ContentDisplay";
 import { isRenderableAsString } from "./helpers/isRenderableAsString";
 import { useTableDisplayStateContext } from "./hooks/useTableDisplayStateContext";
@@ -23,10 +23,9 @@ export interface IInnerTableDisplayProps extends ITableDisplayTreeProps {
  * @see useTableDisplayDispatchContext
  * @see TableDisplay
  */
-export const InnerTableDisplay: FunctionComponent<IInnerTableDisplayProps> = ({
-  path = [],
-  displayObject
-}) => {
+export const InnerTableDisplay: FunctionComponent<
+  PropsWithChildren<IInnerTableDisplayProps>
+> = ({ path = [], displayObject }) => {
   const state = useTableDisplayStateContext();
   const { maxLevel, hiddenPaths, shownPaths } = state;
 

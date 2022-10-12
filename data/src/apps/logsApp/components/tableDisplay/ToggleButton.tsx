@@ -1,4 +1,9 @@
-import { default as React, FunctionComponent, useCallback } from "react";
+import {
+  default as React,
+  FunctionComponent,
+  PropsWithChildren,
+  useCallback,
+} from "react";
 import { useTableDisplayDispatchContext } from "./hooks/useTableDisplayDispatchContext";
 import { showSubTree } from "./actionCreators/showSubTree";
 import { collapseSubTree } from "./actionCreators/collapseSubTree";
@@ -12,14 +17,12 @@ export interface IToggleButtonProps {
 
 export enum ToggleButtonType {
   Minimize,
-  Maximize
+  Maximize,
 }
 
-export const ToggleButton: FunctionComponent<IToggleButtonProps> = ({
-  path,
-  action,
-  buttonType
-}) => {
+export const ToggleButton: FunctionComponent<
+  PropsWithChildren<IToggleButtonProps>
+> = ({ path, action, buttonType }) => {
   const onClick = useCallback(() => action(path), [action, path]);
 
   return (
@@ -46,10 +49,9 @@ export const ToggleButton: FunctionComponent<IToggleButtonProps> = ({
 export interface IConnectedToggleButtonProps
   extends Omit<IToggleButtonProps, "action"> {}
 
-export const ConnectedToggleButton: FunctionComponent<IConnectedToggleButtonProps> = ({
-  buttonType,
-  path
-}) => {
+export const ConnectedToggleButton: FunctionComponent<
+  PropsWithChildren<IConnectedToggleButtonProps>
+> = ({ buttonType, path }) => {
   const dispatch = useTableDisplayDispatchContext();
   const action = useCallback(() => {
     if (buttonType === ToggleButtonType.Minimize) {

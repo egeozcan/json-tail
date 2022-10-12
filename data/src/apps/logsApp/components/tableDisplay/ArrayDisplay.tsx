@@ -1,7 +1,7 @@
 import { isObjectWithGivenKeys } from "./helpers/isObjectWithGivenKeys";
 import { ITableDisplayTreeProps, InnerTableDisplay } from "./InnerTableDisplay";
 import * as React from "react";
-import { FunctionComponent, useMemo } from "react";
+import { FunctionComponent, useMemo, PropsWithChildren } from "react";
 import { BaseTable } from "./baseComponents/BaseTable";
 import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
 import { ContentDisplay } from "./ContentDisplay";
@@ -11,10 +11,9 @@ export interface IArrayDisplayProps extends ITableDisplayTreeProps {
   arr: any[];
 }
 
-export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
-  arr,
-  path = []
-}) => {
+export const ArrayDisplay: FunctionComponent<
+  PropsWithChildren<IArrayDisplayProps>
+> = ({ arr, path = [] }) => {
   if (arr.length === 0) {
     return <BaseTable />;
   }
@@ -24,7 +23,7 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
 
   const notSuitableForTableView =
     !isObjectWithGivenKeys(firstRow) ||
-    arr.some(el => !isObjectWithGivenKeys(el, titles));
+    arr.some((el) => !isObjectWithGivenKeys(el, titles));
 
   return useMemo(() => {
     if (notSuitableForTableView) {
@@ -50,7 +49,7 @@ export const ArrayDisplay: FunctionComponent<IArrayDisplayProps> = ({
           key={"title"}
           headerType={HeaderType.All}
         >
-          {titles.map(title => (
+          {titles.map((title) => (
             <ContentDisplay allowHTML={false} key={title} content={title} />
           ))}
         </BaseRow>

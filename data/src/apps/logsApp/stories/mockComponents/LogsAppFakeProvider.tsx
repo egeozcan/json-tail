@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FunctionComponent } from "react";
+import { FunctionComponent, PropsWithChildren } from "react";
 import { useImmerReducer } from "use-immer";
 import { logsAppReducer } from "../../reducers/logsAppReducer";
 import { LogsAppDispatchContext } from "../../hooks/useLogsAppDispatchContext";
@@ -8,9 +8,9 @@ import { ILogsAppProviderProps, initialState } from "../../LogsAppProvider";
 import { useFakeLogSourceEffect } from "../mockHooks/useFakeLogSourceEffect";
 import { enableMapSet } from "immer";
 
-export const LogsAppFakeProvider: FunctionComponent<ILogsAppProviderProps> = ({
-  children,
-}) => {
+export const LogsAppFakeProvider: FunctionComponent<
+  PropsWithChildren<ILogsAppProviderProps>
+> = ({ children }) => {
   const [state, dispatch] = useImmerReducer(logsAppReducer, {
     ...initialState,
     host: "",

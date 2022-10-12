@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FunctionComponent, useMemo } from "react";
+import { FunctionComponent, useMemo, PropsWithChildren } from "react";
 import { LogStatus } from "./enums/LogStatus";
 import { ILog } from "../../interfaces/ILog";
 import { RowContainer } from "../common/RowContainer";
@@ -32,7 +32,7 @@ function getNodes(data: unknown, pathSelector: string) {
   }
 }
 
-export const Log: FunctionComponent<ILogProps> = ({
+export const Log: FunctionComponent<PropsWithChildren<ILogProps>> = ({
   log,
   toggleState,
   setDeleted,

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FunctionComponent } from "react";
+import { FunctionComponent, PropsWithChildren } from "react";
 import { StyledTr } from "./styledComponents/StyledTr";
 import { TitleCell } from "./TitleCell";
 import { Cell } from "./Cell";
@@ -7,7 +7,7 @@ import { Cell } from "./Cell";
 export enum HeaderType {
   None,
   Single,
-  All
+  All,
 }
 
 interface IRowProps {
@@ -18,7 +18,9 @@ interface IRowProps {
   title?: string;
 }
 
-export const BaseRow: FunctionComponent<IRowProps> = props => {
+export const BaseRow: FunctionComponent<PropsWithChildren<IRowProps>> = (
+  props
+) => {
   return (
     <StyledTr title={props.title} className={props.cssClass}>
       {React.Children.map(props.children, (child, i) => {

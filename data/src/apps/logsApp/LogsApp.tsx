@@ -8,7 +8,7 @@ export interface ILogsAppProps {
 }
 
 export const LogsApp: FunctionComponent<ILogsAppProps> = ({
-  logWebSocketSourceUrl
+  logWebSocketSourceUrl,
 }) => (
   <LogsAppProvider logWebSocketSourceUrl={logWebSocketSourceUrl}>
     <Controls />

@@ -19,8 +19,8 @@ export const LogPathSelectorForm: FunctionComponent<ILofFormProps> = () => {
     dispatch({
       type: AppActionTypes.SetJsonPath,
       data: {
-        path: text
-      }
+        path: text,
+      },
     });
   };
 

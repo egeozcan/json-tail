@@ -1,4 +1,4 @@
-import { default as React, FunctionComponent } from "react";
+import { default as React, FunctionComponent, PropsWithChildren } from "react";
 import { InnerTableDisplay } from "./InnerTableDisplay";
 import {
   ITableDisplayProviderProps,
@@ -21,11 +21,9 @@ export interface ITableDisplayProps extends ITableDisplayProviderProps {
  * @param showCurrentPath
  * @constructor
  */
-export const TableDisplay: FunctionComponent<ITableDisplayProps> = ({
-  maxLevel = 0,
-  displayObject,
-  path = [],
-}) => (
+export const TableDisplay: FunctionComponent<
+  PropsWithChildren<ITableDisplayProps>
+> = ({ maxLevel = 0, displayObject, path = [] }) => (
   <TableDisplayProvider maxLevel={maxLevel}>
     <RowContainer vertical={true}>
       <ConnectedPathDisplay />

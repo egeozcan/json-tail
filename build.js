@@ -39,7 +39,7 @@ execSync('go-bindata-assetfs -prefix "data/"  data/dist/...', {
 
 console.log("bindata done");
 
-execSync("go build", {
+execSync('go build -ldflags="-H windowsgui"', {
   windowsHide: true,
   cwd: __dirname,
   stdio: "inherit",

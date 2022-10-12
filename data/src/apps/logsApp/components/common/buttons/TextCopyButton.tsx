@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ButtonWrapper } from "./ButtonWrapper";
 import { copyIcon } from "../icons/copyIcon";
+import { PropsWithChildren } from "react";
 
 const copyIconPath =
   "M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 " +
@@ -12,9 +13,9 @@ export interface TextCopyButtonProps {
   getCopyString: () => string;
 }
 
-export const TextCopyButton: React.FunctionComponent<TextCopyButtonProps> = ({
-  getCopyString
-}) => (
+export const TextCopyButton: React.FunctionComponent<
+  PropsWithChildren<TextCopyButtonProps>
+> = ({ getCopyString }) => (
   <ButtonWrapper onClick={() => navigator.clipboard.writeText(getCopyString())}>
     {copyIcon}
   </ButtonWrapper>

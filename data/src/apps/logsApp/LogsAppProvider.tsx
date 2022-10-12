@@ -1,4 +1,4 @@
-import { default as React, FunctionComponent } from "react";
+import { default as React, FunctionComponent, PropsWithChildren } from "react";
 import { useImmerReducer } from "use-immer";
 import { logsAppReducer } from "./reducers/logsAppReducer";
 import { IAppState } from "./interfaces/IAppState";
@@ -15,6 +15,8 @@ export const initialState: IAppState = {
   maxLevel: 5,
   host: "/",
   files: [],
+  page: 0,
+  itemsPerPage: 20,
 };
 
 export interface ILogsAppProviderProps {
@@ -22,10 +24,9 @@ export interface ILogsAppProviderProps {
   children: React.ReactNode;
 }
 
-export const LogsAppProvider: FunctionComponent<ILogsAppProviderProps> = ({
-  children,
-  logWebSocketSourceUrl,
-}) => {
+export const LogsAppProvider: FunctionComponent<
+  PropsWithChildren<ILogsAppProviderProps>
+> = ({ children, logWebSocketSourceUrl }) => {
   const [state, dispatch] = useImmerReducer(logsAppReducer, initialState);
   enableMapSet();
 

@@ -15,11 +15,8 @@ func createStartTailHandler(broadcast *chan *message, usePolling *bool, tailers 
 		decoder := json.NewDecoder(r.Body)
 		err := decoder.Decode(&fileIdent)
 
-		tailMux.Lock()
-
 		if err != nil || fileIdent.FilePath == "" || (*tailers)[fileIdent.FilePath] != nil {
 			w.WriteHeader(500)
-			tailMux.Unlock()
 			return
 		}
 
@@ -28,9 +25,10 @@ func createStartTailHandler(broadcast *chan *message, usePolling *bool, tailers 
 		if err != nil {
 			log.Println(err)
 			w.WriteHeader(500)
-			tailMux.Unlock()
 			return
 		}
+
+		tailMux.Lock()
 
 		(*tailers)[fileIdent.FilePath] = fileTail
 
@@ -56,29 +54,26 @@ func createStopTailHandler(tailers *map[string]*tail.Tail, tailMux *sync.Mutex) 
 		decoder := json.NewDecoder(r.Body)
 		err := decoder.Decode(&fileIdent)
 
-		tailMux.Lock()
-
 		if err != nil {
 			w.WriteHeader(500)
 			fmt.Println(err)
 			fmt.Println("error when deleting")
-			tailMux.Unlock()
 			return
 		}
 
 		if fileIdent.FilePath == "" {
 			w.WriteHeader(500)
 			fmt.Println("filepath empty")
-			tailMux.Unlock()
 			return
 		}
 
 		if (*tailers)[fileIdent.FilePath] == nil {
 			w.WriteHeader(500)
 			fmt.Println("filepath nil")
-			tailMux.Unlock()
 			return
 		}
+
+		tailMux.Lock()
 
 		delete(*tailers, fileIdent.FilePath)
 

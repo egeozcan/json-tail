@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FunctionComponent, useCallback } from "react";
+import { FunctionComponent, useCallback, PropsWithChildren } from "react";
 import styled from "styled-components";
 import { useTableDisplayDispatchContext } from "./hooks/useTableDisplayDispatchContext";
 import { setCurrentPath } from "./actionCreators/setCurrentPath";
@@ -35,12 +35,9 @@ const ContentDisplayContainer = styled.span`
   }
 `;
 
-export const ContentDisplay: FunctionComponent<IContentDisplayProps> = ({
-  content,
-  title,
-  path = [],
-  allowHTML = true,
-}) => {
+export const ContentDisplay: FunctionComponent<
+  PropsWithChildren<IContentDisplayProps>
+> = ({ content, title, path = [], allowHTML = true }) => {
   const dispatch = useTableDisplayDispatchContext();
   const state = useTableDisplayStateContext();
   const onClick = useCallback(() => dispatch(setCurrentPath(path)), [path]);

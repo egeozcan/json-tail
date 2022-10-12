@@ -1,4 +1,4 @@
-import { default as React, FunctionComponent } from "react";
+import { default as React, FunctionComponent, PropsWithChildren } from "react";
 import { useImmerReducer } from "use-immer";
 import { tableDisplayReducer } from "./reducers/tableDisplayReducer";
 import { TableDisplayActionTypes } from "./enums/TableDisplayActionTypes";
@@ -16,25 +16,24 @@ const initialState: ITableDisplayState = {
   shownPaths: [],
   maxLevel: 0,
   currentPath: [],
-  specialHandledPaths: new Map<string, TableDisplayRenderTypes>()
+  specialHandledPaths: new Map<string, TableDisplayRenderTypes>(),
 };
 
 /**
  * Provides the required contexts to the InnerTableDisplay
  * @see InnerTableDisplay
  */
-export const TableDisplayProvider: FunctionComponent<ITableDisplayProviderProps> = ({
-  children,
-  maxLevel
-}) => {
+export const TableDisplayProvider: FunctionComponent<
+  PropsWithChildren<ITableDisplayProviderProps>
+> = ({ children, maxLevel }) => {
   const [state, dispatch] = useImmerReducer(tableDisplayReducer, initialState);
 
   if (state.maxLevel !== maxLevel) {
     dispatch({
       type: TableDisplayActionTypes.SetMaxLevel,
       data: {
-        level: maxLevel
-      }
+        level: maxLevel,
+      },
     });
   }
 

@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"github.com/hpcloud/tail"
-	"github.com/pkg/browser"
+	"github.com/zserge/lorca"
 	"log"
 	"net/http"
 	"sync"
@@ -36,18 +36,20 @@ func main() {
 	http.Handle("/", http.FileServer(assetFS()))
 
 	go handleMessages(&tailClients, &broadcast, &messages)
+	go startServer(port)
 
 	if *openBrowser {
-		go launchBrowser("http://localhost:" + *port)
-	}
+		ui, err := lorca.New("http://localhost:"+*port, "", 1920, 1280)
+		if err != nil {
+			log.Fatal(err)
+		}
 
-	log.Fatal("ListenAndServe: ", http.ListenAndServe(":"+*port, nil))
+		defer ui.Close()
+
+		<-ui.Done()
+	}
 }
 
-func launchBrowser(address string) {
-	err := browser.OpenURL(address)
-
-	if err != nil {
-		log.Println("error when opening the browser", err)
-	}
+func startServer(port *string) {
+	log.Fatal("ListenAndServe: ", http.ListenAndServe(":"+*port, nil))
 }
