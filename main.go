@@ -1,12 +1,19 @@
 package main
 
 import (
+	"embed"
 	"flag"
 	"github.com/hpcloud/tail"
 	"github.com/zserge/lorca"
+	"io/fs"
 	"log"
 	"net/http"
 	"sync"
+)
+
+var (
+	//go:embed data/dist/*
+	dataDir embed.FS
 )
 
 func main() {
@@ -26,6 +33,11 @@ func main() {
 	tailers := make(map[string]*tail.Tail)
 	broadcast := make(chan *message)
 
+	resources, err := fs.Sub(dataDir, "data/dist")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	http.HandleFunc("/tail", createClientTailHandler(&tailClients, &messages))
 	http.HandleFunc("/state", createClientStateHandler(&stateClients, &tailers))
 	http.HandleFunc("/download", createLogDownloadHandler(&messages))
@@ -33,7 +45,7 @@ func main() {
 	http.HandleFunc("/addFile", createStartTailHandler(&broadcast, usePolling, &tailers, &mux))
 	http.HandleFunc("/removeFile", createStopTailHandler(&tailers, &mux))
 	http.HandleFunc("/log", createUploadLogHandler(&broadcast))
-	http.Handle("/", http.FileServer(assetFS()))
+	http.Handle("/", http.FileServer(http.FS(resources)))
 
 	go handleMessages(&tailClients, &broadcast, &messages)
 	go startServer(port)
