@@ -1,9 +1,8 @@
-import * as React from "react";
-import { FunctionComponent, PropsWithChildren } from "react";
+import type { FunctionComponent, PropsWithChildren } from "react";
 import { Log } from "./Log";
 import { useLogsAppStateContext } from "../../hooks/useLogsAppStateContext";
 import { useLogsAppDispatchContext } from "../../hooks/useLogsAppDispatchContext";
-import { ILog } from "../../interfaces/ILog";
+import type { ILog } from "../../interfaces/ILog";
 import { LogStatus } from "./enums/LogStatus";
 import { toggleLog } from "../../actionCreators/toggleLog";
 import { parse } from "jsonpath";

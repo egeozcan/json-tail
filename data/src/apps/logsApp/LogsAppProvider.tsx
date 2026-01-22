@@ -1,7 +1,7 @@
-import { default as React, FunctionComponent, PropsWithChildren } from "react";
+import type { FunctionComponent, PropsWithChildren, ReactNode } from "react";
 import { useImmerReducer } from "use-immer";
 import { logsAppReducer } from "./reducers/logsAppReducer";
-import { IAppState } from "./interfaces/IAppState";
+import type { IAppState } from "./interfaces/IAppState";
 import useWebSocketLogSourceEffect from "./hooks/useWebSocketLogSourceEffect";
 import { LogsAppDispatchContext } from "./hooks/useLogsAppDispatchContext";
 import { LogsAppStateContext } from "./hooks/useLogsAppStateContext";
@@ -10,7 +10,7 @@ import { enableMapSet } from "immer";
 export const initialState: IAppState = {
   logs: [],
   displayedLogs: [],
-  titleSelector: (log: any) => JSON.stringify(log),
+  titleSelector: (log: unknown) => JSON.stringify(log),
   pathSelector: "",
   maxLevel: 5,
   host: "/",
@@ -21,7 +21,7 @@ export const initialState: IAppState = {
 
 export interface ILogsAppProviderProps {
   logWebSocketSourceUrl: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const LogsAppProvider: FunctionComponent<

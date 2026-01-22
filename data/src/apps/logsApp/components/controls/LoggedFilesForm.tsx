@@ -1,5 +1,5 @@
-import * as React from "react";
-import { FunctionComponent, useState } from "react";
+import type { ChangeEvent, FormEvent, FunctionComponent } from "react";
+import { useState } from "react";
 import { InputWrapper } from "../common/InputWrapper";
 import {
   addLoggedFile,
@@ -14,11 +14,11 @@ export const LoggedFiles: FunctionComponent<ILoggedFilesControlProps> = () => {
   const [loading, setLoading] = useState(false);
   const state = useLogsAppStateContext();
 
-  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setPath(e.currentTarget.value);
   };
 
-  const addFile = (e: React.FormEvent) => {
+  const addFile = (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     addLoggedFile(path, state.host)

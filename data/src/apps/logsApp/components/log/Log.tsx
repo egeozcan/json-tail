@@ -1,7 +1,7 @@
-import * as React from "react";
-import { FunctionComponent, useMemo, PropsWithChildren } from "react";
+import type { FunctionComponent, PropsWithChildren } from "react";
+import { useMemo } from "react";
 import { LogStatus } from "./enums/LogStatus";
-import { ILog } from "../../interfaces/ILog";
+import type { ILog } from "../../interfaces/ILog";
 import { RowContainer } from "../common/RowContainer";
 import { LogTitle } from "./styledComponents/LogTitle";
 import { TextCopyButton } from "../common/buttons/TextCopyButton";
@@ -18,6 +18,7 @@ export interface ILogProps {
   log: ILog;
   toggleState?: () => void;
   setDeleted?: () => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   titleSelector?: (log: any) => string;
   pathSelector?: string;
   maxLevel?: number;
@@ -36,7 +37,7 @@ export const Log: FunctionComponent<PropsWithChildren<ILogProps>> = ({
   log,
   toggleState,
   setDeleted,
-  titleSelector = (log) => String(log.id),
+  titleSelector = (log) => String(log?.id),
   pathSelector,
   maxLevel = 0,
 }) => {

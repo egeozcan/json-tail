@@ -7,17 +7,25 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
+        use: {
+          loader: "ts-loader",
+          options: {
+            compilerOptions: {
+              module: "ESNext",
+              moduleResolution: "bundler",
+            },
+          },
+        },
         exclude: /node_modules/,
       },
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [".tsx", ".ts", ".js", ".jsx"],
   },
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
-    hashFunction: "xxhash64",
   },
+  devtool: process.env.NODE_ENV === "production" ? "source-map" : "eval-source-map",
 };

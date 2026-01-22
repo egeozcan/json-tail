@@ -1,10 +1,10 @@
-import { default as React, FunctionComponent, PropsWithChildren } from "react";
+import type { FunctionComponent, PropsWithChildren } from "react";
 import { useImmerReducer } from "use-immer";
 import { tableDisplayReducer } from "./reducers/tableDisplayReducer";
 import { TableDisplayActionTypes } from "./enums/TableDisplayActionTypes";
 import { TableDisplayDispatchContext } from "./hooks/useTableDisplayDispatchContext";
 import { TableDisplayStateContext } from "./hooks/useTableDisplayStateContext";
-import { ITableDisplayState } from "./interfaces/ITableDisplayState";
+import type { ITableDisplayState } from "./interfaces/ITableDisplayState";
 import { TableDisplayRenderTypes } from "./enums/TableDisplayRenderTypes";
 
 export interface ITableDisplayProviderProps {

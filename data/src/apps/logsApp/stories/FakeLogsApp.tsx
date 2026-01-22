@@ -1,7 +1,5 @@
 import { ConnectedLogList } from "../components/log/LogList";
-import { LogsAppProvider } from "../LogsAppProvider";
-import * as React from "react";
-import { FunctionComponent, PropsWithChildren } from "react";
+import type { FunctionComponent, PropsWithChildren } from "react";
 import { LogsAppFakeProvider } from "./mockComponents/LogsAppFakeProvider";
 import { Controls } from "../components/controls/Controls";
 

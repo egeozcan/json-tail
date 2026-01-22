@@ -1,5 +1,3 @@
-import * as React from "react";
-
 export const plusIcon = (
   <svg
     stroke="currentColor"

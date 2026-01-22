@@ -1,10 +1,11 @@
 import { BaseTable } from "./baseComponents/BaseTable";
-import * as React from "react";
-import { FunctionComponent, PropsWithChildren, useMemo } from "react";
+import type { FunctionComponent, PropsWithChildren } from "react";
+import { useMemo } from "react";
 import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
 import { isRenderableAsString } from "./helpers/isRenderableAsString";
 import { ContentDisplay } from "./ContentDisplay";
-import { ITableDisplayTreeProps, InnerTableDisplay } from "./InnerTableDisplay";
+import type { ITableDisplayTreeProps } from "./InnerTableDisplay";
+import { InnerTableDisplay } from "./InnerTableDisplay";
 
 export interface IObjectDisplayProps extends ITableDisplayTreeProps {
   obj: object;
@@ -17,7 +18,7 @@ export const ObjectDisplay: FunctionComponent<
     () => (
       <BaseTable baseTableCssClasses={"objectTable jsonTable"}>
         {Object.keys(obj || {}).map((key) => {
-          const curElement: any = (obj as any)[key];
+          const curElement: unknown = (obj as Record<string, unknown>)[key];
 
           const currentPath = (path || []).concat([key]);
           if (isRenderableAsString(curElement)) {

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, type Dispatch } from "react";
 import { createLog } from "../../actionCreators/createLog";
-import { AppAction } from "../../interfaces/IAppAction";
+import type { AppAction } from "../../interfaces/IAppAction";
 
 const fakeData = [
   require("../example-data/topping.json"),
@@ -8,7 +8,7 @@ const fakeData = [
   require("../example-data/weird.json")
 ];
 
-export function useFakeLogSourceEffect(dispatch: React.Dispatch<AppAction>) {
+export function useFakeLogSourceEffect(dispatch: Dispatch<AppAction>) {
   useEffect(() => {
     let numLogs = 0;
     const faker = () => {
@@ -30,5 +30,5 @@ export function useFakeLogSourceEffect(dispatch: React.Dispatch<AppAction>) {
 function getRandomInt(min: number, max: number) {
   min = Math.ceil(min);
   max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+  return Math.floor(Math.random() * (max - min)) + min;
 }

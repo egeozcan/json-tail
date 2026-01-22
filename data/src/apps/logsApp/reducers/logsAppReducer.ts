@@ -1,10 +1,10 @@
-import { Draft } from "immer";
-import { AppAction } from "../interfaces/IAppAction";
+import type { Draft } from "immer";
+import type { AppAction } from "../interfaces/IAppAction";
 import { initialState } from "../LogsAppProvider";
-import { IAppState } from "../interfaces/IAppState";
+import type { IAppState } from "../interfaces/IAppState";
 import { AppActionTypes } from "../enums/AppActionTypes";
 import { parse } from "jsonpath";
-import { ILog } from "../interfaces/ILog";
+import type { ILog } from "../interfaces/ILog";
 
 export function logsAppReducer(
   draft: Draft<IAppState>,
@@ -69,5 +69,3 @@ export function logsAppReducer(
       return draft;
   }
 }
-
-function updateShown() {}

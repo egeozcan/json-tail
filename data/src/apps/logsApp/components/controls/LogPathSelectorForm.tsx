@@ -1,5 +1,5 @@
-import * as React from "react";
-import { FunctionComponent, useState } from "react";
+import type { ChangeEvent, FormEvent, FunctionComponent } from "react";
+import { useState } from "react";
 import { useLogsAppDispatchContext } from "../../hooks/useLogsAppDispatchContext";
 import { InputWrapper } from "../common/InputWrapper";
 import { AppActionTypes } from "../../enums/AppActionTypes";
@@ -10,11 +10,11 @@ export const LogPathSelectorForm: FunctionComponent<ILofFormProps> = () => {
   const [text, setText] = useState("");
   const dispatch = useLogsAppDispatchContext();
 
-  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.currentTarget.value);
   };
 
-  const setPath = (e: React.FormEvent) => {
+  const setPath = (e: FormEvent) => {
     e.preventDefault();
     dispatch({
       type: AppActionTypes.SetJsonPath,

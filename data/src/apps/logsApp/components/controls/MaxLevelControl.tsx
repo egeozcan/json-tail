@@ -1,5 +1,5 @@
-import * as React from "react";
-import { FunctionComponent, useCallback, PropsWithChildren } from "react";
+import type { FunctionComponent, PropsWithChildren } from "react";
+import { useCallback } from "react";
 import { useLogsAppDispatchContext } from "../../hooks/useLogsAppDispatchContext";
 import { useLogsAppStateContext } from "../../hooks/useLogsAppStateContext";
 import { changeLevel } from "../../actionCreators/changeLevel";

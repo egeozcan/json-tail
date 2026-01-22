@@ -1,10 +1,12 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { LogsApp } from "./apps/logsApp/LogsApp";
 
-ReactDOM.render(
-  <LogsApp
-    logWebSocketSourceUrl={"ws://" + document.location.host + "/tail"}
-  />,
-  document.getElementById("logApp")
-);
+const container = document.getElementById("logApp");
+if (container) {
+  const root = createRoot(container);
+  root.render(
+    <LogsApp
+      logWebSocketSourceUrl={"ws://" + document.location.host + "/tail"}
+    />
+  );
+}

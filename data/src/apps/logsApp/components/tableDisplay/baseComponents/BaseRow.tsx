@@ -1,5 +1,5 @@
-import * as React from "react";
-import { FunctionComponent, PropsWithChildren } from "react";
+import { Children } from "react";
+import type { FunctionComponent, PropsWithChildren } from "react";
 import { StyledTr } from "./styledComponents/StyledTr";
 import { TitleCell } from "./TitleCell";
 import { Cell } from "./Cell";
@@ -23,7 +23,7 @@ export const BaseRow: FunctionComponent<PropsWithChildren<IRowProps>> = (
 ) => {
   return (
     <StyledTr title={props.title} className={props.cssClass}>
-      {React.Children.map(props.children, (child, i) => {
+      {Children.map(props.children, (child, i) => {
         const isHeader =
           props.headerType === HeaderType.All ||
           (props.headerType === HeaderType.Single && i === 0);
