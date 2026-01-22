@@ -1,6 +1,6 @@
 import { ConnectedLogList } from "./components/log/LogList";
 import { LogsAppProvider } from "./LogsAppProvider";
-import { default as React, FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 import { Controls } from "./components/controls/Controls";
 
 export interface ILogsAppProps {

@@ -1,6 +1,6 @@
 import { ObjectDisplay } from "./ObjectDisplay";
 import { ArrayDisplay } from "./ArrayDisplay";
-import { default as React, FunctionComponent, PropsWithChildren } from "react";
+import type { FunctionComponent, PropsWithChildren } from "react";
 import { ContentDisplay } from "./ContentDisplay";
 import { isRenderableAsString } from "./helpers/isRenderableAsString";
 import { useTableDisplayStateContext } from "./hooks/useTableDisplayStateContext";

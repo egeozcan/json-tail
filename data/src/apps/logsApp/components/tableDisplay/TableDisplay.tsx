@@ -1,10 +1,7 @@
-import { default as React, FunctionComponent, PropsWithChildren } from "react";
+import type { FunctionComponent, PropsWithChildren } from "react";
 import { InnerTableDisplay } from "./InnerTableDisplay";
-import {
-  ITableDisplayProviderProps,
-  TableDisplayProvider,
-} from "./TableDisplayProvider";
-import { Block } from "../common/Block";
+import type { ITableDisplayProviderProps } from "./TableDisplayProvider";
+import { TableDisplayProvider } from "./TableDisplayProvider";
 import { ConnectedPathDisplay } from "./CurrentPathDisplay";
 import { RowContainer } from "../common/RowContainer";
 

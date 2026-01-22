@@ -1,4 +1,4 @@
-import { AppAction, IAddAction } from "../interfaces/IAppAction";
+import type { IAddAction } from "../interfaces/IAppAction";
 import { LogStatus } from "../components/log/enums/LogStatus";
 import { AppActionTypes } from "../enums/AppActionTypes";
 

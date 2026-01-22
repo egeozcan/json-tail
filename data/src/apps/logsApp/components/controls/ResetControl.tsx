@@ -1,5 +1,4 @@
-import * as React from "react";
-import { FunctionComponent, PropsWithChildren } from "react";
+import type { FunctionComponent, PropsWithChildren } from "react";
 import { resetLogs } from "../../actionCreators/resetLogs";
 import { useLogsAppDispatchContext } from "../../hooks/useLogsAppDispatchContext";
 

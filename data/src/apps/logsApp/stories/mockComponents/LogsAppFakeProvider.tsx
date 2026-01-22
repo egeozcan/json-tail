@@ -1,10 +1,10 @@
-import * as React from "react";
-import { FunctionComponent, PropsWithChildren } from "react";
+import type { FunctionComponent, PropsWithChildren } from "react";
 import { useImmerReducer } from "use-immer";
 import { logsAppReducer } from "../../reducers/logsAppReducer";
 import { LogsAppDispatchContext } from "../../hooks/useLogsAppDispatchContext";
 import { LogsAppStateContext } from "../../hooks/useLogsAppStateContext";
-import { ILogsAppProviderProps, initialState } from "../../LogsAppProvider";
+import type { ILogsAppProviderProps } from "../../LogsAppProvider";
+import { initialState } from "../../LogsAppProvider";
 import { useFakeLogSourceEffect } from "../mockHooks/useFakeLogSourceEffect";
 import { enableMapSet } from "immer";
 

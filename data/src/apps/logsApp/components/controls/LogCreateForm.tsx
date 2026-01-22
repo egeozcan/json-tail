@@ -1,5 +1,5 @@
-import * as React from "react";
-import { FunctionComponent, useState } from "react";
+import type { ChangeEvent, FunctionComponent } from "react";
+import { useState } from "react";
 import { createLogInternal } from "../../actionCreators/createLog";
 import { InputWrapper } from "../common/InputWrapper";
 
@@ -8,7 +8,7 @@ export interface ILogFormProps {}
 export const LogCreateForm: FunctionComponent<ILogFormProps> = () => {
   const [text, setText] = useState("");
 
-  const changeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
+  const changeHandler = (e: ChangeEvent<HTMLTextAreaElement>) =>
     setText(e.currentTarget.value);
 
   const addLog = () => createLogInternal(text);

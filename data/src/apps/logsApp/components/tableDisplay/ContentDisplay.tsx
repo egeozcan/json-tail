@@ -1,5 +1,5 @@
-import * as React from "react";
-import { FunctionComponent, useCallback, PropsWithChildren } from "react";
+import type { FunctionComponent, PropsWithChildren } from "react";
+import { useCallback } from "react";
 import styled from "styled-components";
 import { useTableDisplayDispatchContext } from "./hooks/useTableDisplayDispatchContext";
 import { setCurrentPath } from "./actionCreators/setCurrentPath";
@@ -8,7 +8,7 @@ import { TableDisplayActionTypes } from "./enums/TableDisplayActionTypes";
 import { TableDisplayRenderTypes } from "./enums/TableDisplayRenderTypes";
 
 interface IContentDisplayProps {
-  content: any;
+  content: unknown;
   title?: string;
   path?: string[];
   allowHTML?: boolean;
@@ -78,7 +78,7 @@ export const ContentDisplay: FunctionComponent<
       ) : (
         <div
           className={"html-container"}
-          dangerouslySetInnerHTML={{ __html: content }}
+          dangerouslySetInnerHTML={{ __html: content as string }}
         />
       )}
       &nbsp;

@@ -1,9 +1,5 @@
-import {
-  default as React,
-  FunctionComponent,
-  PropsWithChildren,
-  useCallback,
-} from "react";
+import type { FunctionComponent, PropsWithChildren } from "react";
+import { useCallback } from "react";
 import { useTableDisplayDispatchContext } from "./hooks/useTableDisplayDispatchContext";
 import { showSubTree } from "./actionCreators/showSubTree";
 import { collapseSubTree } from "./actionCreators/collapseSubTree";

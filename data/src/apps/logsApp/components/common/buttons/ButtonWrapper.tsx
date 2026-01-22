@@ -1,9 +1,8 @@
-import * as React from "react";
 import { BackgroundType, CursorType, Block, Size } from "../Block";
-import { FunctionComponent, PropsWithChildren } from "react";
+import type { FunctionComponent, PropsWithChildren } from "react";
 
 export interface IButtonWrapperProps {
-  onClick: (...args: any[]) => any;
+  onClick: (...args: unknown[]) => unknown;
 }
 
 export const ButtonWrapper: FunctionComponent<

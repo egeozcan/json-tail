@@ -1,5 +1,4 @@
-import * as React from "react";
-import { storiesOf } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 import { Log } from "../components/log/Log";
 import { LogStatus } from "../components/log/enums/LogStatus";
 import { FakeLogsApp } from "./FakeLogsApp";
@@ -18,7 +17,23 @@ const atlassianLog = {
   time: new Date()
 };
 
-storiesOf("Logs App", module)
-  .add("Topping", () => <Log log={toppingsLog} />)
-  .add("Atlassian", () => <Log log={atlassianLog} />)
-  .add("Simulation", () => <FakeLogsApp logWebSocketSourceUrl={"foo"} />);
+const meta: Meta<typeof Log> = {
+  title: "Logs App",
+  component: Log,
+};
+
+export default meta;
+
+type Story = StoryObj<typeof Log>;
+
+export const Topping: Story = {
+  render: () => <Log log={toppingsLog} />,
+};
+
+export const Atlassian: Story = {
+  render: () => <Log log={atlassianLog} />,
+};
+
+export const Simulation: StoryObj<typeof FakeLogsApp> = {
+  render: () => <FakeLogsApp logWebSocketSourceUrl="foo" />,
+};

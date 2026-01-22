@@ -1,4 +1,4 @@
-import React, { FunctionComponent, PropsWithChildren } from "react";
+import type { FunctionComponent, PropsWithChildren } from "react";
 import { Block } from "../common/Block";
 import { useTableDisplayStateContext } from "./hooks/useTableDisplayStateContext";
 

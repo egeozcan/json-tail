@@ -1,7 +1,15 @@
-import * as React from "react";
-import { storiesOf } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 import { TextCopyButton } from "../../common/buttons/TextCopyButton";
 
-storiesOf("Other Stuff", module).add("Copy Button", () => (
-  <TextCopyButton getCopyString={() => "Test"} />
-));
+const meta: Meta<typeof TextCopyButton> = {
+  title: "Other Stuff",
+  component: TextCopyButton,
+};
+
+export default meta;
+
+type Story = StoryObj<typeof TextCopyButton>;
+
+export const CopyButton: Story = {
+  render: () => <TextCopyButton getCopyString={() => "Test"} />,
+};

@@ -1,14 +1,15 @@
 import { isObjectWithGivenKeys } from "./helpers/isObjectWithGivenKeys";
-import { ITableDisplayTreeProps, InnerTableDisplay } from "./InnerTableDisplay";
-import * as React from "react";
-import { FunctionComponent, useMemo, PropsWithChildren } from "react";
+import type { ITableDisplayTreeProps } from "./InnerTableDisplay";
+import { InnerTableDisplay } from "./InnerTableDisplay";
+import type { FunctionComponent, PropsWithChildren } from "react";
+import { useMemo } from "react";
 import { BaseTable } from "./baseComponents/BaseTable";
 import { BaseRow, HeaderType } from "./baseComponents/BaseRow";
 import { ContentDisplay } from "./ContentDisplay";
 import { addArrayIndexToLastElement } from "./helpers/addArrayIndexToLastElement";
 
 export interface IArrayDisplayProps extends ITableDisplayTreeProps {
-  arr: any[];
+  arr: unknown[];
 }
 
 export const ArrayDisplay: FunctionComponent<
@@ -19,7 +20,7 @@ export const ArrayDisplay: FunctionComponent<
   }
 
   const firstRow = arr[0];
-  const titles = Object.keys(firstRow);
+  const titles = Object.keys(firstRow as object);
 
   const notSuitableForTableView =
     !isObjectWithGivenKeys(firstRow) ||
@@ -64,7 +65,7 @@ export const ArrayDisplay: FunctionComponent<
                 currentPath.push(title);
                 return (
                   <InnerTableDisplay
-                    displayObject={el[title]}
+                    displayObject={(el as Record<string, unknown>)[title]}
                     path={currentPath}
                     key={i}
                   />
