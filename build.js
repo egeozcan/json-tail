@@ -13,7 +13,7 @@ execSync("npm i", {
 
 console.log("done installing modules");
 
-execSync("npx webpack", {
+execSync("npx vite build", {
   windowsHide: true,
   cwd: join(__dirname, "./data"),
   stdio: "inherit",
@@ -23,7 +23,7 @@ execSync("npx webpack", {
   },
 });
 
-console.log("webpack build done");
+console.log("vite build done");
 
 execSync("go get", {
   windowsHide: true,
