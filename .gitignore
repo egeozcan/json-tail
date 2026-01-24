@@ -103,6 +103,7 @@ typings/
 
 # react / gatsby
 public/
+!data/public/
 
 # Serverless directories
 .serverless/
